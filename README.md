@@ -3,8 +3,7 @@
 ## 💻 Technologies Used
 - 🐍 Python
 - ⚛️ Django
-- 📄 HTML
-- 🎨 CSS
+- 📄 Bootstrap
 
 ## 🔍 Features
 - Stream songs
