@@ -3,9 +3,16 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
+class Genre(models.Model):
+    name = models.CharField(max_length=50, unique=True)
+
+    def __str__(self):
+        return self.name
 
 class Artist(models.Model):
     name = models.CharField(max_length=100)
+    genres = models.ManyToManyField(Genre, related_name="artists")
+
 
     def __str__(self):
         return self.name
@@ -30,6 +37,7 @@ class SongCollection(models.Model):
 class ArtistAlbum(SongCollection):
     owner = models.ForeignKey('Artist', on_delete=models.CASCADE)
     release_date = models.DateField()
+    genres = models.ManyToManyField(Genre, related_name="albums")
 
     def get_songs(self):
         return self.songs.all()
@@ -43,6 +51,7 @@ class Song(models.Model):
     release_date = models.DateField()
     audio_url = models.URLField()
     lyrics = models.TextField(blank=True, null=False)
+    genres = models.ManyToManyField(Genre, related_name="songs")
 
     def __str__(self):
         return f"{self.name} by {self.artist.name}"
@@ -51,6 +60,7 @@ class Song(models.Model):
 class PlatformMix(SongCollection):
     owner = models.CharField(max_length=255, default="Melonix")
     songs = models.ManyToManyField(Song, related_name='mixes')
+    genres = models.ManyToManyField(Genre, related_name="mixes")
 
     def get_songs(self):
         return self.songs.all()
@@ -74,4 +84,3 @@ class UserPlaylistSong(models.Model):
         constraints = [
             models.UniqueConstraint(fields=['playlist', 'song'], name='unique_playlist_song')
         ]
-

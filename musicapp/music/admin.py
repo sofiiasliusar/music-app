@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Artist, ArtistAlbum, Song, PlatformMix, UserPlaylist, UserPlaylistSong
+from .models import Artist, ArtistAlbum, Song, PlatformMix, UserPlaylist, UserPlaylistSong, Genre
 
 
 class ArtistAlbumInline(admin.TabularInline):
@@ -38,3 +38,5 @@ admin.site.register(ArtistAlbum, ArtistAlbumAdmin)
 admin.site.register(Song)
 admin.site.register(PlatformMix)
 admin.site.register(UserPlaylist, UserPlaylistAdmin)
+admin.site.register(Genre)
+
