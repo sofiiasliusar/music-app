@@ -1,3 +1,77 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
+
+
+class Artist(models.Model):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
+
+class SongCollection(models.Model):
+    name = models.CharField(max_length=100)
+
+    def get_total_duration(self):
+        return sum(song.duration.total_seconds() for song in self.get_songs())
+
+    def get_amount_of_songs(self):
+        return self.get_songs().count()
+
+    def get_songs(self):
+        raise NotImplementedError("Subclasses must implement the get_songs method.")
+
+    def __str__(self):
+        return self.name
+
+
+class ArtistAlbum(SongCollection):
+    owner = models.ForeignKey('Artist', on_delete=models.CASCADE)
+    release_date = models.DateField()
+
+    def get_songs(self):
+        return self.songs.all()
+
+
+class Song(models.Model):
+    name = models.CharField(max_length=100)
+    artist = models.ForeignKey(Artist,  related_name='songs', on_delete=models.CASCADE)
+    album = models.ForeignKey(ArtistAlbum, related_name='songs',  on_delete=models.CASCADE, null=True, blank=True)
+    duration = models.DurationField()
+    release_date = models.DateField()
+    audio_url = models.URLField()
+    lyrics = models.TextField(blank=True, null=False)
+
+    def __str__(self):
+        return f"{self.name} by {self.artist.name}"
+
+
+class PlatformMix(SongCollection):
+    owner = models.CharField(max_length=255, default="Melonix")
+    songs = models.ManyToManyField(Song, related_name='mixes')
+
+    def get_songs(self):
+        return self.songs.all()
+
+
+class UserPlaylist(SongCollection):
+    owner = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def get_songs(self):
+        return Song.objects.filter(userplaylistsong__playlist=self)
+
+
+class UserPlaylistSong(models.Model):
+    playlist = models.ForeignKey(UserPlaylist, on_delete=models.CASCADE)
+    # when playlist is deleted, all UserPlaylistSongs will be deleted too
+    song = models.ForeignKey(Song, on_delete=models.CASCADE)
+    # when Song is deleted, in all playlists this song will be deleted
+    date_added = models.DateField(auto_now_add=True)
+
+    class Meta:  # ensures that the same song cannot be added to the same playlist twice
+        constraints = [
+            models.UniqueConstraint(fields=['playlist', 'song'], name='unique_playlist_song')
+        ]
+
