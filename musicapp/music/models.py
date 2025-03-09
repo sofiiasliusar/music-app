@@ -11,7 +11,7 @@ class Genre(models.Model):
 
 class Artist(models.Model):
     name = models.CharField(max_length=100)
-    genres = models.ManyToManyField(Genre, related_name="artists")
+    genres = models.ManyToManyField(Genre, related_name="artists", blank=True)
 
 
     def __str__(self):
@@ -37,7 +37,7 @@ class SongCollection(models.Model):
 class ArtistAlbum(SongCollection):
     owner = models.ForeignKey('Artist', on_delete=models.CASCADE)
     release_date = models.DateField()
-    genres = models.ManyToManyField(Genre, related_name="albums")
+    genres = models.ManyToManyField(Genre, related_name="albums", blank=True)
 
     def get_songs(self):
         return self.songs.all()
@@ -51,7 +51,7 @@ class Song(models.Model):
     release_date = models.DateField()
     audio_url = models.URLField()
     lyrics = models.TextField(blank=True, null=False)
-    genres = models.ManyToManyField(Genre, related_name="songs")
+    genres = models.ManyToManyField(Genre, related_name="songs", blank=True)
 
     def __str__(self):
         return f"{self.name} by {self.artist.name}"
@@ -60,7 +60,7 @@ class Song(models.Model):
 class PlatformMix(SongCollection):
     owner = models.CharField(max_length=255, default="Melonix")
     songs = models.ManyToManyField(Song, related_name='mixes')
-    genres = models.ManyToManyField(Genre, related_name="mixes")
+    genres = models.ManyToManyField(Genre, related_name="mixes", blank=True)
 
     def get_songs(self):
         return self.songs.all()
