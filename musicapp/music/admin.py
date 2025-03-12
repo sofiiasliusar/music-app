@@ -1,12 +1,13 @@
 import datetime
 from django.contrib import admin
+from django.utils.html import format_html
 
 # Register your models here.
 from .models import Artist, ArtistAlbum, Song, PlatformMix, UserPlaylist, UserPlaylistSong, Genre
 
 
 class SongCollectionAdmin(admin.ModelAdmin):
-    list_display = ['name', 'get_total_duration', 'get_amount_of_songs']
+    list_display = ['name', 'get_total_duration', 'get_amount_of_songs', 'image_preview']
 
     def get_total_duration(self, obj):
         total_seconds = obj.get_total_duration()
@@ -14,6 +15,9 @@ class SongCollectionAdmin(admin.ModelAdmin):
 
     def get_amount_of_songs(self, obj):
         return obj.get_amount_of_songs()
+
+    def image_preview(self, obj):
+        return format_html('<img src="{}" width="50" height="50" style="border-radius: 5px;" />', obj.get_image())
 
     get_total_duration.short_description = "Total Duration"
     get_amount_of_songs.short_description = "Number of Songs"

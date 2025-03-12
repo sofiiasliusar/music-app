@@ -32,6 +32,10 @@ class SongCollection(models.Model):
     def get_songs(self):
         raise NotImplementedError("Subclasses must implement the get_songs method.")
 
+    def get_image(self):
+        """Returns the image URL, or the default placeholder if None."""
+        return self.image_url or "/static/images/playlist-placeholder.jpg"
+
     def __str__(self):
         return self.name
 
