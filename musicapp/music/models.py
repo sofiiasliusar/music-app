@@ -3,17 +3,22 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 
+
 class Genre(models.Model):
     name = models.CharField(max_length=50, unique=True)
 
     def __str__(self):
         return self.name
 
+
 class Artist(models.Model):
     name = models.CharField(max_length=100)
     genres = models.ManyToManyField(Genre, related_name="artists", blank=True)
     image_url = models.URLField(blank=True, null=True)
 
+    def get_image(self):
+        """Returns the image URL, or the default placeholder if None."""
+        return self.image_url or "/static/images/artist-placeholder.jpg"
 
     def __str__(self):
         return self.name
@@ -60,6 +65,14 @@ class Song(models.Model):
     genres = models.ManyToManyField(Genre, related_name="songs", blank=True)
     image_url = models.URLField(blank=True, null=True)
 
+    def get_image(self):
+        """Returns the image URL, or the default placeholder if None."""
+        if self.image_url:
+            return self.image_url  # Song has its own image
+        if self.album and isinstance(self.album, ArtistAlbum) and self.album.image_url:  # isinstance so that IDE is not angry
+            return self.album.image_url  # Fallback to album image
+        return "/static/images/song-placeholder.jpg"  # Fallback to placeholder image
+
     def __str__(self):
         return f"{self.name} by {self.artist.name}"
 
@@ -79,12 +92,12 @@ class UserPlaylist(SongCollection):
     def get_songs(self):
         return Song.objects.filter(userplaylistsong__playlist=self)
 
-    # def update_image_from_first_song(self):
-    #     """Automatically set the playlist image to the first song's image_url."""
-    #     first_song = self.get_songs().first()
-    #     if first_song and first_song.image_url:
-    #         self.image_url = first_song.image_url
-    #         self.save()
+    def get_image(self):
+        """Return the image of the first song in the playlist, or the default placeholder if none."""
+        first_song = self.get_songs().first()
+        if first_song:
+            return first_song.get_image()  # Use the first song's image, whether it's the song or album image
+        return "/static/images/playlist-placeholder.jpg"  # Fallback to playlist placeholder
 
 
 class UserPlaylistSong(models.Model):
