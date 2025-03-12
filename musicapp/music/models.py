@@ -12,6 +12,7 @@ class Genre(models.Model):
 class Artist(models.Model):
     name = models.CharField(max_length=100)
     genres = models.ManyToManyField(Genre, related_name="artists", blank=True)
+    image_url = models.URLField(blank=True, null=True)
 
 
     def __str__(self):
@@ -20,6 +21,7 @@ class Artist(models.Model):
 
 class SongCollection(models.Model):
     name = models.CharField(max_length=100)
+    image_url = models.URLField(blank=True, null=True)
 
     def get_total_duration(self):
         return sum(song.duration.total_seconds() for song in self.get_songs())
@@ -52,6 +54,7 @@ class Song(models.Model):
     audio_url = models.URLField()
     lyrics = models.TextField(blank=True, null=False)
     genres = models.ManyToManyField(Genre, related_name="songs", blank=True)
+    image_url = models.URLField(blank=True, null=True)
 
     def __str__(self):
         return f"{self.name} by {self.artist.name}"
@@ -71,6 +74,13 @@ class UserPlaylist(SongCollection):
 
     def get_songs(self):
         return Song.objects.filter(userplaylistsong__playlist=self)
+
+    # def update_image_from_first_song(self):
+    #     """Automatically set the playlist image to the first song's image_url."""
+    #     first_song = self.get_songs().first()
+    #     if first_song and first_song.image_url:
+    #         self.image_url = first_song.image_url
+    #         self.save()
 
 
 class UserPlaylistSong(models.Model):
