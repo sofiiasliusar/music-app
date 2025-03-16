@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trending Songs</title>
+
+    <link rel="stylesheet" href="/musicapp/сss/Heder2R.css">
+    <link rel="stylesheet" href="/musicapp/сss/Footer.css">
+    <link rel="stylesheet" href="/musicapp/сss/Sidebar.css">
+    <link rel="stylesheet" href="/musicapp/сss/Office.css">
+
+
+
+    <style>
+        /* Trending songs mix */
+.trending-songs-container {
+    display: flex;
+    align-items: center; /* Центруємо контент по вертикалі */
+    justify-content: space-between; /* Простір між зображенням і текстом */
+    background: linear-gradient(90deg, rgb(134, 63, 123) 0%, rgb(94, 39, 126) 100%);
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 74%;
+    margin-left: 300px; /* Відступ для бокового меню */
+    margin-top: 20px; /* Відступ згори */
+    margin-bottom: 50px; /* Відступ від футера */
+}
+
+/* Фото альбому */
+.album-cover {
+    width: 200px; /* Ширина картинки */
+    height: auto;
+    border-radius: 10px;
+}
+
+/* Контент текстової частини */
+.content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 20px;
+}
+
+/* Заголовок */
+.content h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+/* Текст опису */
+.content p {
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+/* Контейнер для інформації та кнопки */
+.info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Текст інформації */
+.info p {
+    color: #fff;
+    font-size: 1rem;
+}
+
+/* Кнопка Play All */
+.play-all-btn {
+    background-color: #D5006D;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.play-all-btn:hover {
+    background-color: #C1005B;
+}
+        
+/* Адаптація для мобільних */
+@media (max-width: 768px) {
+    /* Trending songs mix */
+    .trending-songs-container {
+        flex-direction: column; /* Розташовуємо контент вертикально */
+        align-items: center; /* Центруємо контент по горизонталі */
+        margin-left: 20px; /* Зменшуємо відступ для мобільних */
+        margin-right: 20px; /* Зменшуємо відступ для мобільних */
+    }
+
+    .album-cover {
+        width: 100%; /* Змінюємо ширину для мобільних */
+        max-width: 250px; /* Встановлюємо максимальну ширину */
+        margin-bottom: 10px;
+    }
+
+    .content h1 {
+        font-size: 1.5rem; /* Зменшуємо розмір шрифту */
+    }
+
+    .content p {
+        font-size: 1rem; /* Зменшуємо розмір шрифту */
+    }
+
+    .info {
+        flex-direction: column; /* Розміщуємо елементи вертикально */
+        align-items: center; /* Центруємо по горизонталі */
+    }
+
+    .play-all-btn {
+        padding: 10px 15px;
+        font-size: 1rem;
+        width: 100%; /* Кнопка на всю ширину */
+    }
+
+    /* Таблиця для мобільних */
+    .song-table-container {
+        margin-left: 20px; /* Прибираємо лівий відступ */
+        margin-top: 20px; /* Відступ згори */
+        padding: 10px;
+    }
+
+    .song-table th, .song-table td {
+        padding: 8px; /* Зменшуємо відступи в таблиці */
+    }
+
+    .song-table td {
+        font-size: 0.9rem; /* Зменшуємо шрифт для мобільних */
+    }
+
+    /* Стилі для іконок серця та плеєра */
+    .heart-icon, .play-icon {
+        font-size: 16px; /* Зменшуємо розмір іконок */
+    }
+
+    .song-cover {
+        width: 30px; /* Зменшуємо ширину фото для мобільних */
+        height: 30px; /* Зменшуємо висоту фото для мобільних */
+    }
+}
+
+    </style>
+    
+
+</head>
+<body>
+    <!-- Header -->
+<header>
+    <div class="nav">
+        <a href="#">Home</a>
+        <a href="#">About Us</a>
+        <a href="#">Premium</a>
+    </div>
+    <div class="login-signup">
+        <input type="text" placeholder="Search..." class="search-input"> <!-- Нове поле вводу -->
+        <!-- Dropdown кнопка -->
+        <div class="dropdown">
+            <button class="dropbtn">
+                <img src="img/Melonix.png" alt="Dropdown" class="dropdown-img"> <!-- Ваше зображення -->
+            </button>
+            <div class="dropdown-content">
+                <a href="/Office.html">Profile</a> <!-- Перехід до особистого кабінету -->
+            </div>
+        </div>
+    </div>
+</header>
+
+    
+      
+<!-- Sidebar Toggle Button -->
+<button class="sidebar-toggle-btn" onclick="toggleSidebar()">
+    <img src="img/Melonix.png" alt="Logo" class="sidebar-logo-icon">
+</button>
+
+
+<!-- Sidebar -->
+<div class="sidebar">
+    <img src="img/Melonix.png" alt="Logo" class="sidebar-logo">
+    <a href="#" class="sidebar-item">
+        <img src="img/Home.png" alt="Home" class="sidebar-icon"> Home
+    </a>
+    <a href="#" class="sidebar-item">
+        <img src="img/Singers.png" alt="Artists" class="sidebar-icon"> Singers
+    </a>
+    <a href="#" class="sidebar-item">
+        <img src="img/Albums.png" alt="Albums" class="sidebar-icon"> Albums
+    </a>
+    <a href="#" class="sidebar-item">
+        <img src="img/Playlist.png" alt="Your Playlist" class="sidebar-icon"> Playlist
+    </a>
+    <a href="#" class="sidebar-item">
+        <img src="img/Premium1.png" alt="Library" class="sidebar-icon"> Premium
+    </a>
+    <a href="#" class="sidebar-item">
+        <img src="img/Settings.png" alt="Settings" class="sidebar-icon"> Settings
+    </a>
+    <a href="#" class="sidebar-item">
+        <img src="img/Logout.png" alt="Logout" class="sidebar-icon"> Logout
+    </a>
+</div>
+
+
+
+
+
+<div class="profile-container">
+    <div class="profile-details">
+        <h1>Особистий кабінет</h1>
+        <h2>Деталі профілю</h2>
+        <p>Ім'я користувача: Емінем</p>
+        <p>Email: eminem@example.com</p>
+        
+        <h2>Зміна паролю</h2>
+        <form class="password-change">
+            <label for="current-password">Поточний пароль:</label>
+            <input type="password" id="current-password" required>
+
+            <label for="new-password">Новий пароль:</label>
+            <input type="password" id="new-password" required>
+
+            <label for="confirm-password">Підтвердити новий пароль:</label>
+            <input type="password" id="confirm-password" required>
+
+            <button type="submit">Змінити пароль</button>
+        </form>
+    </div>
+    
+    <!-- Картинка праворуч -->
+    <div class="profile-image">
+        <img src="img/Trending songs mix.png" alt="Profile Image">
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Footer -->
+<footer>
+    <div class="footer-column">
+        <h3>Melodies</h3>
+        <a href="#">Songs</a>
+        <a href="#">Radio</a>
+        <a href="#">Podcast</a>
+    </div>
+    <div class="footer-column">
+        <h3>Access</h3>
+        <a href="#">Explore</a>
+        <a href="#">Artists</a>
+        <a href="#">Playlists</a>
+        <a href="#">Albums</a>
+        <a href="#">Trending</a>
+    </div>
+    <div class="footer-column">
+        <h3>Contact</h3>
+        <a href="#">About</a>
+        <a href="#">Policy</a>
+        <a href="#">Social Media</a>
+        <a href="#">Support</a>
+    </div>
+</footer>
+
+
+<script>
+  function toggleSidebar() {
+      const sidebar = document.querySelector('.sidebar');
+      sidebar.classList.toggle('open');
+  }
+
+  // Close sidebar when clicked outside
+  window.addEventListener('click', function (e) {
+      const sidebar = document.querySelector('.sidebar');
+      const toggleBtn = document.querySelector('.sidebar-toggle-btn');
+      if (!sidebar.contains(e.target) && !toggleBtn.contains(e.target)) {
+          sidebar.classList.remove('open');
+      }
+  });
+
+  // Close the sidebar when close button is clicked
+  function closeSidebar() {
+      document.querySelector('.sidebar').classList.remove('open');
+  }
+</script>
+</body>
+</html>

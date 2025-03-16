@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trending Songs</title>
+
+    <link rel="stylesheet" href="/musicapp/сss/Heder2R.css">
+    <link rel="stylesheet" href="/musicapp/сss/Footer.css">
+    <link rel="stylesheet" href="/musicapp/сss/Sidebar.css">
+    <link rel="stylesheet" href="/musicapp/сss/Albums.css">
+
+
+
+    <style>
+        
+        
+
+
+    </style>
+    
+
+</head>
+<body>
+    <!-- Header -->
+<header>
+    <div class="nav">
+        <a href="#">Home</a>
+        <a href="#">About Us</a>
+        <a href="#">Premium</a>
+    </div>
+    <div class="login-signup">
+        <input type="text" placeholder="Search..." class="search-input"> <!-- Нове поле вводу -->
+        <!-- Dropdown кнопка -->
+        <div class="dropdown">
+            <button class="dropbtn">
+                <img src="img/Melonix.png" alt="Dropdown" class="dropdown-img"> <!-- Ваше зображення -->
+            </button>
+            <div class="dropdown-content">
+                <a href="/Office.html">Profile</a> <!-- Перехід до особистого кабінету -->
+            </div>
+        </div>
+    </div>
+</header>
+
+    
+      
+<!-- Sidebar Toggle Button -->
+<button class="sidebar-toggle-btn" onclick="toggleSidebar()">
+    <img src="img/Melonix.png" alt="Logo" class="sidebar-logo-icon">
+</button>
+
+
+<!-- Sidebar -->
+<div class="sidebar">
+    <img src="img/Melonix.png" alt="Logo" class="sidebar-logo">
+    <a href="#" class="sidebar-item">
+        <img src="img/Home.png" alt="Home" class="sidebar-icon"> Home
+    </a>
+    <a href="#" class="sidebar-item">
+        <img src="img/Singers.png" alt="Artists" class="sidebar-icon"> Singers
+    </a>
+    <a href="#" class="sidebar-item">
+        <img src="img/Albums.png" alt="Albums" class="sidebar-icon"> Albums
+    </a>
+    <a href="#" class="sidebar-item">
+        <img src="img/Playlist.png" alt="Your Playlist" class="sidebar-icon"> Playlist
+    </a>
+    <a href="#" class="sidebar-item">
+        <img src="img/Premium1.png" alt="Library" class="sidebar-icon"> Premium
+    </a>
+    <a href="#" class="sidebar-item">
+        <img src="img/Settings.png" alt="Settings" class="sidebar-icon"> Settings
+    </a>
+    <a href="#" class="sidebar-item">
+        <img src="img/Logout.png" alt="Logout" class="sidebar-icon"> Logout
+    </a>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Trending Songs Section -->
+<!-- Trending Songs Section -->
+<div class="trending-songs-container">
+    <!-- Фото альбому -->
+    <img src="img/Trending songs mix.png" alt="Album Cover" class="album-cover">
+    
+    <div class="content">
+        <h1>Trending songs mix</h1>
+        <p>tate mcrae, nightmares, the neighborhood, doja cat and ...</p>
+        <div class="info">
+            <p>20 songs • 1h 36m</p>
+            <button class="play-all-btn">Play All</button>
+        </div>
+    </div>
+</div>
+
+<!-- Table for Trending Songs -->
+<div class="song-table-container">
+    <table class="song-table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Release Date</th>
+                <th>Album</th>
+                <th>Time</th>
+                <th>Play</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <!-- Фото для кожного треку -->
+                    <img src="img/The_Neighbourhood_-_The_Neighbourhood 1.png" alt="Forcecore" class="song-cover"> Forcecore
+                </td>
+                <td>Nov 3, 2023</td>
+                <td>Hard to Imagine</td>
+                <td class="song-time">3:26</td>
+                <td>3:26 <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong()">▶</span></td>
+            </tr>
+            <tr>
+                <td>
+                    <!-- Фото для кожного треку -->
+                    <img src="img/The_Neighbourhood_-_The_Neighbourhood 2.png" alt="Skyfall Beats" class="song-cover"> Skyfall Beats
+                </td>
+                <td>Oct 26, 2023</td>
+                <td>Nightmares</td>
+                <td class="song-time">3:20</td>
+                <td>3:26 <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong()">▶</span></td>
+            </tr>
+            <tr>
+                <td>
+                    <!-- Фото для кожного треку -->
+                    <img src="img/The_Neighbourhood_-_The_Neighbourhood 3.png" alt="Greedy" class="song-cover"> Greedy
+                </td>
+                <td>Nov 30, 2023</td>
+                <td>Greedy</td>
+                <td class="song-time">3:10</td>
+                <td>3:26 <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong()">▶</span></td>
+            </tr>
+            <tr>
+                <td>
+                    <!-- Фото для кожного треку -->
+                    <img src="img/The_Neighbourhood_-_The_Neighbourhood 4.png" alt="Lovin On Me" class="song-cover"> Lovin On Me
+                </td>
+                <td>Dec 15, 2023</td>
+                <td>Lovin On Me</td>
+                <td class="song-time">2:48</td>
+                <td>3:26 <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong()">▶</span></td>
+            </tr>
+            <tr>
+                <td>
+                    <!-- Фото для кожного треку -->
+                    <img src="img/The_Neighbourhood_-_The_Neighbourhood 7 (8).png" alt="Pain the Town Red" class="song-cover"> Pain the Town Red
+                </td>
+                <td>Dec 29, 2023</td>
+                <td>Pain The Town Red</td>
+                <td class="song-time">3:02</td>
+                <td>3:26 <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong()">▶</span></td>
+            </tr>
+          
+            <tr>
+                <td>
+                    <!-- Фото для кожного треку -->
+                    <img src="img/The_Neighbourhood_-_The_Neighbourhood 6.png" alt="Forcecore" class="song-cover"> Forcecore
+                </td>
+                <td>Nov 3, 2023</td>
+                <td>Hard to Imagine</td>
+                <td class="song-time">3:26</td>
+                <td>3:26 <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong()">▶</span></td>
+            </tr>
+            <tr>
+                <td>
+                    <!-- Фото для кожного треку -->
+                    <img src="img/The_Neighbourhood_-_The_Neighbourhood 7 (9).png" alt="Skyfall Beats" class="song-cover"> Skyfall Beats
+                </td>
+                <td>Oct 26, 2023</td>
+                <td>Nightmares</td>
+                <td class="song-time">3:20</td>
+                <td>3:26 <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong()">▶</span></td>
+            </tr>
+            <tr>
+                <td>
+                    <!-- Фото для кожного треку -->
+                    <img src="img/The_Neighbourhood_-_The_Neighbourhood 7 (10).png" alt="Greedy" class="song-cover"> Greedy
+                </td>
+                <td>Nov 30, 2023</td>
+                <td>Greedy</td>
+                <td class="song-time">3:10</td>
+                <td>3:26 <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong()">▶</span></td>
+            </tr>
+
+            <tr>
+                <td>
+                    <!-- Фото для кожного треку -->
+                    <img src="img/The_Neighbourhood_-_The_Neighbourhood 7 (11).png" alt="Skyfall Beats" class="song-cover"> Skyfall Beats
+                </td>
+                <td>Oct 26, 2023</td>
+                <td>Nightmares</td>
+                <td class="song-time">3:20</td>
+                <td>3:26 <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong()">▶</span></td>
+            </tr>
+            <tr>
+                <td>
+                    <!-- Фото для кожного треку -->
+                    <img src="img/The_Neighbourhood_-_The_Neighbourhood 2.png" alt="Skyfall Beats" class="song-cover"> Skyfall Beats
+                </td>
+                <td>Oct 26, 2023</td>
+                <td>Nightmares</td>
+                <td class="song-time">3:20</td>
+                <td>3:26 <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong()">▶</span></td>
+            </tr>
+            <tr>
+                <td>
+                    <!-- Фото для кожного треку -->
+                    <img src="img/The_Neighbourhood_-_The_Neighbourhood 3.png" alt="Greedy" class="song-cover"> Greedy
+                </td>
+                <td>Nov 30, 2023</td>
+                <td>Greedy</td>
+                <td class="song-time">3:10</td>
+                <td>3:26 <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong()">▶</span></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+
+
+
+
+<!-- Footer -->
+<footer>
+    <div class="footer-column">
+        <h3>Melodies</h3>
+        <a href="#">Songs</a>
+        <a href="#">Radio</a>
+        <a href="#">Podcast</a>
+    </div>
+    <div class="footer-column">
+        <h3>Access</h3>
+        <a href="#">Explore</a>
+        <a href="#">Artists</a>
+        <a href="#">Playlists</a>
+        <a href="#">Albums</a>
+        <a href="#">Trending</a>
+    </div>
+    <div class="footer-column">
+        <h3>Contact</h3>
+        <a href="#">About</a>
+        <a href="#">Policy</a>
+        <a href="#">Social Media</a>
+        <a href="#">Support</a>
+    </div>
+</footer>
+
+
+<script>
+  function toggleSidebar() {
+      const sidebar = document.querySelector('.sidebar');
+      sidebar.classList.toggle('open');
+  }
+
+  // Close sidebar when clicked outside
+  window.addEventListener('click', function (e) {
+      const sidebar = document.querySelector('.sidebar');
+      const toggleBtn = document.querySelector('.sidebar-toggle-btn');
+      if (!sidebar.contains(e.target) && !toggleBtn.contains(e.target)) {
+          sidebar.classList.remove('open');
+      }
+  });
+
+  // Close the sidebar when close button is clicked
+  function closeSidebar() {
+      document.querySelector('.sidebar').classList.remove('open');
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trending Songs</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .playlist-container {
+            max-width: 900px;
+            margin: auto;
+            background: #181818;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        h1 {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        h1 span {
+            color: #e600ff;
+        }
+
+        .tracklist {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .tracklist th, .tracklist td {
+            padding: 12px;
+            text-align: left;
+        }
+
+        .tracklist th {
+            color: #b3b3b3;
+            font-size: 14px;
+        }
+
+        .tracklist tbody tr {
+            transition: 0.3s;
+            border-radius: 10px;
+        }
+
+        .tracklist tbody tr:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .tracklist td img {
+            width: 40px;
+            height: 40px;
+            border-radius: 5px;
+            object-fit: cover;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+
+        .song-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .heart-icon {
+            color: #e600ff;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .view-all {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #222;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 20px;
+            transition: 0.3s;
+        }
+
+        .view-all:hover {
+            background: #333;
+        }
+        .heart-icon {
+            color: #e600ff;
+        }
+
+        .play-icon {
+            color: #1DB954;
+        }
+
+        @media (max-width: 600px) {
+            .tracklist th, .tracklist td {
+                font-size: 12px;
+                padding: 8px;
+            }
+
+            .song-title {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .tracklist td img {
+                width: 35px;
+                height: 35px;
+            }
+        }
+        .heart-icon, .play-icon {
+            cursor: pointer;
+            font-size: 18px;
+            margin-left: 10px;
+        }
+
+        .heart-icon {
+            color: #e600ff;
+        }
+
+        .play-icon {
+            color: #1DB954;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="playlist-container">
+        <h1>Trending <span>Songs</span></h1>
+
+        <table class="tracklist">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Title</th>
+                    <th>Release Date</th>
+                    <th>Album</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>#1</td>
+                    <td class="song-title">
+                        <img src="img/The_Neighbourhood_-_The_Neighbourhood 1.png" alt="Sorfcore">
+                        <div>
+                            <strong>Sorfcore</strong><br>
+                            <small>The Neighbourhood</small>
+                        </div>
+                    </td>
+                    <td>Nov 4, 2023</td>
+                    <td>Hard to Imagine</td>
+                    <td>3:26 <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong()">▶</span></td>
+                </tr>
+                <tr>
+                    <td>#2</td>
+                    <td class="song-title">
+                        <img src="img/The_Neighbourhood_-_The_Neighbourhood 2.png" alt="Skyfall Beats">
+                        <div>
+                            <strong>Skyfall Beats</strong><br>
+                            <small>Nightmares</small>
+                        </div>
+                    </td>
+                    <td>Oct 26, 2023</td>
+                    <td>Nightmares</td>
+                    <td>3:26 <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong()">▶</span></td>
+                </tr>
+                <tr>
+                    <td>#3</td>
+                    <td class="song-title">
+                        <img src="img/The_Neighbourhood_-_The_Neighbourhood 3.png" alt="Greedy">
+                        <div>
+                            <strong>Greedy</strong><br>
+                            <small>Tate McRae</small>
+                        </div>
+                    </td>
+                    <td>Dec 30, 2023</td>
+                    <td>Greedy</td>
+                    <td>3:26 <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong()">▶</span></td>
+                </tr>
+                <tr>
+                    <td>#4</td>
+                    <td class="song-title">
+                        <img src="img/The_Neighbourhood_-_The_Neighbourhood 4.png" alt="Lovin On Me">
+                        <div>
+                            <strong>Lovin On Me</strong><br>
+                            <small>Jack Harlow</small>
+                        </div>
+                    </td>
+                    <td>Dec 30, 2023</td>
+                    <td>Lovin On Me</td>
+                    <td>3:26 <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong()">▶</span></td>
+                </tr>
+                <tr>
+                    <td>#5</td>
+                    <td class="song-title">
+                        <img src="img/The_Neighbourhood_-_The_Neighbourhood 5.png" alt="Paint The Town Red">
+                        <div>
+                            <strong>Paint The Town Red</strong><br>
+                            <small>Doja Cat</small>
+                        </div>
+                    </td>
+                    <td>Dec 29, 2023</td>
+                    <td>Paint The Town Red</td>
+                    <td>3:26 <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong()">▶</span></td>
+                </tr>
+                <tr>
+                    <td>#6</td>
+                    <td class="song-title">
+                        <img src="img/The_Neighbourhood_-_The_Neighbourhood 6.png" alt="Dancin On Night">
+                        <div>
+                            <strong>Dancin On Night</strong><br>
+                            <small>Dua Lipa</small>
+                        </div>
+                    </td>
+                    <td>May 27, 2023</td>
+                    <td>Dance The Night</td>
+                    <td>3:26 <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong()">▶</span></td>
+                </tr>
+                <tr>
+                    <td>#7</td>
+                    <td class="song-title">
+                        <img src="img/The_Neighbourhood_-_The_Neighbourhood 7.png" alt="Water">
+                        <div>
+                            <strong>Water</strong><br>
+                            <small>Tyla</small>
+                        </div>
+                    </td>
+                    <td>Dec 10, 2023</td>
+                    <td>Water</td>
+                    <td>3:26 <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong()">▶</span></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="view-all">+ View All</div>
+    </div>
+
+</body>
+</html>

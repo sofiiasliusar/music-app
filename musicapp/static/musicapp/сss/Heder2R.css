@@ -1,0 +1,138 @@
+
+body {
+    background-color: #121212;
+    color: white;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+/* Основні стилі для header */
+header {
+    background-color: #181818;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between; /* Забезпечує відстань між логотипом і кнопками */
+    align-items: center;
+    border-bottom: 2px solid #f26f90;
+}
+
+/* Центрування лише навігаційних посилань */
+header .nav {
+    display: flex;
+    gap: 30px;
+    justify-content: center; /* Центрує кнопки */
+    flex-grow: 1; /* Займає весь доступний простір між логотипом і кнопками */
+    margin-left: 450px; /* Зсувимо кнопки вправо */
+}
+
+/* Стилі для навігаційних посилань */
+header .nav a {
+    color: #f0f0f0;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 5px 10px;
+    transition: background-color 0.3s;
+}
+
+header .nav a:hover {
+    background-color: #f26f90;
+    border-radius: 54px;
+}
+
+/* Стилі для Login/Sign Up, вони залишаються в правій частині */
+header .login-signup {
+    display: flex;
+    gap: 20px;
+}
+
+/* Додавання стилів для поля вводу */
+header .login-signup .search-input {
+    padding: 5px 5px;
+    font-size: 14px;
+    border-radius: 5px;
+    border: 1px solid #444;
+    background-color: #222;
+    color: #fff;
+    margin-right: 15px;  /* Відступ між полем вводу та кнопками Login/Sign Up */
+}
+
+/* Dropdown */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Кнопка для dropdown */
+.dropbtn {
+    background-color: #181818;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+/* Картинка на кнопці */
+.dropdown-img {
+    width: 30px;  /* Розмір картинки */
+    height: auto;
+    margin-right: 10px; /* Відступ між картинкою і текстом */
+}
+
+/* Список для dropdown */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #181818;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+/* Стили для елементів у списку */
+.dropdown-content a {
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    font-size: 14px;
+}
+
+/* При наведенні */
+.dropdown-content a:hover {
+    background-color: #575757;
+}
+
+/* Відкриття списку при натисканні */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+/* Адаптація для мобільних пристроїв */
+@media (max-width: 768px) {
+    header .nav {
+        display: none; /* Hide navigation links */
+    }
+
+    header .login-signup {
+        margin-left: auto; /* Move the login/signup buttons to the right */
+    }
+}
+
+/* Адаптація для екранів до 480px */
+@media (max-width: 480px) {
+    header .nav {
+        display: none;
+    }
+
+    header .login-signup {
+        margin-left: 0;
+    }
+
+    .dropdown-img {
+        width: 25px; /* Зменшуємо розмір картинки */
+    }
+}

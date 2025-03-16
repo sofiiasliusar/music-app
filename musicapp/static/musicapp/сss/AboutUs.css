@@ -1,0 +1,23 @@
+.about-us-container {
+    margin-left: 300px; /* Відступ для Sidebar */
+    max-width: 74%; /* Максимальна ширина */
+    margin-top: 20px; /* Відступ від хедеру */
+    margin-bottom: 70px; /* Відступ від футера */
+    background: linear-gradient(90deg, rgba(94, 39, 126, 1) 0%, rgba(134, 63, 123, 1) 100%); /* Градієнтний фон */
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+}
+
+.about-us-container h1 {
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #f26f90; /* Колір заголовку */
+}
+
+.about-us-container p {
+    font-size: 16px;
+    line-height: 1.5;
+    color: #ccc;
+}

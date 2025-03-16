@@ -1,0 +1,194 @@
+.playlist-container {
+    margin-left: 300px; /* Відступ для Sidebar */
+    margin-right: 300px;
+    padding: 20px;
+    background-color: #181818;
+    border-radius: 15px; /* Додаємо округлені кути */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.8); /* Додаємо тінь */
+    width: 72%; /* Використовуємо 100% ширини контейнера */
+    max-width: 1560px; /* Обмежуємо максимальну ширину */
+    margin-top: 0px;
+}
+
+.playlist-container h1 {
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.playlist-container h1 span {
+    color: #f26f90;
+}
+
+h1 {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+h1 span {
+    color: #e600ff;
+}
+
+.tracklist {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.tracklist th, .tracklist td {
+    padding: 12px;
+    text-align: left;
+}
+
+.tracklist th {
+    color: #b3b3b3;
+    font-size: 14px;
+}
+
+.tracklist tbody tr {
+    transition: 0.3s;
+    border-radius: 10px;
+}
+
+.tracklist tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.tracklist td img {
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
+    object-fit: cover;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+.song-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.heart-icon {
+    color: #e600ff;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.view-all {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #222;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 20px;
+    transition: 0.3s;
+}
+
+.view-all:hover {
+    background: #333;
+}
+.heart-icon {
+    color: #e600ff;
+}
+
+.play-icon {
+    color: #1DB954;
+}
+
+/* Ефект при наведенні на кнопку "View All" */
+.view-all:hover {
+    color: #fcecf0; /* Колір тексту при наведенні */
+    background-color: #1d1d1d; /* Зміна фону при наведенні */
+    border-color: #faf8f9; /* Зміна кольору бордера при наведенні */
+}
+
+
+.tracklist td .heart-icon {
+    color: #e600ff; /* Фіолетовий колір для сердечка */
+}
+
+.tracklist td .play-icon {
+    color: #1DB954; /* Зелений колір для плай іконки */
+}
+
+/* Ефект при наведенні на сердечко та плай */
+.tracklist td .heart-icon:hover {
+    color: #ff00cc; /* Яскравіший фіолетовий при наведенні */
+}
+
+.tracklist td .play-icon:hover {
+    color: #1ed760; /* Яскравіший зелений при наведенні */
+}
+
+
+.view-all {
+    text-align: center;
+    color: #ffffff;
+    font-size: 16px;
+    margin-top: 20px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+/* Ефект при наведенні на кнопку "View All" */
+.view-all:hover {
+    color: #fffbfc; /* Колір при наведенні */
+}
+
+/* Мобільна адаптація */
+@media (max-width: 768px) {
+    .playlist-container {
+        margin-left: 40px; /* Прибираємо відступ для мобільних */
+        text-align: center;
+        padding: 10px; /* Зменшуємо відступи на мобільних */
+    }
+
+    .tracklist td img {
+        width: 30px; /* Ще більше зменшуємо зображення на мобільних */
+    }
+
+    .tracklist td .song-title {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+/* Адаптація для екранів до 480px */
+@media (max-width: 480px) {
+    .playlist-container {
+        margin-left: 40px; /* Прибираємо великі відступи для маленьких екранів */
+        margin-right: 10px;
+        padding: 5px; /* Зменшуємо відступи */
+    }
+
+    .playlist-container h1 {
+        font-size: 22px; /* Зменшуємо розмір шрифта для заголовку */
+        text-align: center; /* Центруємо заголовок */
+    }
+
+    .tracklist td {
+        font-size: 12px; /* Зменшуємо шрифт в таблиці */
+    }
+
+    .tracklist td img {
+        width: 25px; /* Зменшуємо зображення треків */
+        height: 25px; /* Зменшуємо висоту зображень */
+    }
+
+    .song-title {
+        flex-direction: column; /* Зменшуємо простір між елементами */
+        align-items: center;
+    }
+
+    .view-all {
+        font-size: 12px; /* Зменшуємо шрифт кнопки */
+        padding: 8px 16px; /* Зменшуємо відступи кнопки */
+    }
+}

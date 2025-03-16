@@ -1,0 +1,184 @@
+/* Загальні стилі для контейнера налаштувань */
+.settings-container {
+    margin-left: 300px; /* Відступ для Sidebar */
+    max-width: 74%; /* Максимальна ширина */
+    margin-top: 20px; /* Відступ від хедеру */
+    margin-bottom: 70px; /* Відступ від футера */
+    background-color: #181818;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+/* Стилі для заголовку */
+.settings-container h1 {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Стилі для кожного налаштування */
+.setting {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between; /* Вирівнюємо текст зліва та елементи праворуч */
+    align-items: center;
+}
+
+/* Стилі для тексту */
+.setting h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    flex: 1; /* Дозволяє тексту займати більше місця */
+}
+
+.setting p {
+    font-size: 16px;
+    margin-bottom: 5px;
+    flex: 2; /* Текст буде займати більше місця для кращого вирівнювання */
+}
+
+/* Стилі для перемикачів */
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: 0.4s;
+    border-radius: 50px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    border-radius: 50px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: 0.4s;
+}
+
+/* Коли перемикач включено */
+input:checked + .slider {
+    background-color: #4CAF50;
+}
+
+input:checked + .slider:before {
+    transform: translateX(26px);
+}
+
+/* Стилі для dropdown */
+.select-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 200px; /* Встановлюємо ширину контейнера для dropdown */
+}
+
+select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    background-color: #222;
+    border: 1px solid #444;
+    border-radius: 5px;
+    color: white;
+}
+
+/* Мобільна адаптація */
+@media (max-width: 768px) {
+    .settings-container {
+        margin-left: 40px; /* Менше відступу на мобільних */
+        padding: 15px;
+    }
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0px;
+        left: 0px;
+        right: -60px;
+        bottom: 0;
+        background-color: #ccc;
+        transition: 0.4s;
+        border-radius: 50px;
+    }
+
+    .settings-container h1 {
+        font-size: 24px;
+    }
+
+    .setting h2 {
+        font-size: 18px;
+    }
+
+    .setting p {
+        font-size: 14px;
+    }
+
+    .setting {
+        flex-direction: column; /* Вертикальне розміщення на мобільних */
+        align-items: flex-start;
+    }
+
+    .select-container,
+    .switch {
+        width: 100%; /* Ширина на мобільних */
+    }
+}
+
+@media (max-width: 480px) {
+    .settings-container {
+        margin-left: 20px;
+    }
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0px;
+        left: 0px;
+        right: -60px;
+        bottom: 0;
+        background-color: #ccc;
+        transition: 0.4s;
+        border-radius: 50px;
+    }
+
+    .settings-container h1 {
+        font-size: 20px;
+    }
+
+    .setting h2 {
+        font-size: 16px;
+    }
+
+    .setting p {
+        font-size: 12px;
+    }
+
+    .setting {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .select-container,
+    .switch {
+        width: 100%;
+    }
+}

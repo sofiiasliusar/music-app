@@ -1,0 +1,149 @@
+.music-player-container { 
+    margin-left: 300px; /* Відступ для Sidebar */
+    max-width: 74%; /* Максимальна ширина */
+    margin-top: 20px; /* Відступ від хедеру */
+    margin-bottom: 70px; /* Відступ від футера */
+    background-color: #191717;
+    border-radius: 15px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.8); /* Тінь */
+}
+
+/* Стилі для обкладинки альбому */
+.album-cover img {
+    width: 240px;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+/* Інформація про трек */
+.music-info {
+    text-align: center;
+    color: #fff;
+}
+
+.music-info h3 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.music-info p {
+    font-size: 18px;
+    color: #ccc;
+}
+
+/* Кнопки управління */
+.controls {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.controls button {
+    background-color: #222;
+    color: #fff;
+    border: none;
+    padding: 15px;
+    border-radius: 50%;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.controls button:hover {
+    background-color: #f26f90;
+}
+
+/* Прогрес-бар */
+.progress-bar {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.progress-bar input {
+    width: 90%;
+    cursor: pointer;
+}
+
+.progress-bar span {
+    color: #fff;
+    font-size: 14px;
+}
+
+/* Адаптація для мобільних екранів (до 768px) */
+@media (max-width: 768px) {
+    .music-player-container {
+        margin-left: 20px; /* Зменшуємо відступ для мобільних */
+        margin-right: 20px; /* Зменшуємо відступ для мобільних */
+        max-width: 90%; /* Збільшуємо ширину на мобільних */
+    }
+
+    .album-cover img {
+        width: 180px; /* Зменшуємо розмір картинки */
+        height: 180px; /* Зменшуємо розмір картинки */
+    }
+
+    .music-info h3 {
+        font-size: 20px; /* Зменшуємо шрифт заголовку */
+    }
+
+    .music-info p {
+        font-size: 16px; /* Зменшуємо шрифт для опису */
+    }
+
+    .controls button {
+        padding: 12px; /* Зменшуємо розмір кнопок */
+        font-size: 16px; /* Зменшуємо шрифт кнопок */
+    }
+
+    .progress-bar input {
+        width: 80%; /* Зменшуємо ширину прогрес-бару */
+    }
+
+    .progress-bar span {
+        font-size: 12px; /* Зменшуємо шрифт прогресу */
+    }
+}
+
+/* Адаптація для дуже маленьких екранів (до 480px) */
+@media (max-width: 480px) {
+    .music-player-container {
+        margin-left: 10px; /* Ще зменшуємо відступ */
+        margin-right: 80px; /* Ще зменшуємо відступ */
+    }
+
+    .album-cover img {
+        width: 150px; /* Зменшуємо обкладинку */
+        height: 150px; /* Зменшуємо обкладинку */
+    }
+
+    .music-info h3 {
+        font-size: 18px; /* Ще зменшуємо шрифт заголовку */
+    }
+
+    .music-info p {
+        font-size: 14px; /* Ще зменшуємо шрифт опису */
+    }
+
+    .controls button {
+        padding: 10px; /* Зменшуємо розмір кнопок */
+        font-size: 14px; /* Зменшуємо шрифт кнопок */
+    }
+
+    .progress-bar input {
+        width: 70%; /* Зменшуємо прогрес-бар */
+    }
+
+    .progress-bar span {
+        font-size: 12px; /* Зменшуємо шрифт для прогрес-бару */
+    }
+}

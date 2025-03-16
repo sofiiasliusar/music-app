@@ -1,0 +1,95 @@
+/*new-release-container*//*new-release-container*//*new-release-container*/
+/*new-release-container*//*new-release-container*//*new-release-container*/
+/*new-release-container*//*new-release-container*//*new-release-container*/
+.new-release-container {
+    margin-left: 300px; /* Відступ для Sidebar */
+    padding: 10px;
+    background-color: #181818;
+    border-radius: 15px; /* Додаємо округлені кути */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.8); /* Додаємо тінь */
+    width: auto; /* Ширина адаптивна */
+    max-width: 74%; /* Максимальна ширина */
+    margin-top: 20px; /* Відступ від хедеру */
+    margin-bottom: 50px;
+   }
+
+.new-release-container h2 {
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.new-release-container h2 span {
+    color: #f26f90;
+}
+
+.song-block {
+    display: inline-block;
+    width: 150px; /* Ширина картки пісні */
+    background-color: #212020;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    margin-right: 10px;
+    margin-bottom: 15px; /* Відступ між піснями */
+    transition: transform 0.3s ease;
+}
+
+.song-block:hover {
+    transform: scale(1.05); /* Збільшення пісні при наведенні */
+}
+
+.song-block img {
+    width: 100%;
+    max-width: 200px; /* Обмеження максимального розміру зображення */
+    height: auto;
+    border-radius: 10px;
+}
+
+.song-title {
+    color: white;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.song-title small {
+    color: #aaa;
+    font-size: 12px;
+}
+
+/* Вирівнювання карток пісень в одну лінію */
+.new-release-container .song-blocks-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+/* Мобільна адаптація */
+@media (max-width: 768px) {
+    .new-release-container {
+        margin-left: 40px; /* Прибираємо відступ для мобільних */
+        text-align: center;
+        padding: 1px; /* Зменшуємо відступи на мобільних */
+    }
+
+    .song-block {
+        width: 40%; /* Картки пісень займають 45% ширини, щоб мати два ряди */
+        margin-bottom: 15px;
+    }
+
+    .new-release-container .song-blocks-wrapper {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
+
+@media (max-width: 480px) {
+    .new-release-container h2 {
+        font-size: 20px; /* Зменшуємо розмір шрифта для заголовку */
+    }
+
+    .song-block {
+        width: 70%; /* Картки пісень займають всю ширину */
+    }
+}

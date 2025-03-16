@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trending Songs</title>
+
+    <link rel="stylesheet" href="/musicapp/сss/Heder2R.css">
+    <link rel="stylesheet" href="/musicapp/сss/Footer.css">
+    <link rel="stylesheet" href="/musicapp/сss/Sidebar.css">
+    <link rel="stylesheet" href="/musicapp/сss/Settings.css">
+
+
+    <style>
+        
+        
+    </style>
+    
+
+</head>
+<body>
+    <!-- Header -->
+<header>
+    <div class="nav">
+        <a href="#">Home</a>
+        <a href="#">About Us</a>
+        <a href="#">Premium</a>
+    </div>
+    <div class="login-signup">
+        <input type="text" placeholder="Search..." class="search-input"> <!-- Нове поле вводу -->
+        <!-- Dropdown кнопка -->
+        <div class="dropdown">
+            <button class="dropbtn">
+                <img src="img/Melonix.png" alt="Dropdown" class="dropdown-img"> <!-- Ваше зображення -->
+            </button>
+            <div class="dropdown-content">
+                <a href="/Office.html">Profile</a> <!-- Перехід до особистого кабінету -->
+            </div>
+        </div>
+    </div>
+</header>
+
+    
+      
+<!-- Sidebar Toggle Button -->
+<button class="sidebar-toggle-btn" onclick="toggleSidebar()">
+    <img src="img/Melonix.png" alt="Logo" class="sidebar-logo-icon">
+</button>
+
+
+<!-- Sidebar -->
+<div class="sidebar">
+    <img src="img/Melonix.png" alt="Logo" class="sidebar-logo">
+    <a href="#" class="sidebar-item">
+        <img src="img/Home.png" alt="Home" class="sidebar-icon"> Home
+    </a>
+    <a href="#" class="sidebar-item">
+        <img src="img/Singers.png" alt="Artists" class="sidebar-icon"> Singers
+    </a>
+    <a href="#" class="sidebar-item">
+        <img src="img/Albums.png" alt="Albums" class="sidebar-icon"> Albums
+    </a>
+    <a href="#" class="sidebar-item">
+        <img src="img/Playlist.png" alt="Your Playlist" class="sidebar-icon"> Playlist
+    </a>
+    <a href="#" class="sidebar-item">
+        <img src="img/Premium1.png" alt="Library" class="sidebar-icon"> Premium
+    </a>
+    <a href="#" class="sidebar-item">
+        <img src="img/Settings.png" alt="Settings" class="sidebar-icon"> Settings
+    </a>
+    <a href="#" class="sidebar-item">
+        <img src="img/Logout.png" alt="Logout" class="sidebar-icon"> Logout
+    </a>
+</div>
+
+
+
+
+
+
+<div class="settings-container">
+    <h1>Налаштування</h1>
+
+    <div class="setting">
+        <div class="setting-title">
+            <h2>Акаунт</h2>
+            <p>Змінити способи входу</p>
+        </div>
+        <div class="setting-actions">
+
+
+        </div>
+    </div>
+
+    <div class="setting">
+        <div class="setting-title">
+            <h2>Мова</h2>
+            <p>Виберіть мову. Щоб зміни почали діяти, перезавантажте додаток.</p>
+        </div>
+        <div class="setting-actions">
+            <select>
+                <option>Українська (Ukrainian)</option>
+                <option>English</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="setting">
+        <div class="setting-title">
+            <h2>Моя бібліотека</h2>
+            <p>Використовувати компактний режим</p>
+        </div>
+        <div class="setting-actions">
+            <label class="switch">
+                <input type="checkbox">
+                <span class="slider round"></span>
+            </label>
+        </div>
+    </div>
+
+    <div class="setting">
+        <div class="setting-title">
+            <h2>Відображення</h2>
+            <p>Показувати панель "Відтворюється" після натискання кнопки "Відтворити"</p>
+
+        </div>
+        <div class="setting-actions">
+            <label class="switch">
+                <input type="checkbox">
+                <span class="slider round"></span>
+            </label>
+
+        </div>
+    </div>
+
+    <div class="setting">
+        <div class="setting-title">
+            <h2>Спільнота</h2>
+            <p>Показувати списки моїх підписників і підписок у моєму публічному профілі</p>
+        </div>
+        <div class="setting-actions">
+            <label class="switch">
+                <input type="checkbox">
+                <span class="slider round"></span>
+            </label>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Footer -->
+<footer>
+    <div class="footer-column">
+        <h3>Melodies</h3>
+        <a href="#">Songs</a>
+        <a href="#">Radio</a>
+        <a href="#">Podcast</a>
+    </div>
+    <div class="footer-column">
+        <h3>Access</h3>
+        <a href="#">Explore</a>
+        <a href="#">Artists</a>
+        <a href="#">Playlists</a>
+        <a href="#">Albums</a>
+        <a href="#">Trending</a>
+    </div>
+    <div class="footer-column">
+        <h3>Contact</h3>
+        <a href="#">About</a>
+        <a href="#">Policy</a>
+        <a href="#">Social Media</a>
+        <a href="#">Support</a>
+    </div>
+</footer>
+
+
+<script>
+  function toggleSidebar() {
+      const sidebar = document.querySelector('.sidebar');
+      sidebar.classList.toggle('open');
+  }
+
+  // Close sidebar when clicked outside
+  window.addEventListener('click', function (e) {
+      const sidebar = document.querySelector('.sidebar');
+      const toggleBtn = document.querySelector('.sidebar-toggle-btn');
+      if (!sidebar.contains(e.target) && !toggleBtn.contains(e.target)) {
+          sidebar.classList.remove('open');
+      }
+  });
+
+  // Close the sidebar when close button is clicked
+  function closeSidebar() {
+      document.querySelector('.sidebar').classList.remove('open');
+  }
+</script>
+</body>
+</html>

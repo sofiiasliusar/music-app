@@ -1,0 +1,207 @@
+.premium-container {
+    background: linear-gradient(90deg, #9c2f74, #3a4f9f); /* Градієнт, як на картинці */
+    color: white;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    margin-left: 300px; /* Відступ для Sidebar */
+    max-width: 74%; /* Максимальна ширина */
+    margin-top: 20px; /* Відступ від хедеру */
+    margin-bottom: 70px; /* Відступ від футера */
+}
+
+.premium-container h1 {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.premium-container p {
+    font-size: 1rem;
+    margin-bottom: 30px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.start-btn, .view-all-subscriptions-btn {
+    padding: 15px 25px;
+    font-size: 16px;
+    border-radius: 5px;
+    background-color: #f26f90;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.start-btn:hover, .view-all-subscriptions-btn:hover {
+    background-color: #c1005b;
+}
+
+.footer-info {
+    font-size: 12px;
+}
+
+.footer-info a {
+    color: #f26f90;
+    text-decoration: none;
+}
+
+.footer-info a:hover {
+    text-decoration: underline;
+}
+
+/* Мобільна адаптація */
+@media (max-width: 768px) {
+    .premium-container {
+        margin-left: 20px; /* Зменшення відступу для мобільних */
+        padding: 20px; /* Зменшення відступів на мобільних */
+    }
+
+    .premium-container h1 {
+        font-size: 1.5rem; /* Зменшення шрифта для заголовку */
+    }
+
+    .premium-container p {
+        font-size: 0.9rem; /* Зменшення шрифта для тексту */
+    }
+
+    .buttons {
+        flex-direction: column; /* Розміщуємо кнопки одну під одною */
+        gap: 10px;
+    }
+
+    .start-btn, .view-all-subscriptions-btn {
+        padding: 12px 20px; /* Зменшення розміру кнопок */
+    }
+}
+
+@media (max-width: 480px) {
+    .premium-container h1 {
+        font-size: 1.2rem; /* Ще зменшуємо розмір заголовку */
+    }
+
+    .premium-container p {
+        font-size: 0.8rem; /* Ще зменшуємо шрифт для тексту */
+    }
+
+    .start-btn, .view-all-subscriptions-btn {
+        padding: 10px 15px; /* Ще менші кнопки */
+    }
+}
+
+
+/* ІНШІ 3 ПОЗИЦІЇ PREMIUM *//* ІНШІ 3 ПОЗИЦІЇ PREMIUM *//* ІНШІ 3 ПОЗИЦІЇ PREMIUM */
+/* ІНШІ 3 ПОЗИЦІЇ PREMIUM *//* ІНШІ 3 ПОЗИЦІЇ PREMIUM *//* ІНШІ 3 ПОЗИЦІЇ PREMIUM */
+/* ІНШІ 3 ПОЗИЦІЇ PREMIUM *//* ІНШІ 3 ПОЗИЦІЇ PREMIUM *//* ІНШІ 3 ПОЗИЦІЇ PREMIUM */
+
+.premium-cards-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px; /* Додаємо відступ між картками */
+    margin-left: 300px; /* Відступ для Sidebar */
+    max-width: 74%; /* Максимальна ширина */
+    margin-top: 20px; /* Відступ від хедеру */
+    margin-bottom: 70px; /* Відступ від футера */
+}
+
+.premium-card {
+    background-color: #191717;
+    color: white;
+    width: 30%; /* Картки займають по 30% ширини */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.8); /* Тінь */
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.premium-card h2 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #f26f90;
+    margin-bottom: 20px;
+}
+
+.premium-card p {
+    font-size: 16px;
+    color: #ccc;
+}
+
+.premium-card ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 10px 0;
+}
+
+.premium-card ul li {
+    font-size: 14px;
+    margin: 5px 0;
+}
+
+.premium-card button {
+    background-color: #D5006D;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-bottom: 15px;
+}
+
+.premium-card button:hover {
+    background-color: #C1005B;
+}
+
+.premium-card p:last-of-type {
+    font-size: 12px;
+    color: #aaa;
+}
+
+/* Адаптація для мобільних */
+@media (max-width: 768px) {
+    .premium-cards-container {
+        flex-direction: column; /* Розміщення карток одна під одною */
+        gap: 20px;
+        margin-left: 0; /* Прибираємо відступ для Sidebar */
+        max-width: 100%; /* Забезпечуємо, щоб картки займали всю ширину на мобільних */
+    }
+
+    .premium-card {
+        width: 74%; /* Картки займають всю ширину */
+        margin-left: 20px; /* Прибираємо зсув для мобільних пристроїв */
+    }
+}
+
+@media (max-width: 480px) {
+    .premium-cards-container {
+        padding: 0 10px; /* Зменшуємо відступи для мобільних */
+    }
+
+    .premium-card {
+        padding: 15px; /* Зменшуємо відступи всередині картки */
+        margin-bottom: 20px; /* Відступ між картками */
+    }
+
+    .premium-card h2 {
+        font-size: 18px; /* Зменшуємо розмір заголовку для малих екранів */
+    }
+
+    .premium-card p {
+        font-size: 12px; /* Зменшуємо розмір тексту для малих екранів */
+    }
+
+    .premium-card button {
+        padding: 8px 12px; /* Зменшуємо розмір кнопок */
+        font-size: 12px; /* Зменшуємо розмір шрифту на кнопках */
+    }
+}

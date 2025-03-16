@@ -1,0 +1,325 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trending Songs</title>
+
+    <link rel="stylesheet" href="{% static '/musicapp/сss/Heder.css' %}">
+    <link rel="stylesheet" href="{% static '/musicapp/сss/Footer.css' %}">
+    <link rel="stylesheet" href="{% static '/musicapp/сss/Sidebar.css' %}">
+    <link rel="stylesheet" href="{% static '/musicapp/сss/New-Release-Songs.css' %}">
+    <link rel="stylesheet" href="{% static '/musicapp/сss/Trending-Songs.css' %}">
+    <link rel="stylesheet" href="{% static '/musicapp/сss/Artists.css' %}">
+    <link rel="stylesheet" href="{% static '/musicapp/сss/Join-Our-Platform.css' %}">
+    <link rel="stylesheet" href="{% static '/musicapp/сss/ArtistsSidebar.css' %}">
+
+    <style>
+        
+
+    </style>
+    
+
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        
+        <div class="nav">
+            <a href="#">Home</a>
+            <a href="#">About Us</a>
+            <a href="#">Premium</a>
+        </div>
+        <div class="login-signup">
+            <input type="text" placeholder="Search..." class="search-input"> <!-- Нове поле вводу -->
+            <a href="#">Login</a>
+            <a href="#">Sign Up</a>
+        </div>
+    </header>
+    
+      
+<!-- Sidebar Toggle Button -->
+<button class="sidebar-toggle-btn" onclick="toggleSidebar()">
+    <img src="{% static '/musicapp/images/Melonix.png' %}" alt="Logo" class="sidebar-logo-icon">
+</button>
+
+
+<!-- Sidebar -->
+<div class="sidebar">
+    <img src="{% static '/musicapp/images/Melonix.png' %}" alt="Logo" class="sidebar-logo">
+    <a href="#" class="sidebar-item">
+        <img src="{% static '/musicapp/images/Home.png' %}" alt="Home" class="sidebar-icon"> Home
+    </a>
+    <a href="#" class="sidebar-item">
+        <img src="{% static '/musicapp/images/Singers.png' %}" alt="Artists" class="sidebar-icon"> Singers
+    </a>
+    <a href="#" class="sidebar-item">
+        <img src="{% static '/musicapp/images/Albums.png' %}" alt="Albums" class="sidebar-icon"> Albums
+    </a>
+    <a href="#" class="sidebar-item">
+        <img src="{% static '/musicapp/images/Playlist.png' %}" alt="Your Playlist" class="sidebar-icon"> Playlist
+    </a>
+    <a href="#" class="sidebar-item">
+        <img src="{% static '/musicapp/images/Premium1.png' %}" alt="Library" class="sidebar-icon"> Premium
+    </a>
+    <a href="#" class="sidebar-item">
+        <img src="{% static '/musicapp/images/Settings.png' %}" alt="Settings" class="sidebar-icon"> Settings
+    </a>
+    <a href="#" class="sidebar-item">
+        <img src="{% static '/musicapp/images/Logout.png' %}" alt="Logout" class="sidebar-icon"> Logout
+    </a>
+</div>
+
+
+
+
+
+<!-- Нові релізи пісень --> 
+<div class="new-release-container">
+    <h2>New Release <span>Songs</span></h2>
+    <div class="song-block">
+        <img src="{% static '/musicapp/images/The_Neighbourhood.png' %}" alt="Time">
+        <div class="song-title">Time<br><small>Luciano</small></div>
+    </div>
+    <div class="song-block">
+        <img src="{% static '/musicapp/images/The_Neighbourhood_-_The_Neighbourhood 2.png' %}" alt="112">
+        <div class="song-title">112<br><small>jazzek</small></div>
+    </div>
+    <div class="song-block">
+        <img src="{% static '/musicapp/images/The_Neighbourhood_-_The_Neighbourhood 3.png' %}" alt="We Don't Care">
+        <div class="song-title">We Don't Care<br><small>Kyanu & DJ Gullum</small></div>
+    </div>
+    <div class="song-block">
+        <img src="{% static '/musicapp/images/The_Neighbourhood_-_The_Neighbourhood 8.png' %}" alt="Who I Am">
+        <div class="song-title">Who I Am<br><small>Alan Walker & Elias</small></div>
+    </div>
+    <div class="song-block">
+        <img src="{% static '/musicapp/images/The_Neighbourhood_-_The_Neighbourhood 8.png' %}" alt="Baixo">
+        <div class="song-title">Baixo<br><small>XXAnteria</small></div>
+    </div>
+    <div class="song-block">
+        <img src="{% static '/musicapp/images/The_Neighbourhood_-_The_Neighbourhood 7 (10).png' %}" alt="Baixo">
+        <div class="song-title">Baixo<br><small>XXAnteria</small></div>
+    </div>
+</div>
+
+<!-- Trending Songs -->
+<div class="playlist-container">
+    <h1>Trending <span>Songs</span></h1>
+
+    <table class="tracklist">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Title</th>
+                <th>Release Date</th>
+                <th>Album</th>
+                <th>Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>#1</td>
+                <td class="song-title">
+                    <img src="{% static '/musicapp/images/The_Neighbourhood_-_The_Neighbourhood 1.png' %}" alt="Sorfcore">
+                    <div>
+                        <strong>Sorfcore</strong><br>
+                        <small>The Neighbourhood</small>
+                    </div>
+                </td>
+                <td>Nov 4, 2023</td>
+                <td>Hard to Imagine</td>
+                <td>3:26 <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong()">▶</span></td>
+            </tr>
+            <tr>
+                <td>#2</td>
+                <td class="song-title">
+                    <img src="{% static '/musicapp/images/The_Neighbourhood_-_The_Neighbourhood 2.png' %}" alt="Skyfall Beats">
+                    <div>
+                        <strong>Skyfall Beats</strong><br>
+                        <small>Nightmares</small>
+                    </div>
+                </td>
+                <td>Oct 26, 2023</td>
+                <td>Nightmares</td>
+                <td>3:26 <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong()">▶</span></td>
+            </tr>
+            <tr>
+                <td>#3</td>
+                <td class="song-title">
+                    <img src="{% static '/musicapp/images/The_Neighbourhood_-_The_Neighbourhood 3.png' %}" alt="Greedy">
+                    <div>
+                        <strong>Greedy</strong><br>
+                        <small>Tate McRae</small>
+                    </div>
+                </td>
+                <td>Dec 30, 2023</td>
+                <td>Greedy</td>
+                <td>3:26 <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong()">▶</span></td>
+            </tr>
+            <tr>
+                <td>#4</td>
+                <td class="song-title">
+                    <img src="{% static '/musicapp/images/The_Neighbourhood_-_The_Neighbourhood 4.png' %}" alt="Lovin On Me">
+                    <div>
+                        <strong>Lovin On Me</strong><br>
+                        <small>Jack Harlow</small>
+                    </div>
+                </td>
+                <td>Dec 30, 2023</td>
+                <td>Lovin On Me</td>
+                <td>3:26 <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong()">▶</span></td>
+            </tr>
+            <tr>
+                <td>#5</td>
+                <td class="song-title">
+                    <img src="{% static '/musicapp/images/The_Neighbourhood_-_The_Neighbourhood 5.png' %}" alt="Paint The Town Red">
+                    <div>
+                        <strong>Paint The Town Red</strong><br>
+                        <small>Doja Cat</small>
+                    </div>
+                </td>
+                <td>Dec 29, 2023</td>
+                <td>Paint The Town Red</td>
+                <td>3:26 <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong()">▶</span></td>
+            </tr>
+            <tr>
+                <td>#6</td>
+                <td class="song-title">
+                    <img src="{% static '/musicapp/images/The_Neighbourhood_-_The_Neighbourhood 6.png' %}" alt="Dancin On Night">
+                    <div>
+                        <strong>Dancin On Night</strong><br>
+                        <small>Dua Lipa</small>
+                    </div>
+                </td>
+                <td>May 27, 2023</td>
+                <td>Dance The Night</td>
+                <td>3:26 <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong()">▶</span></td>
+            </tr>
+            <tr>
+                <td>#7</td>
+                <td class="song-title">
+                    <img src="{% static '/musicapp/images/The_Neighbourhood_-_The_Neighbourhood 7.png' %}" alt="Water">
+                    <div>
+                        <strong>Water</strong><br>
+                        <small>Tyla</small>
+                    </div>
+                </td>
+                <td>Dec 10, 2023</td>
+                <td>Water</td>
+                <td>3:26 <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong()">▶</span></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="view-all">+ View All</div>
+</div>
+
+
+
+<!-- Popular Artists -->
+<div class="popular-artists-container">
+
+    <div class="artist-block">
+        <img src="{% static '/musicapp/images/Eminiem.png' %}" alt="Eminem">
+    </div>
+    <div class="artist-block">
+        <img src="{% static '/musicapp/images/The Weekend_1.png' %}" alt="The Weekend">
+    </div>
+    <div class="artist-block">
+        <img src="{% static '/musicapp/images/Adele_1.png' %}" alt="Adele">
+    </div>
+    <div class="artist-block">
+        <img src="{% static '/musicapp/images/Lana Del Ray_1.png' %}" alt="Lana Del Ray">
+    </div>
+    <div class="artist-block">
+        <img src="{% static '/musicapp/images/Harry Styles.png' %}" alt="Harry Styles">
+    </div>
+    <div class="artist-block">
+        <img src="{% static '/musicapp/images/Billie Eilish.png' %}" alt="Billie Eilish">
+    </div>
+    <div class="artist-block">
+        <img src="{% static '/musicapp/images/Adele.png' %}" alt="Lana Del Ray">
+    </div>
+</div>
+
+
+<!-- Join Our Platform Form -->
+<div class="join-platform-container">
+    <!-- Text Section -->
+    <div class="text-section">
+        <h1>Join Our Platform</h1>
+        <p>You can be one of the members of our platform by just adding some necessary information. If you already have an account on our website, you can just hit the Login button.</p>
+        <p>Once you're signed up, you’ll get access to a variety of features, including personalized playlists, exclusive content, and much more. It's simple to get started, and we promise a seamless experience throughout.</p>
+        <p>Don't miss out! Join us today and start exploring everything we have to offer. We’re excited to have you with us!</p>
+    </div>
+
+    <!-- Form Section -->
+    <div class="form-container">
+        <h1>Sign Up</h1>
+        <form>
+            <input type="text" placeholder="Enter Your Name" required>
+            <input type="text" placeholder="Enter Your Number" required>
+            <input type="email" placeholder="Enter Your E-Mail" required>
+            <button type="submit">Sign Up</button>
+        </form>
+        <button class="google-signup">
+            <img src="{% static '/musicapp/images/devicon_google.png' %}" alt="Google Icon" width="20" height="20">
+            Sign Up With Google
+        </button>
+    </div>
+</div>
+
+
+  
+
+<!-- Footer -->
+<footer>
+    <div class="footer-column">
+        <h3>Melodies</h3>
+        <a href="#">Songs</a>
+        <a href="#">Radio</a>
+        <a href="#">Podcast</a>
+    </div>
+    <div class="footer-column">
+        <h3>Access</h3>
+        <a href="#">Explore</a>
+        <a href="#">Artists</a>
+        <a href="#">Playlists</a>
+        <a href="#">Albums</a>
+        <a href="#">Trending</a>
+    </div>
+    <div class="footer-column">
+        <h3>Contact</h3>
+        <a href="#">About</a>
+        <a href="#">Policy</a>
+        <a href="#">Social Media</a>
+        <a href="#">Support</a>
+    </div>
+</footer>
+
+
+<script>
+  function toggleSidebar() {
+      const sidebar = document.querySelector('.sidebar');
+      sidebar.classList.toggle('open');
+  }
+
+  // Close sidebar when clicked outside
+  window.addEventListener('click', function (e) {
+      const sidebar = document.querySelector('.sidebar');
+      const toggleBtn = document.querySelector('.sidebar-toggle-btn');
+      if (!sidebar.contains(e.target) && !toggleBtn.contains(e.target)) {
+          sidebar.classList.remove('open');
+      }
+  });
+
+  // Close the sidebar when close button is clicked
+  function closeSidebar() {
+      document.querySelector('.sidebar').classList.remove('open');
+  }
+</script>
+</body>
+</html>
