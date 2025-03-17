@@ -28,12 +28,11 @@
     <header>
         
         <div class="nav">
-            <a href="#">Home</a>
-            <a href="#">About Us</a>
-            <a href="#">Premium</a>
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'about' %}">About Us</a>
+            <a href="{% url 'premium' %}">Premium</a>
         </div>
-        <div class="login-signup">
-            <input type="text" placeholder="Search..." class="search-input"> <!-- Нове поле вводу -->
+    <div "bcfrt devxswzaqASZD"
             <a href="#">Login</a>
             <a href="#">Sign Up</a>
         </div>
@@ -49,22 +48,22 @@
 <!-- Sidebar -->
 <div class="sidebar">
     <img src="{% static '/musicapp/images/Melonix.png' %}" alt="Logo" class="sidebar-logo">
-    <a href="#" class="sidebar-item">
+    <a href="{% url 'home' %}" class="sidebar-item">
         <img src="{% static '/musicapp/images/Home.png' %}" alt="Home" class="sidebar-icon"> Home
     </a>
-    <a href="#" class="sidebar-item">
+    <a href="{% url 'artists' %}" class="sidebar-item">
         <img src="{% static '/musicapp/images/Singers.png' %}" alt="Artists" class="sidebar-icon"> Singers
     </a>
-    <a href="#" class="sidebar-item">
+    <a href="{% url 'albums' %} " class="sidebar-item">
         <img src="{% static '/musicapp/images/Albums.png' %}" alt="Albums" class="sidebar-icon"> Albums
     </a>
-    <a href="#" class="sidebar-item">
+    <a href="{% url 'playlist' %}" class="sidebar-item">
         <img src="{% static '/musicapp/images/Playlist.png' %}" alt="Your Playlist" class="sidebar-icon"> Playlist
     </a>
-    <a href="#" class="sidebar-item">
+    <a href="{% url 'premium' %}" class="sidebar-item">
         <img src="{% static '/musicapp/images/Premium1.png' %}" alt="Library" class="sidebar-icon"> Premium
     </a>
-    <a href="#" class="sidebar-item">
+    <a href="{% url 'settings' %}" class="sidebar-item">
         <img src="{% static '/musicapp/images/Settings.png' %}" alt="Settings" class="sidebar-icon"> Settings
     </a>
     <a href="#" class="sidebar-item">
@@ -76,7 +75,7 @@
 
 
 
-<!-- Нові релізи пісень --> 
+<!-- Нові релізи пісень -->
 <div class="new-release-container">
     <h2>New Release <span>Songs</span></h2>
     <div class="song-block">
@@ -123,7 +122,7 @@
             <tr>
                 <td>#1</td>
                 <td class="song-title">
-                    <img src="{% static '/musicapp/images/The_Neighbourhood_-_The_Neighbourhood 1.png' %}" alt="Sorfcore">
+                    <img src="{% static '/musicapp/images/The_Neighbourhood.png' %}" alt="Sorfcore">
                     <div>
                         <strong>Sorfcore</strong><br>
                         <small>The Neighbourhood</small>
@@ -175,7 +174,7 @@
             <tr>
                 <td>#5</td>
                 <td class="song-title">
-                    <img src="{% static '/musicapp/images/The_Neighbourhood_-_The_Neighbourhood 5.png' %}" alt="Paint The Town Red">
+                    <img src="{% static '/musicapp/images/The_Neighbourhood.png' %}" alt="Paint The Town Red">
                     <div>
                         <strong>Paint The Town Red</strong><br>
                         <small>Doja Cat</small>
@@ -288,12 +287,12 @@
         <a href="#">Explore</a>
         <a href="#">Artists</a>
         <a href="#">Playlists</a>
-        <a href="#">Albums</a>
+        <a href="{% url 'albums' %}">Albums</a>
         <a href="#">Trending</a>
     </div>
     <div class="footer-column">
         <h3>Contact</h3>
-        <a href="#">About</a>
+        <a href="{% url 'about' %}">About</a>
         <a href="#">Policy</a>
         <a href="#">Social Media</a>
         <a href="#">Support</a>

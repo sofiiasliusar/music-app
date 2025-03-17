@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="uk">
 <head>
@@ -5,12 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trending Songs</title>
 
-    <link rel="stylesheet" href="/musicapp/сss/Heder2R.css">
-    <link rel="stylesheet" href="/musicapp/сss/Footer.css">
-    <link rel="stylesheet" href="/musicapp/сss/Sidebar.css">
-    <link rel="stylesheet" href="/musicapp/сss/Albums.css">
-    <link rel="stylesheet" href="/musicapp/сss/ArtistsSidebar.css">
-    <link rel="stylesheet" href="/musicapp/сss/New-Release-Songs.css">
+    <link rel="stylesheet" href="{% static '/musicapp/сss/Heder2R.css' %}">
+    <link rel="stylesheet" href="{% static '/musicapp/сss/Footer.css' %}">
+    <link rel="stylesheet" href="{% static '/musicapp/сss/Sidebar.css' %}">
+    <link rel="stylesheet" href="{% static '/musicapp/сss/Albums.css' %}">
+    <link rel="stylesheet" href="{% static '/musicapp/сss/ArtistsSidebar.css' %}">
+    <link rel="stylesheet" href="{% static '/musicapp/сss/New-Release-Songs.css' %}">
 
 
 
@@ -34,7 +36,7 @@
 <header>
     <div class="nav">
         <a href="#">Home</a>
-        <a href="#">About Us</a>
+        <a href="{% url 'about' %}">About Us</a>
         <a href="#">Premium</a>
     </div>
     <div class="login-signup">
@@ -42,10 +44,10 @@
         <!-- Dropdown кнопка -->
         <div class="dropdown">
             <button class="dropbtn">
-                <img src="img/Melonix.png" alt="Dropdown" class="dropdown-img"> <!-- Ваше зображення -->
+                <img src="{% static '/musicapp/images/Melonix.png' %}" alt="Dropdown" class="dropdown-img"> <!-- Ваше зображення -->
             </button>
             <div class="dropdown-content">
-                <a href="/Office.html">Profile</a> <!-- Перехід до особистого кабінету -->
+                <a href="{% url 'office' %}">Profile</a> <!-- Перехід до особистого кабінету -->
             </div>
         </div>
     </div>
@@ -55,33 +57,33 @@
       
 <!-- Sidebar Toggle Button -->
 <button class="sidebar-toggle-btn" onclick="toggleSidebar()">
-    <img src="img/Melonix.png" alt="Logo" class="sidebar-logo-icon">
+    <img src="{% static '/musicapp/images/Melonix.png' %}" alt="Logo" class="sidebar-logo-icon">
 </button>
 
 
 <!-- Sidebar -->
 <div class="sidebar">
-    <img src="img/Melonix.png" alt="Logo" class="sidebar-logo">
+    <img src="{% static '/musicapp/images/Melonix.png' %}" alt="Logo" class="sidebar-logo">
     <a href="#" class="sidebar-item">
-        <img src="img/Home.png" alt="Home" class="sidebar-icon"> Home
+        <img src="{% static '/musicapp/images/Home.png' %}" alt="Home" class="sidebar-icon"> Home
     </a>
     <a href="#" class="sidebar-item">
-        <img src="img/Singers.png" alt="Artists" class="sidebar-icon"> Singers
+        <img src="{% static '/musicapp/images/Singers.png' %}" alt="Artists" class="sidebar-icon"> Singers
     </a>
     <a href="#" class="sidebar-item">
-        <img src="img/Albums.png" alt="Albums" class="sidebar-icon"> Albums
+        <img src="{% static '/musicapp/images/Albums.png' %}" alt="Albums" class="sidebar-icon"> Albums
     </a>
     <a href="#" class="sidebar-item">
-        <img src="img/Playlist.png" alt="Your Playlist" class="sidebar-icon"> Playlist
+        <img src="{% static '/musicapp/images/Playlist.png' %}" alt="Your Playlist" class="sidebar-icon"> Playlist
     </a>
     <a href="#" class="sidebar-item">
-        <img src="img/Premium1.png" alt="Library" class="sidebar-icon"> Premium
+        <img src="{% static '/musicapp/images/Premium1.png' %}" alt="Library" class="sidebar-icon"> Premium
     </a>
     <a href="#" class="sidebar-item">
-        <img src="img/Settings.png" alt="Settings" class="sidebar-icon"> Settings
+        <img src="{% static '/musicapp/images/Settings.png' %}" alt="Settings" class="sidebar-icon"> Settings
     </a>
     <a href="#" class="sidebar-item">
-        <img src="img/Logout.png" alt="Logout" class="sidebar-icon"> Logout
+        <img src="{% static '/musicapp/images/Logout.png' %}" alt="Logout" class="sidebar-icon"> Logout
     </a>
 </div>
 
@@ -89,7 +91,7 @@
 
 <!-- Контейнер для картинки з текстом -->
 <div class="image-container">
-    <img src="img/Eminem.png" alt="Eminem" class="image">
+    <img src="{% static '/musicapp/images/Eminem.png' %}" alt="Eminem" class="image">
     <div class="text-overlay">Eminem</div>
 </div>
 
@@ -112,7 +114,7 @@
             <tr>
                 <td>
                     <!-- Фото для кожного треку -->
-                    <img src="img/The_Neighbourhood_-_The_Neighbourhood9.png" alt="Forcecore" class="song-cover"> Without Me
+                    <img src="{% static '/musicapp/images/The_Neighbourhood_-_The_Neighbourhood9.png' %}" alt="Forcecore" class="song-cover"> Without Me
                 </td>
                 <td>Nov 3, 2023</td>
                 <td>Eminem</td>
@@ -122,7 +124,7 @@
             <tr>
                 <td>
                     <!-- Фото для кожного треку -->
-                    <img src="img/The_Neighbourhood_-_The_Neighbourhood10.png" alt="Skyfall Beats" class="song-cover"> mockingbird 
+                    <img src="{% static '/musicapp/images/The_Neighbourhood_-_The_Neighbourhood10.png' %}" alt="Skyfall Beats" class="song-cover"> mockingbird
                 </td>
                 <td>Oct 26, 2023</td>
                 <td>Eminem</td>
@@ -132,7 +134,7 @@
             <tr>
                 <td>
                     <!-- Фото для кожного треку -->
-                    <img src="img/The_Neighbourhood_-_The_Neighbourhood11.png" alt="Greedy" class="song-cover"> The Real Slim Sha..
+                    <img src="{% static '/musicapp/images/The_Neighbourhood_-_The_Neighbourhood11.png' %}" alt="Greedy" class="song-cover"> The Real Slim Sha..
                 </td>
                 <td>Nov 30, 2023</td>
                 <td>Eminem</td>
@@ -142,7 +144,7 @@
             <tr>
                 <td>
                     <!-- Фото для кожного треку -->
-                    <img src="img/The_Neighbourhood_-_The_Neighbourhood12.png" alt="Lovin On Me" class="song-cover"> Lose Yourself
+                    <img src="{% static '/musicapp/images/The_Neighbourhood_-_The_Neighbourhood12.png' %}" alt="Lovin On Me" class="song-cover"> Lose Yourself
                 </td>
                 <td>Dec 15, 2023</td>
                 <td>Eminem</td>
@@ -152,7 +154,7 @@
             <tr>
                 <td>
                     <!-- Фото для кожного треку -->
-                    <img src="img/The_Neighbourhood_-_The_Neighbourhood13.png" alt="Pain the Town Red" class="song-cover"> Godzila
+                    <img src="{% static '/musicapp/images/The_Neighbourhood_-_The_Neighbourhood13.png' %}" alt="Pain the Town Red" class="song-cover"> Godzila
                 </td>
                 <td>Dec 29, 2023</td>
                 <td>Eminem</td>
@@ -172,27 +174,27 @@
 <div class="new-release-container">
     <h2>Artist’s  <span>Playlist</span></h2>
     <div class="song-block">
-        <img src="img/Rectangle_17__1_-removebg-preview.png" alt="Time">
+        <img src="{% static '/musicapp/images/Rectangle_17__1_-removebg-preview.png' %}" alt="Time">
         <div class="song-title">Time<br><small>Luciano</small></div>
     </div>
     <div class="song-block">
-        <img src="img/Rectangle_17__2_-removebg-preview.png" alt="112">
+        <img src="{% static '/musicapp/images/Rectangle_17__2_-removebg-preview.png' %}" alt="112">
         <div class="song-title">112<br><small>jazzek</small></div>
     </div>
     <div class="song-block">
-        <img src="img/Rectangle_17__3_-removebg-preview.png" alt="We Don't Care">
+        <img src="{% static '/musicapp/images/Rectangle_17__3_-removebg-preview.png' %}" alt="We Don't Care">
         <div class="song-title">We Don't Care<br><small>Kyanu & DJ Gullum</small></div>
     </div>
     <div class="song-block">
-        <img src="img/Rectangle_17__4_-removebg-preview.png" alt="Who I Am">
+        <img src="{% static '/musicapp/images/Rectangle_17__4_-removebg-preview.png' %}" alt="Who I Am">
         <div class="song-title">Who I Am<br><small>Alan Walker & Elias</small></div>
     </div>
     <div class="song-block">
-        <img src="img/Rectangle 1.png" alt="Baixo">
+        <img src="{% static '/musicapp/images/Rectangle 1.png' %}" alt="Baixo">
         <div class="song-title">Baixo<br><small>XXAnteria</small></div>
     </div>
     <div class="song-block">
-        <img src="img/Rectangle 2.png" alt="Baixo">
+        <img src="{% static '/musicapp/images/Rectangle 2.png' %}" alt="Baixo">
         <div class="song-title">Baixo<br><small>XXAnteria</small></div>
     </div>
 </div>
@@ -201,27 +203,27 @@
 <div class="new-release-container">
     <h2>Artist’s  <span>Albums</span></h2>
     <div class="song-block">
-        <img src="img/Rectangle 1.png" alt="Time">
+        <img src="{% static '/musicapp/images/Rectangle 1.png' %}" alt="Time">
         <div class="song-title">Time<br><small>Luciano</small></div>
     </div>
     <div class="song-block">
-        <img src="img/Rectangle 2.png" alt="112">
+        <img src="{% static '/musicapp/images/Rectangle 2.png' %}" alt="112">
         <div class="song-title">112<br><small>jazzek</small></div>
     </div>
     <div class="song-block">
-        <img src="img/Rectangle 3.png" alt="We Don't Care">
+        <img src="{% static '/musicapp/images/Rectangle 3.png' %}" alt="We Don't Care">
         <div class="song-title">We Don't Care<br><small>Kyanu & DJ Gullum</small></div>
     </div>
     <div class="song-block">
-        <img src="img/Rectangle 4.png" alt="Who I Am">
+        <img src="{% static '/musicapp/images/Rectangle 4.png' %}" alt="Who I Am">
         <div class="song-title">Who I Am<br><small>Alan Walker & Elias</small></div>
     </div>
     <div class="song-block">
-        <img src="img/Rectangle 5.png" alt="Baixo">
+        <img src="{% static '/musicapp/images/Rectangle 5.png' %}" alt="Baixo">
         <div class="song-title">Baixo<br><small>XXAnteria</small></div>
     </div>
     <div class="song-block">
-        <img src="img/Rectangle 2.png" alt="Baixo">
+        <img src="{% static '/musicapp/images/Rectangle 2.png' %}" alt="Baixo">
         <div class="song-title">Baixo<br><small>XXAnteria</small></div>
     </div>
 </div>
@@ -247,7 +249,7 @@
     </div>
     <div class="footer-column">
         <h3>Contact</h3>
-        <a href="#">About</a>
+        <a href="{% url 'about' %}">About</a>
         <a href="#">Policy</a>
         <a href="#">Social Media</a>
         <a href="#">Support</a>

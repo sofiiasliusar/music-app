@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="uk">
 <head>
@@ -5,10 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trending Songs</title>
 
-    <link rel="stylesheet" href="/musicapp/сss/Heder2R.css">
-    <link rel="stylesheet" href="/musicapp/сss/Footer.css">
-    <link rel="stylesheet" href="/musicapp/сss/Sidebar.css">
-    <link rel="stylesheet" href="/musicapp/сss/Albums.css">
+    <link rel="stylesheet" href="{% static '/musicapp/сss/Heder2R.css' %}">
+    <link rel="stylesheet" href="{% static '/musicapp/сss/Footer.css' %}">
+    <link rel="stylesheet" href="{% static '/musicapp/сss/Sidebar.css' %}">
+    <link rel="stylesheet" href="{% static '/musicapp/сss/Albums.css' %}">
 
 
 
@@ -25,16 +27,16 @@
     <!-- Header -->
 <header>
     <div class="nav">
-        <a href="#">Home</a>
-        <a href="#">About Us</a>
-        <a href="#">Premium</a>
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'about' %}">About Us</a>
+        <a href="{% url 'premium' %}">Premium</a>
     </div>
     <div class="login-signup">
         <input type="text" placeholder="Search..." class="search-input"> <!-- Нове поле вводу -->
         <!-- Dropdown кнопка -->
         <div class="dropdown">
             <button class="dropbtn">
-                <img src="img/Melonix.png" alt="Dropdown" class="dropdown-img"> <!-- Ваше зображення -->
+                <img src="{% static '/musicapp/images/Melonix.png' %}" alt="Dropdown" class="dropdown-img"> <!-- Ваше зображення -->
             </button>
             <div class="dropdown-content">
                 <a href="/Office.html">Profile</a> <!-- Перехід до особистого кабінету -->
@@ -47,33 +49,33 @@
       
 <!-- Sidebar Toggle Button -->
 <button class="sidebar-toggle-btn" onclick="toggleSidebar()">
-    <img src="img/Melonix.png" alt="Logo" class="sidebar-logo-icon">
+    <img src="{% static '/musicapp/images/Melonix.png' %}" alt="Logo" class="sidebar-logo-icon">
 </button>
 
 
 <!-- Sidebar -->
 <div class="sidebar">
-    <img src="img/Melonix.png" alt="Logo" class="sidebar-logo">
-    <a href="#" class="sidebar-item">
-        <img src="img/Home.png" alt="Home" class="sidebar-icon"> Home
+    <img src="{% static '/musicapp/images/Melonix.png' %}" alt="Logo" class="sidebar-logo">
+    <a href="{% url 'home' %}" class="sidebar-item">
+        <img src="{% static '/musicapp/images/Home.png' %}" alt="Home" class="sidebar-icon"> Home
+    </a>
+    <a href="{% url 'artists' %}" class="sidebar-item">
+        <img src="{% static '/musicapp/images/Singers.png' %}" alt="Artists" class="sidebar-icon"> Singers
+    </a>
+    <a href="{% url 'albums' %}" class="sidebar-item">
+        <img src="{% static '/musicapp/images/Albums.png' %}" alt="Albums" class="sidebar-icon"> Albums
+    </a>
+    <a href="{% url 'playlist' %}" class="sidebar-item">
+        <img src="{% static '/musicapp/images/Playlist.png' %}" alt="Your Playlist" class="sidebar-icon"> Playlist
+    </a>
+    <a href="{% url 'premium' %}" class="sidebar-item">
+        <img src="{% static '/musicapp/images/Premium1.png' %}" alt="Library" class="sidebar-icon"> Premium
+    </a>
+    <a href="{% url 'settings' %}" class="sidebar-item">
+        <img src="{% static '/musicapp/images/Settings.png' %}" alt="Settings" class="sidebar-icon"> Settings
     </a>
     <a href="#" class="sidebar-item">
-        <img src="img/Singers.png" alt="Artists" class="sidebar-icon"> Singers
-    </a>
-    <a href="#" class="sidebar-item">
-        <img src="img/Albums.png" alt="Albums" class="sidebar-icon"> Albums
-    </a>
-    <a href="#" class="sidebar-item">
-        <img src="img/Playlist.png" alt="Your Playlist" class="sidebar-icon"> Playlist
-    </a>
-    <a href="#" class="sidebar-item">
-        <img src="img/Premium1.png" alt="Library" class="sidebar-icon"> Premium
-    </a>
-    <a href="#" class="sidebar-item">
-        <img src="img/Settings.png" alt="Settings" class="sidebar-icon"> Settings
-    </a>
-    <a href="#" class="sidebar-item">
-        <img src="img/Logout.png" alt="Logout" class="sidebar-icon"> Logout
+        <img src="{% static '/musicapp/images/Logout.png' %}" alt="Logout" class="sidebar-icon"> Logout
     </a>
 </div>
 
@@ -93,7 +95,7 @@
 <!-- Trending Songs Section -->
 <div class="trending-songs-container">
     <!-- Фото альбому -->
-    <img src="img/Trending songs mix.png" alt="Album Cover" class="album-cover">
+    <img src="{% static '/musicapp/images/Trending songs mix.png' %}" alt="Album Cover" class="album-cover">
     
     <div class="content">
         <h1>Trending songs mix</h1>
@@ -121,7 +123,7 @@
             <tr>
                 <td>
                     <!-- Фото для кожного треку -->
-                    <img src="img/The_Neighbourhood_-_The_Neighbourhood 1.png" alt="Forcecore" class="song-cover"> Forcecore
+                    <img src="{% static '/musicapp/images/The_Neighbourhood.png' %}" alt="Forcecore" class="song-cover"> Forcecore
                 </td>
                 <td>Nov 3, 2023</td>
                 <td>Hard to Imagine</td>
@@ -131,7 +133,7 @@
             <tr>
                 <td>
                     <!-- Фото для кожного треку -->
-                    <img src="img/The_Neighbourhood_-_The_Neighbourhood 2.png" alt="Skyfall Beats" class="song-cover"> Skyfall Beats
+                    <img src="{% static '/musicapp/images/The_Neighbourhood_-_The_Neighbourhood 2.png' %}" alt="Skyfall Beats" class="song-cover"> Skyfall Beats
                 </td>
                 <td>Oct 26, 2023</td>
                 <td>Nightmares</td>
@@ -141,7 +143,7 @@
             <tr>
                 <td>
                     <!-- Фото для кожного треку -->
-                    <img src="img/The_Neighbourhood_-_The_Neighbourhood 3.png" alt="Greedy" class="song-cover"> Greedy
+                    <img src="{% static '/musicapp/images/The_Neighbourhood_-_The_Neighbourhood 3.png' %}" alt="Greedy" class="song-cover"> Greedy
                 </td>
                 <td>Nov 30, 2023</td>
                 <td>Greedy</td>
@@ -151,7 +153,7 @@
             <tr>
                 <td>
                     <!-- Фото для кожного треку -->
-                    <img src="img/The_Neighbourhood_-_The_Neighbourhood 4.png" alt="Lovin On Me" class="song-cover"> Lovin On Me
+                    <img src="{% static '/musicapp/images/The_Neighbourhood_-_The_Neighbourhood 4.png' %}" alt="Lovin On Me" class="song-cover"> Lovin On Me
                 </td>
                 <td>Dec 15, 2023</td>
                 <td>Lovin On Me</td>
@@ -161,7 +163,7 @@
             <tr>
                 <td>
                     <!-- Фото для кожного треку -->
-                    <img src="img/The_Neighbourhood_-_The_Neighbourhood 7 (8).png" alt="Pain the Town Red" class="song-cover"> Pain the Town Red
+                    <img src="{% static '/musicapp/images/The_Neighbourhood_-_The_Neighbourhood 7 (8).png' %}" alt="Pain the Town Red" class="song-cover"> Pain the Town Red
                 </td>
                 <td>Dec 29, 2023</td>
                 <td>Pain The Town Red</td>
@@ -172,7 +174,7 @@
             <tr>
                 <td>
                     <!-- Фото для кожного треку -->
-                    <img src="img/The_Neighbourhood_-_The_Neighbourhood 6.png" alt="Forcecore" class="song-cover"> Forcecore
+                    <img src="{% static '/musicapp/images/The_Neighbourhood_-_The_Neighbourhood 6.png' %}" alt="Forcecore" class="song-cover"> Forcecore
                 </td>
                 <td>Nov 3, 2023</td>
                 <td>Hard to Imagine</td>
@@ -182,7 +184,7 @@
             <tr>
                 <td>
                     <!-- Фото для кожного треку -->
-                    <img src="img/The_Neighbourhood_-_The_Neighbourhood 7 (9).png" alt="Skyfall Beats" class="song-cover"> Skyfall Beats
+                    <img src="{% static '/musicapp/images/The_Neighbourhood_-_The_Neighbourhood 7 (9).png' %}" alt="Skyfall Beats" class="song-cover"> Skyfall Beats
                 </td>
                 <td>Oct 26, 2023</td>
                 <td>Nightmares</td>
@@ -192,7 +194,7 @@
             <tr>
                 <td>
                     <!-- Фото для кожного треку -->
-                    <img src="img/The_Neighbourhood_-_The_Neighbourhood 7 (10).png" alt="Greedy" class="song-cover"> Greedy
+                    <img src="{% static '/musicapp/images/The_Neighbourhood_-_The_Neighbourhood 7 (10).png' %}" alt="Greedy" class="song-cover"> Greedy
                 </td>
                 <td>Nov 30, 2023</td>
                 <td>Greedy</td>
@@ -203,7 +205,7 @@
             <tr>
                 <td>
                     <!-- Фото для кожного треку -->
-                    <img src="img/The_Neighbourhood_-_The_Neighbourhood 7 (11).png" alt="Skyfall Beats" class="song-cover"> Skyfall Beats
+                    <img src="{% static '/musicapp/images/The_Neighbourhood_-_The_Neighbourhood 7 (11).png' %}" alt="Skyfall Beats" class="song-cover"> Skyfall Beats
                 </td>
                 <td>Oct 26, 2023</td>
                 <td>Nightmares</td>
@@ -213,7 +215,7 @@
             <tr>
                 <td>
                     <!-- Фото для кожного треку -->
-                    <img src="img/The_Neighbourhood_-_The_Neighbourhood 2.png" alt="Skyfall Beats" class="song-cover"> Skyfall Beats
+                    <img src="{% static '/musicapp/images/The_Neighbourhood_-_The_Neighbourhood 2.png' %}" alt="Skyfall Beats" class="song-cover"> Skyfall Beats
                 </td>
                 <td>Oct 26, 2023</td>
                 <td>Nightmares</td>
@@ -223,7 +225,7 @@
             <tr>
                 <td>
                     <!-- Фото для кожного треку -->
-                    <img src="img/The_Neighbourhood_-_The_Neighbourhood 3.png" alt="Greedy" class="song-cover"> Greedy
+                    <img src="{% static '/musicapp/images/The_Neighbourhood_-_The_Neighbourhood 3.png' %}" alt="Greedy" class="song-cover"> Greedy
                 </td>
                 <td>Nov 30, 2023</td>
                 <td>Greedy</td>
@@ -260,7 +262,7 @@
     </div>
     <div class="footer-column">
         <h3>Contact</h3>
-        <a href="#">About</a>
+        <a href="{% url 'about' %}">About</a>
         <a href="#">Policy</a>
         <a href="#">Social Media</a>
         <a href="#">Support</a>
