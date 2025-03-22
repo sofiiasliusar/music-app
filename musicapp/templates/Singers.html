@@ -1,235 +1,52 @@
-<!DOCTYPE html>
-<html lang="uk">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trending Songs</title>
-
-    <link rel="stylesheet" href="/musicapp/сss/Heder2R.css">
-    <link rel="stylesheet" href="/musicapp/сss/Footer.css">
-    <link rel="stylesheet" href="/musicapp/сss/Sidebar.css">
-    <link rel="stylesheet" href="/musicapp/сss/Albums.css">
-    <link rel="stylesheet" href="/musicapp/сss/ArtistsSidebar.css">
-    <link rel="stylesheet" href="/musicapp/сss/New-Release-Songs.css">
+{% extends "base.html" %}
+{% load static %}
 
 
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static '/musicapp/сss/Albums.css' %}">
+    <link rel="stylesheet" href="{% static '/musicapp/сss/ArtistsSidebar.css' %}">
+    <link rel="stylesheet" href="{% static '/musicapp/сss/New-Release-Songs.css' %}">
+    <link rel="stylesheet" href="{% static '/musicapp/сss/Settings.css' %}">
 
-    <style>
-
-
-        
-        
-.popular-artists-container {
-    display: flex;
-    flex-direction: center; /* Встановлюємо вертикальне розташування елементів */
-    align-items: center; /* Центруємо елементи */
-    margin-left: 300px; /* Відступ для бокового меню */
-    margin-top: 20px;
-    background-color: #181818; /* Колір фону */
-    padding: 20px;
-    border-radius: 10px;
-    max-width: 74%;
-}
-.popular-artists-container h2 {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-
-/* Стилі для блоків артистів */
-.popular-artists-container .artist-block {
-     display: inline-block;
-     width: 135px; /* Фіксована ширина кола */
-     height: 135px; /* Фіксована висота кола, яка дорівнює ширині */
-    margin-right: 1%;
-    text-align: center;
-    border-radius: 50%; /* Робить блок круглим */
-    overflow: hidden;
-    background-color: #222;
-    cursor: pointer;
-    transition: 0.3s;
-    position: relative;
-    }
-
-/* Стилі для блоків артистів */
-.artist-block {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 120px;
-    height: 120px;
-    background-color: #222;
-    border-radius: 50%;
-    overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    cursor: pointer;
-}
-
-.artist-block img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Зберігає пропорції зображення */
-    object-position: center; /* Вирівнювання зображення по центру */
-}
-
-/* Ефект при наведенні на блок артиста */
-.artist-block:hover {
-    transform: translateY(-5px);
-    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.7);
-}
-
-/* Заголовок для популярних артистів */
-.popular-artists-container h2 {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin-bottom: 20px;
-    text-align: center; /* Центруємо заголовок */
-    color: #fff; /* Колір тексту */
-    margin-top: 0; /* Задаємо відступ зверху */
-    letter-spacing: 2px; /* Міжбуквений інтервал для кращого вигляду */
-}
-
-.popular-artists-container h2 span {
-    color: #f26f90; /* Колір частини тексту "Artists" */
-}
+{% endblock extra_css%}
 
 
-/* Медіа-запит для екранів до 768px */
-@media (max-width: 768px) {
-    .popular-artists-container {
-        display: block; /* Змінюємо на блокову структуру для мобільних */
-        margin-left: 40px; /* Зменшення відступу для мобільних */
-    }
-
-    .artist-blocks {
-        display: flex; /* Горизонтальне відображення з двома колонками */
-        flex-wrap: wrap; /* Дозволяє переносити елементи */
-        justify-content: space-between; /* Простір між картками */
-        gap: 20px; /* Відстань між картками */
-    }
-
-    .artist-block {
-        flex-basis: calc(50% - 10px); /* Два стовпці для мобільних */
-        height: 120px;
-        margin-bottom: 20px; /* Відступ між картками */
-    }
-}
-
-/* Медіа-запит для дуже малих екранів (до 600px) */
-@media (max-width: 600px) {
-    .popular-artists-container {
-        padding: 10px; /* Зменшення відступів для дуже малих екранів */
-    }
-
-    .artist-block {
-        width: 90px; /* Зменшення ширини блоків для дуже малих екранів */
-        height: 90px;
-    }
-}
-
-
-        
-
-
-    </style>
-    
-
-</head>
-<body>
-    <!-- Header -->
-<header>
-    <div class="nav">
-        <a href="#">Home</a>
-        <a href="{% url 'about' %}">About Us</a>
-        <a href="#">Premium</a>
-    </div>
-    <div class="login-signup">
-        <input type="text" placeholder="Search..." class="search-input"> <!-- Нове поле вводу -->
-        <!-- Dropdown кнопка -->
-        <div class="dropdown">
-            <button class="dropbtn">
-                <img src="img/Melonix.png" alt="Dropdown" class="dropdown-img"> <!-- Ваше зображення -->
-            </button>
-            <div class="dropdown-content">
-                <a href="/Office.html">Profile</a> <!-- Перехід до особистого кабінету -->
-            </div>
-        </div>
-    </div>
-</header>
-
-    
-      
-<!-- Sidebar Toggle Button -->
-<button class="sidebar-toggle-btn" onclick="toggleSidebar()">
-    <img src="img/Melonix.png" alt="Logo" class="sidebar-logo-icon">
-</button>
-
-
-<!-- Sidebar -->
-<div class="sidebar">
-    <img src="img/Melonix.png" alt="Logo" class="sidebar-logo">
-    <a href="#" class="sidebar-item">
-        <img src="img/Home.png" alt="Home" class="sidebar-icon"> Home
-    </a>
-    <a href="#" class="sidebar-item">
-        <img src="img/Singers.png" alt="Artists" class="sidebar-icon"> Singers
-    </a>
-    <a href="#" class="sidebar-item">
-        <img src="img/Albums.png" alt="Albums" class="sidebar-icon"> Albums
-    </a>
-    <a href="#" class="sidebar-item">
-        <img src="img/Playlist.png" alt="Your Playlist" class="sidebar-icon"> Playlist
-    </a>
-    <a href="#" class="sidebar-item">
-        <img src="img/Premium1.png" alt="Library" class="sidebar-icon"> Premium
-    </a>
-    <a href="#" class="sidebar-item">
-        <img src="img/Settings.png" alt="Settings" class="sidebar-icon"> Settings
-    </a>
-    <a href="#" class="sidebar-item">
-        <img src="img/Logout.png" alt="Logout" class="sidebar-icon"> Logout
-    </a>
-</div>
-
+{% block content %}
 
 
 <!-- Контейнер для картинки з текстом -->
 <div class="image-container">
-    <img src="img/Eminem.png" alt="Eminem" class="image">
+    <img src="{% static '/musicapp/images/Eminem.png' %}" alt="Eminem" class="image">
     <div class="text-overlay">Eminem</div>
 </div>
 
 
 
-
-
-
-
-<!-- Нові релізи пісень --> 
+<!-- Нові релізи пісень -->
 <div class="new-release-container">
     <h2>Artist’s  <span>Playlist</span></h2>
     <div class="song-block">
-        <img src="img/Rectangle_17__1_-removebg-preview.png" alt="Time">
+        <img src="{% static '/musicapp/images/Rectangle_17__1_-removebg-preview.png' %}" alt="Time">
         <div class="song-title">Time<br><small>Luciano</small></div>
     </div>
     <div class="song-block">
-        <img src="img/Rectangle_17__2_-removebg-preview.png" alt="112">
+        <img src="{% static '/musicapp/images/Rectangle_17__2_-removebg-preview.png' %}" alt="112">
         <div class="song-title">112<br><small>jazzek</small></div>
     </div>
     <div class="song-block">
-        <img src="img/Rectangle_17__3_-removebg-preview.png" alt="We Don't Care">
+        <img src="{% static '/musicapp/images/Rectangle_17__3_-removebg-preview.png' %}" alt="We Don't Care">
         <div class="song-title">We Don't Care<br><small>Kyanu & DJ Gullum</small></div>
     </div>
     <div class="song-block">
-        <img src="img/Rectangle_17__4_-removebg-preview.png" alt="Who I Am">
+        <img src="{% static '/musicapp/images/Rectangle_17__4_-removebg-preview.png' %}" alt="Who I Am">
         <div class="song-title">Who I Am<br><small>Alan Walker & Elias</small></div>
     </div>
     <div class="song-block">
-        <img src="img/Rectangle 1.png" alt="Baixo">
+        <img src="{% static '/musicapp/images/Rectangle 1.png' %}" alt="Baixo">
         <div class="song-title">Baixo<br><small>XXAnteria</small></div>
     </div>
     <div class="song-block">
-        <img src="img/Rectangle 2.png" alt="Baixo">
+        <img src="{% static '/musicapp/images/Rectangle 2.png' %}" alt="Baixo">
         <div class="song-title">Baixo<br><small>XXAnteria</small></div>
     </div>
 </div>
@@ -238,163 +55,116 @@
 <div class="popular-artists-container">
     <h2>Artist’s  <span>Playlist</span></h2>
     <div class="artist-block">
-        <img src="img/Eminiem.png" alt="Eminem">
+        <img src="{% static '/musicapp/images/Eminiem.png' %}" alt="Eminem">
     </div>
     <div class="artist-block">
-        <img src="img/The Weekend_1.png" alt="The Weekend">
+        <img src="{% static '/musicapp/images/The Weekend_1.png' %}" alt="The Weekend">
     </div>
     <div class="artist-block">
-        <img src="img/Adele_1.png" alt="Adele">
+        <img src="{% static '/musicapp/images/Adele_1.png' %}" alt="Adele">
     </div>
     <div class="artist-block">
-        <img src="img/Lana Del Ray_1.png" alt="Lana Del Ray">
+        <img src="{% static '/musicapp/images/Lana Del Ray_1.png' %}" alt="Lana Del Ray">
     </div>
     <div class="artist-block">
-        <img src="img/Harry Styles.png" alt="Harry Styles">
+        <img src="{% static '/musicapp/images/Harry Styles.png' %}" alt="Harry Styles">
     </div>
     <div class="artist-block">
-        <img src="img/Billie Eilish.png" alt="Billie Eilish">
+        <img src="{% static '/musicapp/images/Billie Eilish.png' %}" alt="Billie Eilish">
     </div>
     <div class="artist-block">
-        <img src="img/Adele.png" alt="Lana Del Ray">
+        <img src="{% static '/musicapp/images/Adele.png' %}" alt="Lana Del Ray">
     </div>
 </div>
 
 
-<!-- Нові релізи пісень --> 
+<!-- Нові релізи пісень -->
 <div class="new-release-container">
     <h2>Artist’s  <span>Albums</span></h2>
     <div class="song-block">
-        <img src="img/Rectangle 1.png" alt="Time">
+        <img src="{% static '/musicapp/images/Rectangle 1.png' %}" alt="Time">
         <div class="song-title">Time<br><small>Luciano</small></div>
     </div>
     <div class="song-block">
-        <img src="img/Rectangle 2.png" alt="112">
+        <img src="{% static '/musicapp/images/Rectangle 2.png' %}" alt="112">
         <div class="song-title">112<br><small>jazzek</small></div>
     </div>
     <div class="song-block">
-        <img src="img/Rectangle 3.png" alt="We Don't Care">
+        <img src="{% static '/musicapp/images/Rectangle 3.png' %}" alt="We Don't Care">
         <div class="song-title">We Don't Care<br><small>Kyanu & DJ Gullum</small></div>
     </div>
     <div class="song-block">
-        <img src="img/Rectangle 4.png" alt="Who I Am">
+        <img src="{% static '/musicapp/images/Rectangle 4.png' %}" alt="Who I Am">
         <div class="song-title">Who I Am<br><small>Alan Walker & Elias</small></div>
     </div>
     <div class="song-block">
-        <img src="img/Rectangle 5.png" alt="Baixo">
+        <img src="{% static '/musicapp/images/Rectangle 5.png' %}" alt="Baixo">
         <div class="song-title">Baixo<br><small>XXAnteria</small></div>
     </div>
     <div class="song-block">
-        <img src="img/Rectangle 2.png" alt="Baixo">
+        <img src="{% static '/musicapp/images/Rectangle 2.png' %}" alt="Baixo">
         <div class="song-title">Baixo<br><small>XXAnteria</small></div>
     </div>
 </div>
 
 
-<!-- Нові релізи пісень --> 
+<!-- Нові релізи пісень -->
 <div class="new-release-container">
     <h2>Top  <span>Albums</span></h2>
     <div class="song-block">
-        <img src="img/Rectangle 1.png" alt="Time">
+        <img src="{% static '/musicapp/images/Rectangle 1.png' %}" alt="Time">
         <div class="song-title">Time<br><small>Luciano</small></div>
     </div>
     <div class="song-block">
-        <img src="img/Rectangle 2.png" alt="112">
+        <img src="{% static '/musicapp/images/Rectangle 2.png' %}" alt="112">
         <div class="song-title">112<br><small>jazzek</small></div>
     </div>
     <div class="song-block">
-        <img src="img/Rectangle 3.png" alt="We Don't Care">
+        <img src="{% static '/musicapp/images/Rectangle 3.png' %}" alt="We Don't Care">
         <div class="song-title">We Don't Care<br><small>Kyanu & DJ Gullum</small></div>
     </div>
     <div class="song-block">
-        <img src="img/Rectangle 4.png" alt="Who I Am">
+        <img src="{% static '/musicapp/images/Rectangle 4.png' %}" alt="Who I Am">
         <div class="song-title">Who I Am<br><small>Alan Walker & Elias</small></div>
     </div>
     <div class="song-block">
-        <img src="img/Rectangle 5.png" alt="Baixo">
+        <img src="{% static '/musicapp/images/Rectangle 5.png' %}" alt="Baixo">
         <div class="song-title">Baixo<br><small>XXAnteria</small></div>
     </div>
     <div class="song-block">
-        <img src="img/Rectangle 2.png" alt="Baixo">
+        <img src="{% static '/musicapp/images/Rectangle 2.png' %}" alt="Baixo">
         <div class="song-title">Baixo<br><small>XXAnteria</small></div>
     </div>
 </div>
 
 
-<!-- Нові релізи пісень --> 
+<!-- Нові релізи пісень -->
 <div class="new-release-container">
     <h2>Weekly Top  <span>Albums</span></h2>
     <div class="song-block">
-        <img src="img/Rectangle 1.png" alt="Time">
+        <img src="{% static '/musicapp/images/Rectangle 1.png' %}" alt="Time">
         <div class="song-title">Time<br><small>Luciano</small></div>
     </div>
     <div class="song-block">
-        <img src="img/Rectangle 2.png" alt="112">
+        <img src="{% static '/musicapp/images/Rectangle 2.png' %}" alt="112">
         <div class="song-title">112<br><small>jazzek</small></div>
     </div>
     <div class="song-block">
-        <img src="img/Rectangle 3.png" alt="We Don't Care">
+        <img src="{% static '/musicapp/images/Rectangle 3.png' %}" alt="We Don't Care">
         <div class="song-title">We Don't Care<br><small>Kyanu & DJ Gullum</small></div>
     </div>
     <div class="song-block">
-        <img src="img/Rectangle 4.png" alt="Who I Am">
+        <img src="{% static '/musicapp/images/Rectangle 4.png' %}" alt="Who I Am">
         <div class="song-title">Who I Am<br><small>Alan Walker & Elias</small></div>
     </div>
     <div class="song-block">
-        <img src="img/Rectangle 5.png" alt="Baixo">
+        <img src="{% static '/musicapp/images/Rectangle 5.png' %}" alt="Baixo">
         <div class="song-title">Baixo<br><small>XXAnteria</small></div>
     </div>
     <div class="song-block">
-        <img src="img/Rectangle 2.png" alt="Baixo">
+        <img src="{% static '/musicapp/images/Rectangle 2.png' %}" alt="Baixo">
         <div class="song-title">Baixo<br><small>XXAnteria</small></div>
     </div>
 </div>
 
-<!-- Footer -->
-<footer>
-    <div class="footer-column">
-        <h3>Melodies</h3>
-        <a href="#">Songs</a>
-        <a href="#">Radio</a>
-        <a href="#">Podcast</a>
-    </div>
-    <div class="footer-column">
-        <h3>Access</h3>
-        <a href="#">Explore</a>
-        <a href="#">Artists</a>
-        <a href="#">Playlists</a>
-        <a href="#">Albums</a>
-        <a href="#">Trending</a>
-    </div>
-    <div class="footer-column">
-        <h3>Contact</h3>
-        <a href="{% url 'about' %}">About</a>
-        <a href="#">Policy</a>
-        <a href="#">Social Media</a>
-        <a href="#">Support</a>
-    </div>
-</footer>
-
-
-<script>
-  function toggleSidebar() {
-      const sidebar = document.querySelector('.sidebar');
-      sidebar.classList.toggle('open');
-  }
-
-  // Close sidebar when clicked outside
-  window.addEventListener('click', function (e) {
-      const sidebar = document.querySelector('.sidebar');
-      const toggleBtn = document.querySelector('.sidebar-toggle-btn');
-      if (!sidebar.contains(e.target) && !toggleBtn.contains(e.target)) {
-          sidebar.classList.remove('open');
-      }
-  });
-
-  // Close the sidebar when close button is clicked
-  function closeSidebar() {
-      document.querySelector('.sidebar').classList.remove('open');
-  }
-</script>
-</body>
-</html>
+{% endblock content%}

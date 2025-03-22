@@ -1,0 +1,107 @@
+.popular-artists-container {
+    display: flex;
+    flex-direction: center; /* Встановлюємо вертикальне розташування елементів */
+    align-items: center; /* Центруємо елементи */
+    margin-left: 300px; /* Відступ для бокового меню */
+    margin-top: 20px;
+    background-color: #181818; /* Колір фону */
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 74%;
+}
+.popular-artists-container h2 {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+/* Стилі для блоків артистів */
+.popular-artists-container .artist-block {
+     display: inline-block;
+     width: 135px; /* Фіксована ширина кола */
+     height: 135px; /* Фіксована висота кола, яка дорівнює ширині */
+    margin-right: 1%;
+    text-align: center;
+    border-radius: 50%; /* Робить блок круглим */
+    overflow: hidden;
+    background-color: #222;
+    cursor: pointer;
+    transition: 0.3s;
+    position: relative;
+    }
+
+/* Стилі для блоків артистів */
+.artist-block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 120px;
+    height: 120px;
+    background-color: #222;
+    border-radius: 50%;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.artist-block img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Зберігає пропорції зображення */
+    object-position: center; /* Вирівнювання зображення по центру */
+}
+
+/* Ефект при наведенні на блок артиста */
+.artist-block:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.7);
+}
+
+/* Заголовок для популярних артистів */
+.popular-artists-container h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center; /* Центруємо заголовок */
+    color: #fff; /* Колір тексту */
+    margin-top: 0; /* Задаємо відступ зверху */
+    letter-spacing: 2px; /* Міжбуквений інтервал для кращого вигляду */
+}
+
+.popular-artists-container h2 span {
+    color: #f26f90; /* Колір частини тексту "Artists" */
+}
+
+
+/* Медіа-запит для екранів до 768px */
+@media (max-width: 768px) {
+    .popular-artists-container {
+        display: block; /* Змінюємо на блокову структуру для мобільних */
+        margin-left: 40px; /* Зменшення відступу для мобільних */
+    }
+
+    .artist-blocks {
+        display: flex; /* Горизонтальне відображення з двома колонками */
+        flex-wrap: wrap; /* Дозволяє переносити елементи */
+        justify-content: space-between; /* Простір між картками */
+        gap: 20px; /* Відстань між картками */
+    }
+
+    .artist-block {
+        flex-basis: calc(50% - 10px); /* Два стовпці для мобільних */
+        height: 120px;
+        margin-bottom: 20px; /* Відступ між картками */
+    }
+}
+
+/* Медіа-запит для дуже малих екранів (до 600px) */
+@media (max-width: 600px) {
+    .popular-artists-container {
+        padding: 10px; /* Зменшення відступів для дуже малих екранів */
+    }
+
+    .artist-block {
+        width: 90px; /* Зменшення ширини блоків для дуже малих екранів */
+        height: 90px;
+    }
+}

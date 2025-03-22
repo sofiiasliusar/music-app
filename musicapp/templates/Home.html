@@ -1,79 +1,17 @@
+{% extends "base.html" %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="uk">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trending Songs</title>
 
-    <link rel="stylesheet" href="{% static '/musicapp/сss/Heder.css' %}">
-    <link rel="stylesheet" href="{% static '/musicapp/сss/Footer.css' %}">
-    <link rel="stylesheet" href="{% static '/musicapp/сss/Sidebar.css' %}">
+{% block extra_css %}
     <link rel="stylesheet" href="{% static '/musicapp/сss/New-Release-Songs.css' %}">
     <link rel="stylesheet" href="{% static '/musicapp/сss/Trending-Songs.css' %}">
     <link rel="stylesheet" href="{% static '/musicapp/сss/Artists.css' %}">
     <link rel="stylesheet" href="{% static '/musicapp/сss/Join-Our-Platform.css' %}">
     <link rel="stylesheet" href="{% static '/musicapp/сss/ArtistsSidebar.css' %}">
-
-    <style>
-        
-
-    </style>
-    
-
-</head>
-<body>
-    <!-- Header -->
-    <header>
-        
-        <div class="nav">
-            <a href="{% url 'home' %}">Home</a>
-            <a href="{% url 'about' %}">About Us</a>
-            <a href="{% url 'premium' %}">Premium</a>
-        </div>
-    <div "bcfrt devxswzaqASZD"
-            <a href="#">Login</a>
-            <a href="#">Sign Up</a>
-        </div>
-    </header>
-    
-      
-<!-- Sidebar Toggle Button -->
-<button class="sidebar-toggle-btn" onclick="toggleSidebar()">
-    <img src="{% static '/musicapp/images/Melonix.png' %}" alt="Logo" class="sidebar-logo-icon">
-</button>
+{% endblock extra_css%}
 
 
-<!-- Sidebar -->
-<div class="sidebar">
-    <img src="{% static '/musicapp/images/Melonix.png' %}" alt="Logo" class="sidebar-logo">
-    <a href="{% url 'home' %}" class="sidebar-item">
-        <img src="{% static '/musicapp/images/Home.png' %}" alt="Home" class="sidebar-icon"> Home
-    </a>
-    <a href="{% url 'artists' %}" class="sidebar-item">
-        <img src="{% static '/musicapp/images/Singers.png' %}" alt="Artists" class="sidebar-icon"> Singers
-    </a>
-    <a href="{% url 'albums' %} " class="sidebar-item">
-        <img src="{% static '/musicapp/images/Albums.png' %}" alt="Albums" class="sidebar-icon"> Albums
-    </a>
-    <a href="{% url 'playlist' %}" class="sidebar-item">
-        <img src="{% static '/musicapp/images/Playlist.png' %}" alt="Your Playlist" class="sidebar-icon"> Playlist
-    </a>
-    <a href="{% url 'premium' %}" class="sidebar-item">
-        <img src="{% static '/musicapp/images/Premium1.png' %}" alt="Library" class="sidebar-icon"> Premium
-    </a>
-    <a href="{% url 'settings' %}" class="sidebar-item">
-        <img src="{% static '/musicapp/images/Settings.png' %}" alt="Settings" class="sidebar-icon"> Settings
-    </a>
-    <a href="#" class="sidebar-item">
-        <img src="{% static '/musicapp/images/Logout.png' %}" alt="Logout" class="sidebar-icon"> Logout
-    </a>
-</div>
-
-
-
-
+{% block content %}
 
 <!-- Нові релізи пісень -->
 <div class="new-release-container">
@@ -103,6 +41,7 @@
         <div class="song-title">Baixo<br><small>XXAnteria</small></div>
     </div>
 </div>
+
 
 <!-- Trending Songs -->
 <div class="playlist-container">
@@ -217,7 +156,6 @@
 </div>
 
 
-
 <!-- Popular Artists -->
 <div class="popular-artists-container">
 
@@ -272,53 +210,4 @@
 </div>
 
 
-  
-
-<!-- Footer -->
-<footer>
-    <div class="footer-column">
-        <h3>Melodies</h3>
-        <a href="#">Songs</a>
-        <a href="#">Radio</a>
-        <a href="#">Podcast</a>
-    </div>
-    <div class="footer-column">
-        <h3>Access</h3>
-        <a href="#">Explore</a>
-        <a href="#">Artists</a>
-        <a href="#">Playlists</a>
-        <a href="{% url 'albums' %}">Albums</a>
-        <a href="#">Trending</a>
-    </div>
-    <div class="footer-column">
-        <h3>Contact</h3>
-        <a href="{% url 'about' %}">About</a>
-        <a href="#">Policy</a>
-        <a href="#">Social Media</a>
-        <a href="#">Support</a>
-    </div>
-</footer>
-
-
-<script>
-  function toggleSidebar() {
-      const sidebar = document.querySelector('.sidebar');
-      sidebar.classList.toggle('open');
-  }
-
-  // Close sidebar when clicked outside
-  window.addEventListener('click', function (e) {
-      const sidebar = document.querySelector('.sidebar');
-      const toggleBtn = document.querySelector('.sidebar-toggle-btn');
-      if (!sidebar.contains(e.target) && !toggleBtn.contains(e.target)) {
-          sidebar.classList.remove('open');
-      }
-  });
-
-  // Close the sidebar when close button is clicked
-  function closeSidebar() {
-      document.querySelector('.sidebar').classList.remove('open');
-  }
-</script>
-</body>
-</html>
+{% endblock content%}

@@ -1,90 +1,20 @@
+{% extends "base.html" %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="uk">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trending Songs</title>
 
-    <link rel="stylesheet" href="{% static '/musicapp/сss/Heder2R.css' %}">
-    <link rel="stylesheet" href="{% static '/musicapp/сss/Footer.css' %}">
-    <link rel="stylesheet" href="{% static '/musicapp/сss/Sidebar.css' %}">
+{% block extra_css %}
     <link rel="stylesheet" href="{% static '/musicapp/сss/Albums.css' %}">
-    <link rel="stylesheet" href="{% static '/musicapp/сss/PleyList.css' %}">
+    <link rel="stylesheet" href="{% static '/musicapp/сss/Playlist.css' %}">
+{% endblock extra_css%}
 
-
-
-    <style>
-        
-        
-
-
-    </style>
-    
-
-</head>
-<body>
-    <!-- Header -->
-<header>
-    <div class="nav">
-        <a href="#">Home</a>
-        <a href="{% url 'about' %}">About Us</a>
-        <a href="#">Premium</a>
-    </div>
-    <div class="login-signup">
-        <input type="text" placeholder="Search..." class="search-input"> <!-- Нове поле вводу -->
-        <!-- Dropdown кнопка -->
-        <div class="dropdown">
-            <button class="dropbtn">
-                <img src="{% static '/musicapp/images/Melonix.png' %}" alt="Dropdown" class="dropdown-img"> <!-- Ваше зображення -->
-            </button>
-            <div class="dropdown-content">
-                <a href="{% url 'office' %}">Profile</a> <!-- Перехід до особистого кабінету -->
-            </div>
-        </div>
-    </div>
-</header>
-
-    
-      
-<!-- Sidebar Toggle Button -->
-<button class="sidebar-toggle-btn" onclick="toggleSidebar()">
-    <img src="{% static '/musicapp/images/Melonix.png' %}" alt="Logo" class="sidebar-logo-icon">
-</button>
-
-
-<!-- Sidebar -->
-<div class="sidebar">
-    <img src="{% static '/musicapp/images/Melonix.png' %}" alt="Logo" class="sidebar-logo">
-    <a href="#" class="sidebar-item">
-        <img src="{% static '/musicapp/images/Home.png' %}" alt="Home" class="sidebar-icon"> Home
-    </a>
-    <a href="#" class="sidebar-item">
-        <img src="{% static '/musicapp/images/Singers.png' %}" alt="Artists" class="sidebar-icon"> Singers
-    </a>
-    <a href="#" class="sidebar-item">
-        <img src="{% static '/musicapp/images/Albums.png' %}" alt="Albums" class="sidebar-icon"> Albums
-    </a>
-    <a href="#" class="sidebar-item">
-        <img src="{% static '/musicapp/images/Playlist.png' %}" alt="Your Playlist" class="sidebar-icon"> Playlist
-    </a>
-    <a href="#" class="sidebar-item">
-        <img src="{% static '/musicapp/images/Premium1.png' %}" alt="Library" class="sidebar-icon"> Premium
-    </a>
-    <a href="#" class="sidebar-item">
-        <img src="{% static '/musicapp/images/Settings.png' %}" alt="Settings" class="sidebar-icon"> Settings
-    </a>
-    <a href="#" class="sidebar-item">
-        <img src="{% static '/musicapp/images/Logout.png' %}" alt="Logout" class="sidebar-icon"> Logout
-    </a>
-</div>
-
-
+{% block content %}
 <!-- music-player-container --><!-- music-player-container -->
  <!-- music-player-container --><!-- music-player-container -->
   <!-- music-player-container --><!-- music-player-container -->
 <div class="music-player-container">
+    <audio id="audio-player">
+        <source src="https://muzem.net/uploads/music/2023/10/Prada_Cola_Ian_Asher_TikTok_Remix.mp3" type="audio/mpeg">
+    </audio>
     <div class="album-cover">
         <img src="{% static '/musicapp/images/Rectangle 1.png' %}" alt="Song Cover">
     </div>
@@ -94,12 +24,15 @@
     </div>
     <div class="controls">
         <button class="prev">◀</button>
-        <button class="play-pause">▶</button>
+        <button class="play-pause" onclick="togglePlayPause()">▶</button>
         <button class="next">▶</button>
     </div>
-    <div class="progress-bar">
-        <input type="range" value="0" max="100">
-        <span>0:00</span>
+    <div class="progress-bar" id="progress-bar">
+        <div class="progress" id="progress"></div>
+    </div>
+    <div class="time-stamps">
+        <span id="current-time">0:00</span>
+        <span id="total-duration">2:14</span>
     </div>
 </div>
 
@@ -132,7 +65,7 @@
                 <td>Nov 3, 2023</td>
                 <td>Hard to Imagine</td>
                 <td class="song-time">3:26</td>
-                <td>3:26 <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong()">▶</span></td>
+                <td>3:26 <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong(this, 'https://muzem.net/uploads/music/2023/10/Prada_Cola_Ian_Asher_TikTok_Remix.mp3')">▶</span></td>
             </tr>
             <tr>
                 <td>
@@ -142,7 +75,7 @@
                 <td>Oct 26, 2023</td>
                 <td>Nightmares</td>
                 <td class="song-time">3:20</td>
-                <td>3:26 <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong()">▶</span></td>
+                <td>3:26 <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong(this, 'https://muzem.net/uploads/music/2023/10/Prada_Cola_Ian_Asher_TikTok_Remix.mp3')">▶</span></td>
             </tr>
             <tr>
                 <td>
@@ -152,7 +85,7 @@
                 <td>Nov 30, 2023</td>
                 <td>Greedy</td>
                 <td class="song-time">3:10</td>
-                <td>3:26 <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong()">▶</span></td>
+                <td>3:26 <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong(this, 'https://muzem.net/uploads/music/2023/10/Prada_Cola_Ian_Asher_TikTok_Remix.mp3')">▶</span></td>
             </tr>
             <tr>
                 <td>
@@ -162,7 +95,7 @@
                 <td>Dec 15, 2023</td>
                 <td>Lovin On Me</td>
                 <td class="song-time">2:48</td>
-                <td>3:26 <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong()">▶</span></td>
+                <td>3:26 <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong(this, 'https://muzem.net/uploads/music/2023/10/Prada_Cola_Ian_Asher_TikTok_Remix.mp3')">▶</span></td>
             </tr>
             <tr>
                 <td>
@@ -172,7 +105,7 @@
                 <td>Dec 29, 2023</td>
                 <td>Pain The Town Red</td>
                 <td class="song-time">3:02</td>
-                <td>3:26 <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong()">▶</span></td>
+                <td>3:26 <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong(this, 'https://muzem.net/uploads/music/2023/10/Prada_Cola_Ian_Asher_TikTok_Remix.mp3')">▶</span></td>
             </tr>
           
             <tr>
@@ -183,7 +116,7 @@
                 <td>Nov 3, 2023</td>
                 <td>Hard to Imagine</td>
                 <td class="song-time">3:26</td>
-                <td>3:26 <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong()">▶</span></td>
+                <td>3:26 <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong(this, 'https://muzem.net/uploads/music/2023/10/Prada_Cola_Ian_Asher_TikTok_Remix.mp3')">▶</span></td>
             </tr>
             <tr>
                 <td>
@@ -193,7 +126,7 @@
                 <td>Oct 26, 2023</td>
                 <td>Nightmares</td>
                 <td class="song-time">3:20</td>
-                <td>3:26 <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong()">▶</span></td>
+                <td>3:26 <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong(this, 'https://muzem.net/uploads/music/2023/10/Prada_Cola_Ian_Asher_TikTok_Remix.mp3')">▶</span></td>
             </tr>
             <tr>
                 <td>
@@ -203,7 +136,7 @@
                 <td>Nov 30, 2023</td>
                 <td>Greedy</td>
                 <td class="song-time">3:10</td>
-                <td>3:26 <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong()">▶</span></td>
+                <td>3:26 <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong(this, 'https://muzem.net/uploads/music/2023/10/Prada_Cola_Ian_Asher_TikTok_Remix.mp3')">▶</span></td>
             </tr>
 
             <tr>
@@ -214,7 +147,7 @@
                 <td>Oct 26, 2023</td>
                 <td>Nightmares</td>
                 <td class="song-time">3:20</td>
-                <td>3:26 <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong()">▶</span></td>
+                <td>3:26 <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong(this, 'https://muzem.net/uploads/music/2023/10/Prada_Cola_Ian_Asher_TikTok_Remix.mp3')">▶</span></td>
             </tr>
             <tr>
                 <td>
@@ -224,7 +157,7 @@
                 <td>Oct 26, 2023</td>
                 <td>Nightmares</td>
                 <td class="song-time">3:20</td>
-                <td>3:26 <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong()">▶</span></td>
+                <td>3:26 <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong(this, 'https://muzem.net/uploads/music/2023/10/Prada_Cola_Ian_Asher_TikTok_Remix.mp3')">▶</span></td>
             </tr>
             <tr>
                 <td>
@@ -234,65 +167,111 @@
                 <td>Nov 30, 2023</td>
                 <td>Greedy</td>
                 <td class="song-time">3:10</td>
-                <td>3:26 <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong()">▶</span></td>
+                <td>3:26 <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong(this, 'https://muzem.net/uploads/music/2023/10/Prada_Cola_Ian_Asher_TikTok_Remix.mp3')">▶</span></td>
             </tr>
         </tbody>
     </table>
 </div>
 
 
+{% endblock content%}
 
-
-
-
-
-
-
-<!-- Footer -->
-<footer>
-    <div class="footer-column">
-        <h3>Melodies</h3>
-        <a href="#">Songs</a>
-        <a href="#">Radio</a>
-        <a href="#">Podcast</a>
-    </div>
-    <div class="footer-column">
-        <h3>Access</h3>
-        <a href="#">Explore</a>
-        <a href="#">Artists</a>
-        <a href="#">Playlists</a>
-        <a href="#">Albums</a>
-        <a href="#">Trending</a>
-    </div>
-    <div class="footer-column">
-        <h3>Contact</h3>
-        <a href="{% url 'about' %}">About</a>
-        <a href="#">Policy</a>
-        <a href="#">Social Media</a>
-        <a href="#">Support</a>
-    </div>
-</footer>
-
+{% block extra_scripts %}
 
 <script>
-  function toggleSidebar() {
-      const sidebar = document.querySelector('.sidebar');
-      sidebar.classList.toggle('open');
+
+  const audioPlayer = document.getElementById('audio-player');
+  const playPauseBtn = document.querySelector('.play-pause');
+  const progressBar = document.getElementById('progress-bar');
+  const progress = document.getElementById('progress');
+  const currentTimeElement = document.getElementById('current-time');
+  const totalDurationElement = document.getElementById('total-duration');
+  let currentSongElement = null;
+
+  function playSong(element, songUrl) {
+      if (currentSongElement === element) {
+          togglePlayPause();
+          return;
+        }
+
+      audioPlayer.src = songUrl;
+      audioPlayer.play();
+      playPauseBtn.innerHTML = "❚❚"; // Pause symbol
+      updateSongHighlight(element);
+      currentSongElement = element;
   }
 
-  // Close sidebar when clicked outside
-  window.addEventListener('click', function (e) {
-      const sidebar = document.querySelector('.sidebar');
-      const toggleBtn = document.querySelector('.sidebar-toggle-btn');
-      if (!sidebar.contains(e.target) && !toggleBtn.contains(e.target)) {
-          sidebar.classList.remove('open');
+  function togglePlayPause() {
+      if (audioPlayer.paused) {
+          audioPlayer.play();
+          playPauseBtn.innerHTML = "❚❚"; // Pause symbol
+          if (currentSongElement) {
+              currentSongElement.innerHTML = "❚❚";
+          }
+      } else {
+          audioPlayer.pause();
+          playPauseBtn.innerHTML = "▶";
+          if (currentSongElement) {
+              currentSongElement.innerHTML = "▶";
+          }
+      }
+  }
+  // Update progress bar as song plays
+  audioPlayer.addEventListener("timeupdate", () => {
+      if (!audioPlayer.duration) return;
+
+      const progressPercentage = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+      progress.style.width = `${progressPercentage}%`;
+
+      // Update current time display
+      const currentMinutes = Math.floor(audioPlayer.currentTime / 60);
+      const currentSeconds = Math.floor(audioPlayer.currentTime % 60);
+      currentTimeElement.textContent = `${currentMinutes}:${currentSeconds.toString().padStart(2, "0")}`;
+
+      // Set total duration when available
+      if (!totalDurationElement.textContent.includes(":") && !isNaN(audioPlayer.duration)) {
+          const totalMinutes = Math.floor(audioPlayer.duration / 60);
+          const totalSeconds = Math.floor(audioPlayer.duration % 60);
+          totalDurationElement.textContent = `${totalMinutes}:${totalSeconds.toString().padStart(2, "0")}`;
       }
   });
 
-  // Close the sidebar when close button is clicked
-  function closeSidebar() {
-      document.querySelector('.sidebar').classList.remove('open');
+  progressBar.addEventListener("click", (e) => {
+      if (!audioPlayer.duration) return;
+
+      const progressBarWidth = progressBar.clientWidth;
+      const clickX = e.offsetX;
+      audioPlayer.currentTime = (clickX / progressBarWidth) * audioPlayer.duration;
+
+      audioPlayer.currentTime = (clickX / progressBarWidth) * audioPlayer.duration;
+  });
+
+
+  function updateSongHighlight(element) {
+      if (currentSongElement) {
+          currentSongElement.innerHTML = "▶";
+      }
+      element.innerHTML = "❚❚";
   }
+
+  audioPlayer.addEventListener("ended", () => {
+    playPauseBtn.innerHTML = "▶"; // Change back to play icon when song ends
+    if (currentSongElement) {
+        currentSongElement.innerHTML = "▶"; // Reset the song element icon
+    }
+});
+
+  const prevBtn = document.querySelector('.prev');
+  const nextBtn = document.querySelector('.next');
+
+  prevBtn.addEventListener("click", () => {
+      audioPlayer.currentTime = Math.max(0, audioPlayer.currentTime - 10); // Go back 10 seconds
+  });
+
+  nextBtn.addEventListener("click", () => {
+      audioPlayer.currentTime = Math.min(audioPlayer.duration, audioPlayer.currentTime + 10); // Skip forward 10 seconds
+  });
+
 </script>
-</body>
-</html>
+{% endblock extra_scripts%}
+
