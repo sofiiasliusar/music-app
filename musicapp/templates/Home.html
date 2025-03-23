@@ -55,7 +55,7 @@
                 </td>
                 <td>{{ song.release_date|date:"M d, Y" }}</td>
                 <td>{{ song.album.name|default:"-" }}</td>
-                <td>{{ song.duration|format_duration }} <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong()">▶</span></td>
+                <td>{{ song.duration|format_duration }} <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong(this, '{{ song.audio_url }}')">▶</span></td>
             </tr>
             {% endfor %}
 
@@ -106,3 +106,4 @@
 
 
 {% endblock content%}
+
