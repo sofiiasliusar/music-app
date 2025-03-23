@@ -18,7 +18,7 @@ class Artist(models.Model):
 
     def get_image(self):
         """Returns the image URL, or the default placeholder if None."""
-        return self.image_url or "/static/images/artist-placeholder.jpg"
+        return self.image_url or "/static/musicapp/images/artist-placeholder.jpg"
 
     def __str__(self):
         return self.name
@@ -39,7 +39,7 @@ class SongCollection(models.Model):
 
     def get_image(self):
         """Returns the image URL, or the default placeholder if None."""
-        return self.image_url or "/static/images/playlist-placeholder.jpg"
+        return self.image_url or "/static/musicapp/images/playlist-placeholder.jpg"
 
     def __str__(self):
         return self.name
@@ -71,7 +71,7 @@ class Song(models.Model):
             return self.image_url  # Song has its own image
         if self.album and isinstance(self.album, ArtistAlbum) and self.album.image_url:  # isinstance so that IDE is not angry
             return self.album.image_url  # Fallback to album image
-        return "/static/images/song-placeholder.jpg"  # Fallback to placeholder image
+        return "/static/musicapp/images/song-placeholder.jpg"  # Fallback to placeholder image
 
     def __str__(self):
         return f"{self.name} by {self.artist.name}"
@@ -97,7 +97,7 @@ class UserPlaylist(SongCollection):
         first_song = self.get_songs().first()
         if first_song:
             return first_song.get_image()  # Use the first song's image, whether it's the song or album image
-        return "/static/images/playlist-placeholder.jpg"  # Fallback to playlist placeholder
+        return "/static/musicapp/images/playlist-placeholder.jpg"  # Fallback to playlist placeholder
 
 
 class UserPlaylistSong(models.Model):
