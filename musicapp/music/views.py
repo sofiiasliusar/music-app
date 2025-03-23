@@ -2,10 +2,18 @@ from django.shortcuts import render
 
 # Create your views here.
 from django.views.generic import TemplateView
+from .models import Song, Artist
 
 
 class HomeView(TemplateView):
     template_name = 'Home.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['new_releases'] = Song.objects.order_by('-release_date')[:6]  # Fetch latest 6 songs
+        context['trending_songs'] = Song.objects.order_by('-release_date')[:7]  # Example logic for trending
+        context['popular_artists'] = Artist.objects.all()[:7]  # Fetch first 6 artists
+        return context
 
 
 class ArtistsView(TemplateView):

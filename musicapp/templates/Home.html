@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load custom_filters %}
 
 
 {% block extra_css %}
@@ -13,33 +14,16 @@
 
 {% block content %}
 
+
 <!-- Нові релізи пісень -->
 <div class="new-release-container">
     <h2>New Release <span>Songs</span></h2>
+    {% for song in new_releases %}
     <div class="song-block">
-        <img src="{% static '/musicapp/images/The_Neighbourhood.png' %}" alt="Time">
-        <div class="song-title">Time<br><small>Luciano</small></div>
+        <img src="{{ song.get_image }}" alt="{{ song.name }}">
+        <div class="song-title">{{ song.name }}<br><small>{{ song.artist.name }}</small></div>
     </div>
-    <div class="song-block">
-        <img src="{% static '/musicapp/images/The_Neighbourhood_-_The_Neighbourhood 2.png' %}" alt="112">
-        <div class="song-title">112<br><small>jazzek</small></div>
-    </div>
-    <div class="song-block">
-        <img src="{% static '/musicapp/images/The_Neighbourhood_-_The_Neighbourhood 3.png' %}" alt="We Don't Care">
-        <div class="song-title">We Don't Care<br><small>Kyanu & DJ Gullum</small></div>
-    </div>
-    <div class="song-block">
-        <img src="{% static '/musicapp/images/The_Neighbourhood_-_The_Neighbourhood 8.png' %}" alt="Who I Am">
-        <div class="song-title">Who I Am<br><small>Alan Walker & Elias</small></div>
-    </div>
-    <div class="song-block">
-        <img src="{% static '/musicapp/images/The_Neighbourhood_-_The_Neighbourhood 8.png' %}" alt="Baixo">
-        <div class="song-title">Baixo<br><small>XXAnteria</small></div>
-    </div>
-    <div class="song-block">
-        <img src="{% static '/musicapp/images/The_Neighbourhood_-_The_Neighbourhood 7 (10).png' %}" alt="Baixo">
-        <div class="song-title">Baixo<br><small>XXAnteria</small></div>
-    </div>
+    {% endfor %}
 </div>
 
 
@@ -58,97 +42,23 @@
             </tr>
         </thead>
         <tbody>
+
+            {% for song in trending_songs %}
             <tr>
-                <td>#1</td>
+                <td>{{ forloop.counter }}</td>
                 <td class="song-title">
-                    <img src="{% static '/musicapp/images/The_Neighbourhood.png' %}" alt="Sorfcore">
+                    <img src="{{ song.get_image }}" alt="{{ song.name }}">
                     <div>
-                        <strong>Sorfcore</strong><br>
-                        <small>The Neighbourhood</small>
+                        <strong>{{ song.name }}</strong><br>
+                        <small>{{ song.artist.name }}</small>
                     </div>
                 </td>
-                <td>Nov 4, 2023</td>
-                <td>Hard to Imagine</td>
-                <td>3:26 <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong()">▶</span></td>
+                <td>{{ song.release_date|date:"M d, Y" }}</td>
+                <td>{{ song.album.name|default:"-" }}</td>
+                <td>{{ song.duration|format_duration }} <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong()">▶</span></td>
             </tr>
-            <tr>
-                <td>#2</td>
-                <td class="song-title">
-                    <img src="{% static '/musicapp/images/The_Neighbourhood_-_The_Neighbourhood 2.png' %}" alt="Skyfall Beats">
-                    <div>
-                        <strong>Skyfall Beats</strong><br>
-                        <small>Nightmares</small>
-                    </div>
-                </td>
-                <td>Oct 26, 2023</td>
-                <td>Nightmares</td>
-                <td>3:26 <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong()">▶</span></td>
-            </tr>
-            <tr>
-                <td>#3</td>
-                <td class="song-title">
-                    <img src="{% static '/musicapp/images/The_Neighbourhood_-_The_Neighbourhood 3.png' %}" alt="Greedy">
-                    <div>
-                        <strong>Greedy</strong><br>
-                        <small>Tate McRae</small>
-                    </div>
-                </td>
-                <td>Dec 30, 2023</td>
-                <td>Greedy</td>
-                <td>3:26 <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong()">▶</span></td>
-            </tr>
-            <tr>
-                <td>#4</td>
-                <td class="song-title">
-                    <img src="{% static '/musicapp/images/The_Neighbourhood_-_The_Neighbourhood 4.png' %}" alt="Lovin On Me">
-                    <div>
-                        <strong>Lovin On Me</strong><br>
-                        <small>Jack Harlow</small>
-                    </div>
-                </td>
-                <td>Dec 30, 2023</td>
-                <td>Lovin On Me</td>
-                <td>3:26 <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong()">▶</span></td>
-            </tr>
-            <tr>
-                <td>#5</td>
-                <td class="song-title">
-                    <img src="{% static '/musicapp/images/The_Neighbourhood.png' %}" alt="Paint The Town Red">
-                    <div>
-                        <strong>Paint The Town Red</strong><br>
-                        <small>Doja Cat</small>
-                    </div>
-                </td>
-                <td>Dec 29, 2023</td>
-                <td>Paint The Town Red</td>
-                <td>3:26 <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong()">▶</span></td>
-            </tr>
-            <tr>
-                <td>#6</td>
-                <td class="song-title">
-                    <img src="{% static '/musicapp/images/The_Neighbourhood_-_The_Neighbourhood 6.png' %}" alt="Dancin On Night">
-                    <div>
-                        <strong>Dancin On Night</strong><br>
-                        <small>Dua Lipa</small>
-                    </div>
-                </td>
-                <td>May 27, 2023</td>
-                <td>Dance The Night</td>
-                <td>3:26 <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong()">▶</span></td>
-            </tr>
-            <tr>
-                <td>#7</td>
-                <td class="song-title">
-                    <img src="{% static '/musicapp/images/The_Neighbourhood_-_The_Neighbourhood 7.png' %}" alt="Water">
-                    <div>
-                        <strong>Water</strong><br>
-                        <small>Tyla</small>
-                    </div>
-                </td>
-                <td>Dec 10, 2023</td>
-                <td>Water</td>
-                <td>3:26 <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong()">▶</span></td>
-            </tr>
+            {% endfor %}
+
         </tbody>
     </table>
 
@@ -159,27 +69,12 @@
 <!-- Popular Artists -->
 <div class="popular-artists-container">
 
+    {% for artist in popular_artists %}
     <div class="artist-block">
-        <img src="{% static '/musicapp/images/Eminiem.png' %}" alt="Eminem">
+        <img src="{{ artist.get_image }}" alt="{{ artist.name }}">
     </div>
-    <div class="artist-block">
-        <img src="{% static '/musicapp/images/The Weekend_1.png' %}" alt="The Weekend">
-    </div>
-    <div class="artist-block">
-        <img src="{% static '/musicapp/images/Adele_1.png' %}" alt="Adele">
-    </div>
-    <div class="artist-block">
-        <img src="{% static '/musicapp/images/Lana Del Ray_1.png' %}" alt="Lana Del Ray">
-    </div>
-    <div class="artist-block">
-        <img src="{% static '/musicapp/images/Harry Styles.png' %}" alt="Harry Styles">
-    </div>
-    <div class="artist-block">
-        <img src="{% static '/musicapp/images/Billie Eilish.png' %}" alt="Billie Eilish">
-    </div>
-    <div class="artist-block">
-        <img src="{% static '/musicapp/images/Adele.png' %}" alt="Lana Del Ray">
-    </div>
+    {% endfor %}
+
 </div>
 
 
