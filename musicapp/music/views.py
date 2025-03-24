@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
 # Create your views here.
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, DetailView
 from .models import Song, Artist
 
 
@@ -18,6 +18,21 @@ class HomeView(TemplateView):
 
 class ArtistsView(TemplateView):
     template_name = 'Artists.html'
+
+
+class ArtistDetailView(DetailView):
+    model = Artist
+    template_name = 'ArtistDetail.html'
+    context_object_name = 'artist'
+    slug_field = 'slug'  # use slug for lookup
+    slug_url_kwarg = 'slug'  # match url parameter
+
+    def get_context_data(self, **kwargs):
+        """Add the artist's songs to the context."""
+        context = super().get_context_data(**kwargs)
+        context['songs'] = self.object.songs.all()
+        context['albums'] = self.object.albums.all()
+        return context
 
 
 class AlbumView(TemplateView):

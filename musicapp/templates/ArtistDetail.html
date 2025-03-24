@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% load static %}
+{% load custom_filters %}
+
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static '/musicapp/сss/Albums.css' %}">
+    <link rel="stylesheet" href="{% static '/musicapp/сss/ArtistsSidebar.css' %}">
+    <link rel="stylesheet" href="{% static '/musicapp/сss/New-Release-Songs.css' %}">
+
+{% endblock extra_css%}
+
+
+{% block content %}
+
+
+
+<!-- Контейнер для картинки з текстом -->
+<div class="image-container">
+    <img src="{{ artist.get_detail_image }}" alt="{{ artist.name }}" class="image">
+    <div class="text-overlay"> {{ artist.name }} </div>
+</div>
+
+
+<!-- Audio Player -->
+<audio id="audio-player"></audio>
+
+<!-- Table for Trending Songs -->
+<div class="song-table-container">
+    <table class="song-table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Release Date</th>
+                <th>Singer</th>
+                <th>Time</th>
+                <th>Play</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for song in songs %}
+                <tr>
+                    <td>
+                        <!-- Фото для кожного треку -->
+                        <img src="{{ song.get_image }}" alt="{{ song.name }}" class="song-cover"> {{ song.name }}
+                    </td>
+                    <td>{{ song.release_date|date:"M d, Y" }}</td>
+                    <td>{{ artist.name }}</td>
+                    <td class="song-time">{{ song.duration|format_duration }}</td>
+                    <td>{{ song.duration|format_duration }} <span class="heart-icon">❤</span> <span class="play-icon" onclick="togglePlay(this, '{{ song.audio_url }}')">▶</span></td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="5">No songs available for this artist.</td>
+                </tr>
+            {% endfor %}
+
+        </tbody>
+    </table>
+</div>
+
+
+<!-- Нові релізи пісень -->
+<div class="new-release-container">
+    <h2>Artist’s  <span>Playlist</span></h2>
+    <div class="song-block">
+        <img src="{% static '/musicapp/images/Rectangle_17__1_-removebg-preview.png' %}" alt="Time">
+        <div class="song-title">Time<br><small>Luciano</small></div>
+    </div>
+    <div class="song-block">
+        <img src="{% static '/musicapp/images/Rectangle_17__2_-removebg-preview.png' %}" alt="112">
+        <div class="song-title">112<br><small>jazzek</small></div>
+    </div>
+    <div class="song-block">
+        <img src="{% static '/musicapp/images/Rectangle_17__3_-removebg-preview.png' %}" alt="We Don't Care">
+        <div class="song-title">We Don't Care<br><small>Kyanu & DJ Gullum</small></div>
+    </div>
+    <div class="song-block">
+        <img src="{% static '/musicapp/images/Rectangle_17__4_-removebg-preview.png' %}" alt="Who I Am">
+        <div class="song-title">Who I Am<br><small>Alan Walker & Elias</small></div>
+    </div>
+    <div class="song-block">
+        <img src="{% static '/musicapp/images/Rectangle 1.png' %}" alt="Baixo">
+        <div class="song-title">Baixo<br><small>XXAnteria</small></div>
+    </div>
+    <div class="song-block">
+        <img src="{% static '/musicapp/images/Rectangle 2.png' %}" alt="Baixo">
+        <div class="song-title">Baixo<br><small>XXAnteria</small></div>
+    </div>
+</div>
+
+<!-- Нові релізи пісень -->
+<div class="new-release-container">
+    <h2>Artist’s  <span>Albums</span></h2>
+    {% for album in albums %}
+        <div class="song-block">
+            <img src="{{ album.get_image }}" alt="{{ album.name }}">
+            <div class="song-title">{{ album.name }}<br><small>{{ album.owner.name }}</small></div>
+        </div>
+
+    {% empty %}
+        <tr>
+            <td colspan="5">No albums available for this artist.</td>
+        </tr>
+    {% endfor %}
+
+
+</div>
+
+{% endblock content%}
+
+
+{% block extra_scripts %}
+<script src="{% static '/musicapp/js/player.js' %}"></script>
+{% endblock extra_scripts%}

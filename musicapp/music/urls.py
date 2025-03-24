@@ -10,5 +10,5 @@ urlpatterns = [
     path('premium/', views.PremiumView.as_view(), name="premium"),
     path('settings/', views.SettingsView.as_view(), name="settings"),
     path('office/', views.OfficeView.as_view(), name="office"),
-
+    path('artist/<slug:slug>/', views.ArtistDetailView.as_view(), name='artist_detail'),
 ]

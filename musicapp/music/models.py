@@ -1,5 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
+from django.utils.text import slugify
+
 
 # Create your models here.
 
@@ -12,13 +15,29 @@ class Genre(models.Model):
 
 
 class Artist(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, unique=True)
+    slug = models.SlugField(max_length=150, null=False, unique=True)
     genres = models.ManyToManyField(Genre, related_name="artists", blank=True)
-    image_url = models.URLField(blank=True, null=True)
+    profile_image = models.URLField(blank=True, null=True)
+    detail_image = models.URLField(blank=True, null=True)
 
-    def get_image(self):
-        """Returns the image URL, or the default placeholder if None."""
-        return self.image_url or "/static/musicapp/images/artist-placeholder.jpg"
+    def get_absolute_url(self):
+        """Returns the URL for the artist's detail page using slug."""
+        return reverse('artist_detail', args=[self.slug])
+
+    def save(self, *args, **kwargs):
+        """Automatically generate a slug from the artist's name if not provided."""
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+
+    def get_profile_image(self):
+        """Returns the profile image URL, or the default placeholder if None."""
+        return self.profile_image or "/static/musicapp/images/artist-placeholder.jpg"
+
+    def get_detail_image(self):
+        """Returns the detail image URL, or the default placeholder if None."""
+        return self.detail_image or "/static/musicapp/images/detail-placeholder.jpg"
 
     def __str__(self):
         return self.name
@@ -46,7 +65,7 @@ class SongCollection(models.Model):
 
 
 class ArtistAlbum(SongCollection):
-    owner = models.ForeignKey('Artist', on_delete=models.CASCADE)
+    owner = models.ForeignKey('Artist', on_delete=models.CASCADE, related_name="albums")
     release_date = models.DateField()
     genres = models.ManyToManyField(Genre, related_name="albums", blank=True)
 
