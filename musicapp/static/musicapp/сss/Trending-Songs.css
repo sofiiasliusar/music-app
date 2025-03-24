@@ -186,6 +186,7 @@ h1 span {
     .song-title {
         flex-direction: column; /* Зменшуємо простір між елементами */
         align-items: center;
+        cursor: pointer;
     }
 
     .view-all {
