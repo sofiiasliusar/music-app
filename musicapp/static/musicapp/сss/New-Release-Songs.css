@@ -34,6 +34,7 @@
     margin-right: 10px;
     margin-bottom: 15px; /* Відступ між піснями */
     transition: transform 0.3s ease;
+    cursor: pointer;
 }
 
 .song-block:hover {
