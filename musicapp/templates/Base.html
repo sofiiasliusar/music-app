@@ -8,108 +8,35 @@
     <title>Trending Songs</title>
 
     <link rel="stylesheet" href="{% static '/musicapp/сss/Heder2R.css' %}">
-    <link rel="stylesheet" href="{% static '/musicapp/сss/Footer.css' %}">
     <link rel="stylesheet" href="{% static '/musicapp/сss/Sidebar.css' %}">
+    <link rel="stylesheet" href="{% static '/musicapp/сss/Footer.css' %}">
+    <link rel="stylesheet" href="{% static '/musicapp/сss/BottomPlayer.css' %}">
+
     {% block extra_css %}{% endblock extra_css%}
 </head>
 
 <body>
-    <!-- Header -->
-<header>
-    <div class="nav">
-        <a href="#">Home</a>
-        <a href="{% url 'about' %}">About Us</a>
-        <a href="#">Premium</a>
-    </div>
-    <div class="login-signup">
-        {% if request.resolver_match.url_name == 'home' %}
-        <!-- Elements for Home Page -->
-            <input type="text" placeholder="Search..." class="search-input"> <!-- Нове поле вводу -->
-            <a href="#">Login</a>
-            <a href="#">Sign Up</a>
-        {% else %}
-        <!-- Elements for Other Pages -->
-            <input type="text" placeholder="Search..." class="search-input"> <!-- Нове поле вводу -->
-            <!-- Dropdown кнопка -->
-            <div class="dropdown">
-                <button class="dropbtn">
-                    <img src="{% static '/musicapp/images/Melonix.png' %}" alt="Dropdown" class="dropdown-img"> <!-- Ваше зображення -->
-                </button>
-                <div class="dropdown-content">
-                    <a href="{% url 'office' %}">Profile</a> <!-- Перехід до особистого кабінету -->
-                </div>
-            </div>
-        {% endif %}
-
-    </div>
-</header>
-
-    
-      
-<!-- Sidebar Toggle Button -->
-<button class="sidebar-toggle-btn" onclick="toggleSidebar()">
-    <img src="{% static '/musicapp/images/Melonix.png' %}" alt="Logo" class="sidebar-logo-icon">
-</button>
+<!-- Header -->
+{% include 'Header.html' %}
 
 <!-- Sidebar -->
-<div class="sidebar">
-    <img src="{% static '/musicapp/images/Melonix.png' %}" alt="Logo" class="sidebar-logo">
-    <a href="{% url 'home' %}" class="sidebar-item">
-        <img src="{% static '/musicapp/images/Home.png' %}" alt="Home" class="sidebar-icon"> Home
-    </a>
-    <a href="{% url 'artists' %}" class="sidebar-item">
-        <img src="{% static '/musicapp/images/Singers.png' %}" alt="Artists" class="sidebar-icon"> Singers
-    </a>
-    <a href="{% url 'albums' %} " class="sidebar-item">
-        <img src="{% static '/musicapp/images/Albums.png' %}" alt="Albums" class="sidebar-icon"> Albums
-    </a>
-    <a href="{% url 'playlist' %}" class="sidebar-item">
-        <img src="{% static '/musicapp/images/Playlist.png' %}" alt="Your Playlist" class="sidebar-icon"> Playlist
-    </a>
-    <a href="{% url 'premium' %}" class="sidebar-item">
-        <img src="{% static '/musicapp/images/Premium1.png' %}" alt="Library" class="sidebar-icon"> Premium
-    </a>
-    <a href="{% url 'settings' %}" class="sidebar-item">
-        <img src="{% static '/musicapp/images/Settings.png' %}" alt="Settings" class="sidebar-icon"> Settings
-    </a>
-    <a href="#" class="sidebar-item">
-        <img src="{% static '/musicapp/images/Logout.png' %}" alt="Logout" class="sidebar-icon"> Logout
-    </a>
-</div>
-
+{% include 'Sidebar.html' %}
 
     {%  block content %}
         <!-- Content goes here -->
     {%  endblock content %}
 
+<!-- Player Controls -->
+{% include 'BottomPlayer.html' %}
+
 <!-- Footer -->
-<footer>
-    <div class="footer-column">
-        <h3>Melodies</h3>
-        <a href="#">Songs</a>
-        <a href="#">Radio</a>
-        <a href="#">Podcast</a>
-    </div>
-    <div class="footer-column">
-        <h3>Access</h3>
-        <a href="#">Explore</a>
-        <a href="#">Artists</a>
-        <a href="#">Playlists</a>
-        <a href="#">Albums</a>
-        <a href="#">Trending</a>
-    </div>
-    <div class="footer-column">
-        <h3>Contact</h3>
-        <a href="{% url 'about' %}">About</a>
-        <a href="#">Policy</a>
-        <a href="#">Social Media</a>
-        <a href="#">Support</a>
-    </div>
-</footer>
+{% include 'Footer.html' %}
+
 
 
 <!-- Common JavaScript included here -->
 <script src="{% static '/musicapp/js/sidebar.js' %}"></script>
+<script src="{% static '/musicapp/js/player.js' %}"></script>
 {% block extra_scripts %}{% endblock extra_scripts%}
 </body>
 </html>

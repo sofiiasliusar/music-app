@@ -1,0 +1,32 @@
+{% load static %}
+
+<!-- Sidebar Toggle Button -->
+<button class="sidebar-toggle-btn" onclick="toggleSidebar()">
+    <img src="{% static '/musicapp/images/Melonix.png' %}" alt="Logo" class="sidebar-logo-icon">
+</button>
+
+<!-- Sidebar -->
+<div class="sidebar">
+    <img src="{% static '/musicapp/images/Melonix.png' %}" alt="Logo" class="sidebar-logo">
+    <a href="{% url 'home' %}" class="sidebar-item">
+        <img src="{% static '/musicapp/images/Home.png' %}" alt="Home" class="sidebar-icon"> Home
+    </a>
+    <a href="{% url 'artists' %}" class="sidebar-item">
+        <img src="{% static '/musicapp/images/Singers.png' %}" alt="Artists" class="sidebar-icon"> Singers
+    </a>
+    <a href="{% url 'albums' %} " class="sidebar-item">
+        <img src="{% static '/musicapp/images/Albums.png' %}" alt="Albums" class="sidebar-icon"> Albums
+    </a>
+    <a href="{% url 'playlist' %}" class="sidebar-item">
+        <img src="{% static '/musicapp/images/Playlist.png' %}" alt="Your Playlist" class="sidebar-icon"> Playlist
+    </a>
+    <a href="{% url 'premium' %}" class="sidebar-item">
+        <img src="{% static '/musicapp/images/Premium1.png' %}" alt="Library" class="sidebar-icon"> Premium
+    </a>
+    <a href="{% url 'settings' %}" class="sidebar-item">
+        <img src="{% static '/musicapp/images/Settings.png' %}" alt="Settings" class="sidebar-icon"> Settings
+    </a>
+    <a href="#" class="sidebar-item">
+        <img src="{% static '/musicapp/images/Logout.png' %}" alt="Logout" class="sidebar-icon"> Logout
+    </a>
+</div>
