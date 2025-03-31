@@ -65,14 +65,18 @@
     <div class="view-all">+ View All</div>
 </div>
 
+<!-- Audio Player -->
+<audio id="audio-player"></audio>
 
 <!-- Popular Artists -->
 <div class="popular-artists-container">
 
     {% for artist in popular_artists %}
-    <div class="artist-block">
-        <img src="{{ artist.get_image }}" alt="{{ artist.name }}">
-    </div>
+    <a href="   {{ artist.get_absolute_url }}">
+        <div class="artist-block">
+            <img src="{{ artist.get_profile_image }}" alt="{{ artist.name }}">
+        </div>
+    </a>
     {% endfor %}
 
 </div>
@@ -106,4 +110,6 @@
 
 
 {% endblock content%}
+
+
 
