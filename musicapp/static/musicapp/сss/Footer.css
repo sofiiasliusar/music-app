@@ -2,6 +2,7 @@
 footer {
     background: linear-gradient(90deg, #be3ccc, #9724a3);  /* Градієнтний фон для футера */
     padding: 30px 100px;  /* Відступи по вертикалі 30px, по горизонталі 100px */
+    padding-bottom: 100px;
     color: white;
     text-align: center;
     font-size: 16px;
