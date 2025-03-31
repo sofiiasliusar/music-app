@@ -42,6 +42,11 @@ class AlbumView(TemplateView):
 class PlaylistView(TemplateView):
     template_name = 'Playlist.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['playlist_songs'] = Song.objects.order_by('-release_date')[:5]  # Example logic for playlist
+        return context
+
 
 class PremiumView(TemplateView):
     template_name = 'Premium.html'
