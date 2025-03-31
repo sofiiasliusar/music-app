@@ -23,13 +23,22 @@ function togglePlay(icon, audioUrl) {
 }
 
 const audioPlayer = document.getElementById('bottom-audio-player');
-  const playPauseBtn = document.querySelector('.play-pause');
-  const progressBar = document.getElementById('progress-bar');
-  const progress = document.getElementById('progress');
-  const currentTimeElement = document.getElementById('current-time');
-  const totalDurationElement = document.getElementById('total-duration');
-  let currentSongElement = null;
 
+  // const playPauseBtn = document.querySelector('.play-pause');
+  // const progressBar = document.getElementById('progress-bar');
+  // const progress = document.getElementById('progress');
+  // const currentTimeElement = document.getElementById('current-time');
+  // const totalDurationElement = document.getElementById('total-duration');
+  let currentSongElement = null;
+    const playPauseButtons = document.querySelectorAll('.play-pause');
+
+    // Get progress bars
+    const progressBars = document.querySelectorAll('.progress-bar');
+    const progressIndicators = document.querySelectorAll('.progress');
+
+    // Get current time & duration elements
+    const currentTimeElements = document.querySelectorAll('#current-time');
+    const totalDurationElements = document.querySelectorAll('#total-duration');
   function playSong(element, songUrl) {
       if (currentSongElement === element) {
           togglePlayPause();
@@ -38,14 +47,14 @@ const audioPlayer = document.getElementById('bottom-audio-player');
 
       audioPlayer.pause();
       progress.style.width = "0%";
-      currentTimeElement.textContent = "0:00";
-      totalDurationElement.textContent = "0:00";
+      currentTimeElements.forEach(timeElement => timeElement.textContent = "0:00");
+      totalDurationElements.forEach(totalElement => totalElement.textContent = "0:00");
       audioPlayer.src = songUrl;
-      playPauseBtn.innerHTML = "▶";
+      playPauseButtons.forEach(btn => btn.innerHTML = "▶");
 
       setTimeout(() => {
           audioPlayer.play();
-          playPauseBtn.innerHTML = "❚❚";
+          playPauseButtons.forEach(btn => btn.innerHTML = "❚❚");
           updateSongHighlight(element);
           currentSongElement = element;
           }, 500); // Wait for half a second before playing the new song
@@ -54,13 +63,13 @@ const audioPlayer = document.getElementById('bottom-audio-player');
   function togglePlayPause() {
       if (audioPlayer.paused) {
           audioPlayer.play();
-          playPauseBtn.innerHTML = "❚❚"; // Pause symbol
+          playPauseButtons.forEach(btn => btn.innerHTML = "❚❚"); // Pause symbol
           if (currentSongElement) {
               currentSongElement.innerHTML = "❚❚";
           }
       } else {
           audioPlayer.pause();
-          playPauseBtn.innerHTML = "▶";
+          playPauseButtons.forEach(btn => btn.innerHTML = "▶");
           if (currentSongElement) {
               currentSongElement.innerHTML = "▶";
           }
@@ -72,7 +81,7 @@ const audioPlayer = document.getElementById('bottom-audio-player');
     if (!isNaN(audioPlayer.duration)) {
         const totalMinutes = Math.floor(audioPlayer.duration / 60);
         const totalSeconds = Math.floor(audioPlayer.duration % 60);
-        totalDurationElement.textContent = `${totalMinutes}:${totalSeconds.toString().padStart(2, "0")}`;
+        totalDurationElements.forEach(e => e.textContent = `${totalMinutes}:${totalSeconds.toString().padStart(2, "0")}`);
     }
 });
 
@@ -81,12 +90,15 @@ const audioPlayer = document.getElementById('bottom-audio-player');
       if (!audioPlayer.duration) return;  //  audio is not loaded yet, so the function exits early;
 
       const progressPercentage = (audioPlayer.currentTime / audioPlayer.duration) * 100;
-      progress.style.width = `${progressPercentage}%`;
+        progressIndicators.forEach(indicator => {
+            indicator.style.width = `${progressPercentage}%`;
+        });
+      // progress.style.width = `${progressPercentage}%`;
 
       // Update current time display
       const currentMinutes = Math.floor(audioPlayer.currentTime / 60);
       const currentSeconds = Math.floor(audioPlayer.currentTime % 60);
-      currentTimeElement.textContent = `${currentMinutes}:${currentSeconds.toString().padStart(2, "0")}`;
+      currentTimeElements.forEach(e => e.textContent = `${currentMinutes}:${currentSeconds.toString().padStart(2, "0")}`);
 
       // Set total duration when available
       // if (!totalDurationElement.textContent.includes(":") && !isNaN(audioPlayer.duration)) {
@@ -96,14 +108,14 @@ const audioPlayer = document.getElementById('bottom-audio-player');
       // }
   });
 
-  progressBar.addEventListener("click", (e) => {
+  progressBars.forEach(bar => bar.addEventListener("click", (e) => {
       if (!audioPlayer.duration) return;  //  audio is not loaded yet, so the function exits early;
 
-      const progressBarWidth = progressBar.clientWidth;
+      const progressBarWidth = bar.clientWidth;
       const clickX = e.offsetX;
       audioPlayer.currentTime = (clickX / progressBarWidth) * audioPlayer.duration;
 
-  });
+  }));
 
 
   function updateSongHighlight(element) {
@@ -114,20 +126,20 @@ const audioPlayer = document.getElementById('bottom-audio-player');
   }
 
   audioPlayer.addEventListener("ended", () => {
-    playPauseBtn.innerHTML = "▶"; // Change back to play icon when song ends
+    playPauseButtons.forEach(btn => btn.innerHTML = "▶"); // Change back to play icon when song ends
     if (currentSongElement) {
         currentSongElement.innerHTML = "▶"; // Reset the song element icon
     }
 });
 
-  const prevBtn = document.querySelector('.skip-back');
-  const nextBtn = document.querySelector('.skip-forward');
+  const prevButtons = document.querySelectorAll('.skip-back');
+  const nextButtons = document.querySelectorAll('.skip-forward');
 
-  prevBtn.addEventListener("click", () => {
+  prevButtons.forEach(btn => btn.addEventListener("click", () => {
       audioPlayer.currentTime = Math.max(0, audioPlayer.currentTime - 10); // Go back 10 seconds
-  });
+  }));
 
-  nextBtn.addEventListener("click", () => {
+  nextButtons.forEach(btn => btn.addEventListener("click", () => {
       audioPlayer.currentTime = Math.min(audioPlayer.duration, audioPlayer.currentTime + 10); // Skip forward 10 seconds
-  });
+  }));
 
