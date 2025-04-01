@@ -22,8 +22,6 @@
 </div>
 
 
-<!-- Audio Player -->
-<audio id="audio-player"></audio>
 
 <!-- Table for Trending Songs -->
 <div class="song-table-container">
@@ -47,7 +45,7 @@
                     <td>{{ song.release_date|date:"M d, Y" }}</td>
                     <td>{{ artist.name }}</td>
                     <td class="song-time">{{ song.duration|format_duration }}</td>
-                    <td>{{ song.duration|format_duration }} <span class="heart-icon">❤</span> <span class="play-icon" onclick="togglePlay(this, '{{ song.audio_url }}')">▶</span></td>
+                    <td>{{ song.duration|format_duration }} <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong(this, '{{ song.audio_url }}')">▶</span></td>
                 </tr>
             {% empty %}
                 <tr>
