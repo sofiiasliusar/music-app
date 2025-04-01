@@ -140,6 +140,25 @@
     color: #1DB954;
 }
 
+.view-all {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #222;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 20px;
+    transition: 0.3s;
+}
+
+.view-all:hover {
+    background: #333;
+}
+
 /* Адаптація для мобільних */
 @media (max-width: 768px) {
     /* Trending songs mix */
