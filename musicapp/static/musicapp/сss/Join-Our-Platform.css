@@ -78,8 +78,9 @@
 }
 
 /* Кнопка для реєстрації через Google */
-.form-container .google-signup {
+.form-container .social-signup {
     width: 100%; /* Забезпечуємо ширину на 100% */
+    height: 40px;
     padding: 10px;
     background-color: #4285F4;
     color: white;
@@ -95,15 +96,23 @@
     box-sizing: border-box; /* Враховуємо відступи і рамки в ширині */
 }
 
-.form-container .google-signup:hover {
+.form-container .social-signup:hover {
     background-color: #357AE8;
 }
-
 /* Іконка Google */
-.form-container .google-signup img {
-    width: 20px;
+#google-img {
+    width: 25px;
     height: 20px;
 }
+#facebook-img {
+    width: 30px;
+    height: 20px;
+}
+#apple-img {
+    width: 25px;
+    height: 25px;
+}
+
 
 /* Медіа-запит для мобільних пристроїв */
 @media (max-width: 768px) {

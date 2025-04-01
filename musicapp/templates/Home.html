@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="{% static '/musicapp/сss/Artists.css' %}">
     <link rel="stylesheet" href="{% static '/musicapp/сss/Join-Our-Platform.css' %}">
     <link rel="stylesheet" href="{% static '/musicapp/сss/ArtistsSidebar.css' %}">
+    <link rel="stylesheet" href="{% static '/musicapp/сss/ModalRegister.css' %}">
 {% endblock extra_css%}
 
 
@@ -19,10 +20,12 @@
 <div class="new-release-container">
     <h2>New Release <span>Songs</span></h2>
     {% for song in new_releases %}
-    <div class="song-block">
-        <img src="{{ song.get_image }}" alt="{{ song.name }}">
-        <div class="song-title">{{ song.name }}<br><small>{{ song.artist.name }}</small></div>
-    </div>
+    <a href="{% url 'song' %}">
+        <div class="song-block">
+            <img src="{{ song.get_image }}" alt="{{ song.name }}">
+            <div class="song-title">{{ song.name }}<br><small>{{ song.artist.name }}</small></div>
+        </div>
+    </a>
     {% endfor %}
 </div>
 
@@ -91,7 +94,7 @@
     </div>
 
     <!-- Form Section -->
-    <div class="form-container">
+    <div id="signup-form" class="form-container">
         <h1>Sign Up</h1>
         <form>
             <input type="text" placeholder="Enter Your Name" required>
@@ -99,15 +102,111 @@
             <input type="email" placeholder="Enter Your E-Mail" required>
             <button type="submit">Sign Up</button>
         </form>
-        <button class="google-signup">
-            <img src="{% static '/musicapp/images/devicon_google.png' %}" alt="Google Icon" width="20" height="20">
+        <button class="social-signup">
+            <img id="google-img" src="{% static '/musicapp/images/Google.png' %}" alt="Google Icon" width="20" height="20">
             Sign Up With Google
+        </button>
+        <button class="social-signup">
+            <img id="facebook-img" src="{% static '/musicapp/images/Facebook.png' %}" alt="Google Icon" width="20" height="20">
+            Sign Up With Facebook
+        </button>
+        <button class="social-signup">
+            <img id="apple-img" src="{% static '/musicapp/images/apple.png' %}" alt="Google Icon" width="20" height="20">
+            Sign Up With Apple
         </button>
     </div>
 </div>
 
+<!--<div id="modal-register" class="modal">-->
+<!--  <div class="modal-content">-->
+<!--    <h2>Реєстрація</h2>-->
+<!--    <form id="register-form">-->
+<!--      <input type="text" placeholder="Ваше ім’я" required>-->
+<!--      <input type="email" placeholder="Email" required>-->
+<!--      <input type="password" placeholder="Пароль" required>-->
+<!--      <button type="submit">Зареєструватися</button>-->
+<!--    </form>-->
+
+<!--    <div class="separator">або</div>-->
+
+<!--    <button class="social-btn">-->
+<!--      <img src="img/Google.png" alt="Google">-->
+<!--      Увійти через Google-->
+<!--    </button>-->
+
+<!--    <button class="social-btn">-->
+<!--      <img src="img/Facebook.png" alt="Facebook">-->
+<!--      Увійти через Facebook-->
+<!--    </button>-->
+
+<!--    <button class="social-btn">-->
+<!--      <img src="img/apple.png" alt="Apple">-->
+<!--      Увійти через Apple-->
+<!--    </button>-->
+<!--  </div>-->
+<!--</div>-->
+
+
+<div id="modal-login" class="modal">
+  <div class="modal-content">
+    <h2>Вхід</h2>
+    <form id="login-form">
+      <input type="email" placeholder="Email" required>
+      <input type="password" placeholder="Пароль" required>
+      <button type="submit">Увійти</button>
+    </form>
+
+    <div class="separator">або</div>
+
+    <button class="social-btn">
+      <img src="{% static '/musicapp/images/Google.png' %}" alt="Google">
+      Увійти через Google
+    </button>
+
+    <button class="social-btn">
+      <img src="{% static '/musicapp/images/Facebook.png' %}" alt="Facebook">
+      Увійти через Facebook
+    </button>
+
+    <button class="social-btn">
+      <img src="{% static '/musicapp/images/apple.png' %}" alt="Apple">
+      Увійти через Apple
+    </button>
+  </div>
+</div>
 
 {% endblock content%}
+
+{% block extra_scripts %}
+<script>
+    // Open login modal
+    const loginBtn = document.getElementById('login');
+    const modalLogin = document.getElementById('modal-login');
+
+    loginBtn.addEventListener('click', () => {
+        modalLogin.classList.add("modal_open");
+    })
+
+    document.getElementById("login-form").addEventListener("submit", function (event) {
+    event.preventDefault(); // Prevent page reload
+    modalLogin.classList.remove("modal_open");
+    // alert("Реєстрація успішна!");
+});
+
+    // Scroll to registration
+    const registerBtn = document.getElementById('sign-up');
+
+    registerBtn.addEventListener('click', () => {
+        document.getElementById("signup-form").scrollIntoView({behavior: "smooth"});
+    })
+
+
+
+
+
+</script>
+{% endblock extra_scripts%}
+
 
 
 

@@ -1,0 +1,113 @@
+body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #111;
+      color: #fff;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.75);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .modal.modal_open {
+        display: flex;
+    }
+
+    .modal-content {
+      background-color: #1a1a1a;
+      padding: 30px;
+      border-radius: 20px;
+      width: 90%;
+      max-width: 420px;
+      box-shadow: 0 0 15px #ff00cc;
+    }
+
+    .modal-content h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #ff00cc;
+    }
+
+    .modal-content input {
+      width: 94%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #333;
+      background-color: #222;
+      border-radius: 10px;
+      color: #fff;
+      font-size: 15px;
+    }
+
+    .modal-content button {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(45deg, #ff00cc, #3333ff);
+      border: none;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .separator {
+      text-align: center;
+      margin: 20px 0 10px;
+      color: #aaa;
+      font-size: 14px;
+    }
+
+    .social-btn {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      background: linear-gradient(45deg, #ff00cc, #3333ff);
+    }
+
+    .social-btn:hover {
+     opacity: 0.9;
+    }
+
+    .social-btn img {
+     width: 24px;
+     height: 24px;
+     object-fit: contain;
+     vertical-align: middle;
+    }
+
+   /* Індивідуальні відступи */
+    img[src*="Google.png"] {
+     width: 24px;
+     height: 24px;
+    }
+
+    img[src*="Facebook.png"] {
+      width: 30px;
+      height: 24px;
+    }
+
+    img[src*="apple.png"] {
+        width: 35px;
+        height: 24px;
+    }

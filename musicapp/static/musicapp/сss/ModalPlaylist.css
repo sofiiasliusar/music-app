@@ -1,0 +1,77 @@
+body {
+    margin: 0;
+    background-color: #111;
+    font-family: 'Segoe UI', sans-serif;
+    color: white;
+  }
+
+  .playlist-container {
+    margin-left: 300px;
+    max-width: 74%;
+    margin-top: 20px;
+    margin-bottom: 70px;
+    padding: 20px;
+  }
+
+  /* Модальне вікно — сховане за замовчуванням */
+  .modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.75);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+
+  /* Якщо клас "modal_open" — модалка з'являється */
+  .modal.modal_open {
+    display: flex;
+  }
+
+  .modal-content {
+    background-color: #1a1a1a;
+    padding: 30px;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 0 15px #ff00cc;
+    position: relative;
+  }
+
+  .modal-content h2 {
+    margin-top: 0;
+    color: #ff00cc;
+    text-align: center;
+  }
+
+  .modal-content input,
+  .modal-content textarea {
+    width: 94%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #333;
+    background-color: #222;
+    border-radius: 10px;
+    color: white;
+    font-size: 14px;
+  }
+
+  .modal-content button {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(45deg, #ff00cc, #3333ff);
+    border: none;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+
+  .modal-content button:hover {
+    opacity: 0.9;
+  }
