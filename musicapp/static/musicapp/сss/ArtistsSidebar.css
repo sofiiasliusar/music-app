@@ -6,7 +6,7 @@
     height: auto;
     overflow: hidden;
     border-radius: 10px; /* Круглі краї */
-    margin-left: 300px; /* Відступ для бокового меню */
+    margin-left: 350px; /* Відступ для бокового меню */
     margin-top: 10px; /* Відступ згори */
     margin-bottom: 45px; /* Відступ від футера */
 }
