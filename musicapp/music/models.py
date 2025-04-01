@@ -39,6 +39,11 @@ class Artist(models.Model):
         """Returns the detail image URL, or the default placeholder if None."""
         return self.detail_image or "/static/musicapp/images/detail-placeholder.jpg"
 
+    def get_platform_mixes(self):
+        """Returns all platform mixes that contain songs by this artist."""
+        return PlatformMix.objects.filter(songs__artist=self).distinct()
+        # if multiple songs by the same artist exist in the same mix, the mix is only returned once.
+
     def __str__(self):
         return self.name
 
