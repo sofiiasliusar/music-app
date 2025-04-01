@@ -62,3 +62,7 @@ class AboutView(TemplateView):
 
 class OfficeView(TemplateView):
     template_name = 'Office.html'
+
+
+class SongView(TemplateView):
+    template_name = 'Song.html'
