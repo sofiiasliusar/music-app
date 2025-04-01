@@ -10,38 +10,21 @@
 
 <div class="lyrics-container">
   <div class="song-header">
-    <img src="{% static '/musicapp/images/The_Neighbourhood.png' %}" alt="Beggin">
+    <img src="{{ song.get_image }}" alt="{{ song.name }}">
     <div>
-      <div class="song-title">Beggin</div>
-      <div class="song-artist">Måneskin</div>
+      <div class="song-title">{{ song.name }}</div>
+      <div class="song-artist"><a href="{{ song.artist.get_absolute_url }}">{{ song.artist.name }}</a></div>
     </div>
   </div>
 
   <div class="lyrics">
-    <p>SO AH, ANY TIME I NEED YA, LET ME GO</p>
-    <p>EVERY TIME I REACH, YOU GET ME LOW</p>
-    <p>EVERY TIME I SEEK, YOU LET ME KNOW</p>
-    <p>BUT I PLANTED THAT SEED, JUST LET ME GROW</p>
-    <p>I'M ON MY KNEES WHILE I'M (BEGGIN')</p>
-    <p>CAUSE I DON'T WANNA LOSE (YOU)</p>
-    <p>I GOT MY ARMS ALL SPREAD</p>
-    <p>I HOPE THAT MY HEART GETS FED</p>
-    <p>MATTER OF FACT, GIRL, I'M BEGGIN'! (BEGGIN', BEGGIN')</p>
-
-    <p class="highlight1">BEGGIN', BEGGIN' YOU</p>
-    <p class="highlight1">PUT YOUR LOVING HAND OUT, BABY</p>
-    <p class="highlight1">BEGGIN', BEGGIN' YOU</p>
-    <p class="highlight1">PUT YOUR LOVING HAND OUT, DARLING</p>
-
-    <p class="highlight1">I NEED YOU (YEAH) TO UNDERSTAND</p>
-    <p class="highlight1">TRIED SO HARD (HEY) TO BE YOUR MAN</p>
-    <p class="highlight2">THE KIND OF MAN (OH) YOU WANT IN THE END</p>
-    <p class="highlight2">ONLY THEN CAN I BEGIN TO LIVE AGAIN</p>
-
-    <p class="dimmed">AN EMPTY SHELL I USED TO BE</p>
-    <p class="dimmed">SHADOW OF MY LIFE WAS HANGIN' OVER ME</p>
-    <p class="dimmed">A BROKEN MAN THAT I DON'T KNOW</p>
-    <p class="dimmed">WON'T EVEN STAND THE DEVIL'S CHANCE TO WIN MY SOUL</p>
+    {% if song.lyrics %}
+        {% for line in song.lyrics.upper.splitlines %}
+        <p class="highlight1">{{ line }}</p>
+      {% endfor %}
+    {% else %}
+      <p>No lyrics available.</p>
+    {% endif %}
   </div>
 </div>
 

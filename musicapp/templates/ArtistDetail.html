@@ -61,30 +61,17 @@
 <!-- Нові релізи пісень -->
 <div class="new-release-container">
     <h2>Artist’s  <span>Playlist</span></h2>
-    <div class="song-block">
-        <img src="{% static '/musicapp/images/Rectangle_17__1_-removebg-preview.png' %}" alt="Time">
-        <div class="song-title">Time<br><small>Luciano</small></div>
-    </div>
-    <div class="song-block">
-        <img src="{% static '/musicapp/images/Rectangle_17__2_-removebg-preview.png' %}" alt="112">
-        <div class="song-title">112<br><small>jazzek</small></div>
-    </div>
-    <div class="song-block">
-        <img src="{% static '/musicapp/images/Rectangle_17__3_-removebg-preview.png' %}" alt="We Don't Care">
-        <div class="song-title">We Don't Care<br><small>Kyanu & DJ Gullum</small></div>
-    </div>
-    <div class="song-block">
-        <img src="{% static '/musicapp/images/Rectangle_17__4_-removebg-preview.png' %}" alt="Who I Am">
-        <div class="song-title">Who I Am<br><small>Alan Walker & Elias</small></div>
-    </div>
-    <div class="song-block">
-        <img src="{% static '/musicapp/images/Rectangle 1.png' %}" alt="Baixo">
-        <div class="song-title">Baixo<br><small>XXAnteria</small></div>
-    </div>
-    <div class="song-block">
-        <img src="{% static '/musicapp/images/Rectangle 2.png' %}" alt="Baixo">
-        <div class="song-title">Baixo<br><small>XXAnteria</small></div>
-    </div>
+    {% for mix in platform_mixes %}
+        <div class="song-block">
+            <img src="{{ mix.get_image }}" alt="{{ mix.name }}">
+            <div class="song-title">{{ mix.name }}<br></div>
+        </div>
+
+    {% empty %}
+        <tr>
+            <td colspan="5">No playlists available for this artist.</td>
+        </tr>
+    {% endfor %}
 </div>
 
 <!-- Нові релізи пісень -->

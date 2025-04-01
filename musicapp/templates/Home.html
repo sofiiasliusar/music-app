@@ -20,7 +20,7 @@
 <div class="new-release-container">
     <h2>New Release <span>Songs</span></h2>
     {% for song in new_releases %}
-    <a href="{% url 'song' %}">
+    <a href="{% url 'song' song.id %}">
         <div class="song-block">
             <img src="{{ song.get_image }}" alt="{{ song.name }}">
             <div class="song-title">{{ song.name }}<br><small>{{ song.artist.name }}</small></div>
@@ -52,7 +52,7 @@
                 <td class="song-title">
                     <img src="{{ song.get_image }}" alt="{{ song.name }}">
                     <div>
-                        <strong>{{ song.name }}</strong><br>
+                        <a href="{% url 'song' song.id %}"><strong>{{ song.name }}</strong><br></a>
                         <small>{{ song.artist.name }}</small>
                     </div>
                 </td>
@@ -73,7 +73,7 @@
 <div class="popular-artists-container">
 
     {% for artist in popular_artists %}
-    <a href="   {{ artist.get_absolute_url }}">
+    <a href="{{ artist.get_absolute_url }}">
         <div class="artist-block">
             <img src="{{ artist.get_profile_image }}" alt="{{ artist.name }}">
         </div>
@@ -199,9 +199,6 @@
     registerBtn.addEventListener('click', () => {
         document.getElementById("signup-form").scrollIntoView({behavior: "smooth"});
     })
-
-
-
 
 
 </script>

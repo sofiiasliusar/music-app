@@ -32,6 +32,7 @@ class ArtistDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context['songs'] = self.object.songs.all()
         context['albums'] = self.object.albums.all()
+        context['platform_mixes'] = self.object.get_platform_mixes()  # artist playlists
         return context
 
 
@@ -64,5 +65,9 @@ class OfficeView(TemplateView):
     template_name = 'Office.html'
 
 
-class SongView(TemplateView):
+class SongView(DetailView):
+    model = Song
     template_name = 'Song.html'
+    context_object_name = 'song'
+    pk_url_kwarg = 'id'  # Tell Django to use "id" instead of "pk"
+
