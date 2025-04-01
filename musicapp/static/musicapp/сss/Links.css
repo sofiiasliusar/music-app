@@ -1,0 +1,12 @@
+a {
+    text-decoration: none; /* Remove underline */
+    color: inherit; /* Inherit text color */
+    background: transparent; /* Ensure no background color */
+}
+
+/* Remove blue line effect */
+a:focus, a:active, a:visited {
+    outline: none; /* Remove focus outline */
+    text-decoration: none; /* Ensure no underline */
+    background: transparent; /* Ensure no blue background */
+}
