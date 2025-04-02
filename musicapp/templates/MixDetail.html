@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% load static %}
+{% load custom_filters %}
+
+
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static '/musicapp/сss/Albums.css' %}">
+{% endblock extra_css%}
+
+{% block content %}
+<!-- Trending Songs Section -->
+<!-- Trending Songs Section -->
+<div class="trending-songs-container">
+    <!-- Фото мікса -->
+    <img src="{% static '/musicapp/images/Trending songs mix.png' %}" alt="Album Cover" class="album-cover">
+
+    <div class="content">
+        <h1>{{ mix.name }}</h1>
+        <p>{{ mix.owner }}</p>
+        <div class="info">
+            <p>{{ mix.get_amount_of_songs }} songs • {{ mix.get_total_duration|format_duration }}</p>
+            <button class="play-all-btn">Play All</button>
+        </div>
+    </div>
+</div>
+
+<!-- Table for Trending Songs -->
+<div class="song-table-container">
+    <table class="song-table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Release Date</th>
+                <th>Mix</th>
+                <th>Time</th>
+                <th>Play</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for song in mix.get_songs %}
+            <tr>
+                <td>
+                    <!-- Фото для кожного треку -->
+                    <img src="{{ song.get_image }}" alt="{{ song.name }}" class="song-cover"> <a href="{% url 'song' song.id %}">{{ song.name }}</a>
+                </td>
+                <td>{{ song.release_date|date:"M d, Y" }}</td>
+                <td>{{ mix.name }}</td>
+                <td class="song-time">{{ song.duration|format_duration }}</td>
+                <td>{{ song.duration|format_duration }} <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong(this, '{{ song.audio_url }}')">▶</span></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="view-all">+View All</div>
+
+</div>
+
+{% endblock content%}

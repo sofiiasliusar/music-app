@@ -12,4 +12,7 @@ urlpatterns = [
     path('office/', views.OfficeView.as_view(), name="office"),
     path('artist/<slug:slug>/', views.ArtistDetailView.as_view(), name='artist_detail'),
     path('song/<int:id>/', views.SongView.as_view(), name='song'),
+    path('album/<int:id>/', views.AlbumDetailView.as_view(), name='album'),
+    path('mix/<int:id>/', views.MixDetailView.as_view(), name='mix'),
+
 ]

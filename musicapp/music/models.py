@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.utils.text import slugify
+from datetime import timedelta
+# from django.db.models import Count
 
 
 # Create your models here.
@@ -44,6 +46,12 @@ class Artist(models.Model):
         return PlatformMix.objects.filter(songs__artist=self).distinct()
         # if multiple songs by the same artist exist in the same mix, the mix is only returned once.
 
+    # def get_platform_mixes(self):
+    #     """Returns platform mixes where all songs belong to this artist."""
+    #     return PlatformMix.objects.annotate(
+    #         artist_count=Count('songs__artist', distinct=True)  # Count distinct artists in the mix
+    #     ).filter(artist_count=1, songs__artist=self)
+
     def __str__(self):
         return self.name
 
@@ -53,7 +61,8 @@ class SongCollection(models.Model):
     image_url = models.URLField(blank=True, null=True)
 
     def get_total_duration(self):
-        return sum(song.duration.total_seconds() for song in self.get_songs())
+        total_seconds = sum(song.duration.total_seconds() for song in self.get_songs())
+        return timedelta(seconds=total_seconds)
 
     def get_amount_of_songs(self):
         return self.get_songs().count()

@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 # Create your views here.
 from django.views.generic import TemplateView, DetailView
-from .models import Song, Artist
+from .models import Song, Artist, ArtistAlbum, PlatformMix
 
 
 class HomeView(TemplateView):
@@ -48,7 +48,6 @@ class PlaylistView(TemplateView):
         context['playlist_songs'] = Song.objects.order_by('-release_date')[:5]  # Example logic for playlist
         return context
 
-
 class PremiumView(TemplateView):
     template_name = 'Premium.html'
 
@@ -71,3 +70,15 @@ class SongView(DetailView):
     context_object_name = 'song'
     pk_url_kwarg = 'id'  # Tell Django to use "id" instead of "pk"
 
+
+class AlbumDetailView(DetailView):
+    model = ArtistAlbum
+    template_name = "AlbumDetail.html"
+    context_object_name = 'album'
+    pk_url_kwarg = 'id'
+
+class MixDetailView(DetailView):
+    model = PlatformMix
+    template_name = "MixDetail.html"
+    context_object_name = 'mix'
+    pk_url_kwarg = 'id'

@@ -40,7 +40,7 @@
                 <tr>
                     <td>
                         <!-- Фото для кожного треку -->
-                        <img src="{{ song.get_image }}" alt="{{ song.name }}" class="song-cover"> {{ song.name }}
+                        <img src="{{ song.get_image }}" alt="{{ song.name }}" class="song-cover"><a href="{% url 'song' song.id %}"> {{ song.name }} </a>
                     </td>
                     <td>{{ song.release_date|date:"M d, Y" }}</td>
                     <td>{{ artist.name }}</td>
@@ -62,11 +62,12 @@
 <div class="new-release-container">
     <h2>Artist’s  <span>Playlist</span></h2>
     {% for mix in platform_mixes %}
+    <a href="{% url 'mix' mix.id %}">
         <div class="song-block">
             <img src="{{ mix.get_image }}" alt="{{ mix.name }}">
             <div class="song-title">{{ mix.name }}<br></div>
         </div>
-
+    </a>
     {% empty %}
         <tr>
             <td colspan="5">No playlists available for this artist.</td>
@@ -78,11 +79,12 @@
 <div class="new-release-container">
     <h2>Artist’s  <span>Albums</span></h2>
     {% for album in albums %}
+    <a href="{% url 'album' album.id %}">
         <div class="song-block">
             <img src="{{ album.get_image }}" alt="{{ album.name }}">
             <div class="song-title">{{ album.name }}<br><small>{{ album.owner.name }}</small></div>
         </div>
-
+    </a>
     {% empty %}
         <tr>
             <td colspan="5">No albums available for this artist.</td>
