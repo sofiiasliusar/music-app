@@ -12,9 +12,11 @@
 <div class="modal modal_open">
   <div class="modal-content">
     <h2>Вхід</h2>
-    <form>
-      <input type="email" placeholder="Email" required>
-      <input type="password" placeholder="Пароль" required>
+    <form action="" method="POST">
+      {% csrf_token %}
+      <input type="hidden" name="next" value="{{ request.GET.next }}">
+      <input type="text" name="username" placeholder="Імʼя користувача" required>
+      <input type="password" name="password" placeholder="Пароль" required>
       <button type="submit">Увійти</button>
     </form>
 
