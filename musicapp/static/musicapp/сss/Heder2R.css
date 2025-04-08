@@ -111,6 +111,21 @@ header .login-signup .search-input {
     display: block;
 }
 
+button.link-button {
+    color: white;
+    border: 0;
+    font-size: medium;
+    background: transparent;
+    font-family: sans-serif;
+    padding: 5px 10px;
+    border-radius: 54px;
+
+
+}
+button.link-button:hover {
+    background-color: #f26f90;
+    cursor: pointer;
+}
 /* Адаптація для мобільних пристроїв */
 @media (max-width: 768px) {
     header .nav {
