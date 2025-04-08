@@ -1,11 +1,15 @@
 from django.shortcuts import render
 
 # Create your views here.
-from django.views.generic import TemplateView, DetailView, CreateView
+from django.views.generic import TemplateView, DetailView, CreateView, View
 from .models import Song, Artist, ArtistAlbum, PlatformMix
-# from django.urls import reverse_lazy
-# from django.contrib.auth import login
-# from .forms import CustomUserCreationForm
+from django.urls import reverse_lazy
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.models import User
+from .forms import SignUpForm
+from django.contrib import messages
+from django.shortcuts import redirect
+from django.contrib.auth.views import LoginView, LogoutView
 
 
 class HomeView(TemplateView):
@@ -99,9 +103,50 @@ class MixDetailView(DetailView):
     pk_url_kwarg = 'id'
 
 
-class SignupView(TemplateView):
-    template_name = 'Signup.html'
+class SignUpView(View):
+    def get(self, request):
+        return render(request, 'signup.html')
+
+    def post(self, request):
+        email = request.POST['email']
+        username = request.POST['username']
+        password = request.POST['password1']
+        password2 = request.POST['password2']
+
+        if password == password2:
+            if User.objects.filter(email=email).exists():
+                messages.info(request, 'Email Taken')
+                return redirect('signup')
+            elif User.objects.filter(username=username).exists():
+                messages.info(request, 'Username Taken')
+                return redirect('signup')
+            else:
+                user = User.objects.create_user(username=username, email=email, password=password)
+                user.save()
+
+                # log the user in
+                user_login = authenticate(request, username=username, password=password)
+                login(request, user_login)
+                return redirect('/')
+        else:
+            messages.info(request, 'Password Not Matching')
+            return redirect('signup')
 
 
-class LoginView(TemplateView):
-    template_name = 'Login.html'
+class CustomLoginView(View):
+    def get(self, request):
+        return render(request, 'login.html')
+
+    def post(self, request):
+        username = request.POST['username']
+        password = request.POST['password']
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            return redirect('/')
+        else:
+            messages.info(request, 'Credentials Invalid')
+            return redirect('login')
+

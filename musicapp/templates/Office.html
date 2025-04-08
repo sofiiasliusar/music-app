@@ -12,8 +12,8 @@
     <div class="profile-details">
         <h1>Особистий кабінет</h1>
         <h2>Деталі профілю</h2>
-        <p>Ім'я користувача: Емінем</p>
-        <p>Email: eminem@example.com</p>
+        <p>Ім'я користувача: {{ user.username }}</p>
+        <p>Email: {{ user.email }}</p>
         
         <h2>Зміна паролю</h2>
         <form class="password-change">

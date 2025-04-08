@@ -12,10 +12,12 @@
 <div class="modal modal_open">
   <div class="modal-content">
     <h2>Реєстрація</h2>
-    <form>
-      <input type="text" placeholder="Ваше ім’я" required>
-      <input type="email" placeholder="Email" required>
-      <input type="password" placeholder="Пароль" required>
+    <form action="" method="POST">
+      {% csrf_token %}
+      <input type="text" name="username" placeholder="Ваше ім’я" required>
+      <input type="email" name="email" placeholder="Email" required>
+      <input type="password" name="password1" placeholder="Пароль" required>
+      <input type="password" name="password2" placeholder="Повторіть пароль" required>
       <button type="submit">Зареєструватися</button>
     </form>
 

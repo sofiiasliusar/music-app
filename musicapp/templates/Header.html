@@ -10,8 +10,15 @@
         {% if request.resolver_match.url_name == 'home' %}
         <!-- Elements for Home Page -->
             <input type="text" placeholder="Search..." class="search-input"> <!-- Нове поле вводу -->
-            <a id="login" href="{% url 'login' %}">Login</a>
-            <a id="sign-up" href="{% url 'signup' %}">Sign Up</a>
+            {% if user.is_authenticated %}
+                <form method="post" action="{% url 'logout' %}" class="logout-form">
+                    {% csrf_token %}
+                    <button type="submit" class="link-button">Logout</button>
+                </form>
+            {% else %}
+                <a id="login" href="{% url 'login' %}">Login</a>
+                <a id="sign-up" href="{% url 'signup' %}">Sign Up</a>
+            {% endif %}
         {% else %}
         <!-- Elements for Other Pages -->
             <input type="text" placeholder="Search..." class="search-input"> <!-- Нове поле вводу -->
