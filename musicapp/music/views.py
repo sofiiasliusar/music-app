@@ -159,3 +159,29 @@ class LoginView(View):
             messages.info(request, 'Credentials Invalid')
             return redirect('login')
 
+
+class SearchView(TemplateView):
+    template_name = 'Search.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        search_query = self.request.GET.get('search_query', '')
+
+        if search_query:
+            # Search Songs
+            songs = Song.objects.filter(name__icontains=search_query)
+            # Search Artists
+            artists = Artist.objects.filter(name__icontains=search_query)
+            # Search Albums
+            albums = ArtistAlbum.objects.filter(name__icontains=search_query)
+        else:
+            songs = []
+            artists = []
+            albums = []
+
+        context['search_query'] = search_query
+        context['songs'] = songs
+        context['artists'] = artists
+        context['albums'] = albums
+        return context

@@ -9,12 +9,11 @@
     <div class="login-signup">
         {% if request.resolver_match.url_name == 'home' %}
         <!-- Elements for Home Page -->
-<!--            <input type="text" placeholder="Search..." class="search-input"> &lt;!&ndash; Нове поле вводу &ndash;&gt;-->
-            <form action="search" method="POST">
+            <form action="search" method="get">
             {% csrf_token %}
 
             <div class="search-bar">
-                <input type="search" name="search_query" placeholder="Search..." aria-label="Search">
+                <input type="search" name="search_query" placeholder="Search songs..." aria-label="Search">
                 <button type="submit" class="search-button" aria-label="Search">
                     🔍
                 </button>
@@ -31,12 +30,11 @@
             {% endif %}
         {% else %}
         <!-- Elements for Other Pages -->
-<!--            <input type="text" placeholder="Search..." class="search-input"> &lt;!&ndash; Нове поле вводу &ndash;&gt;-->
-            <form action="search" method="POST">
+            <form action="search" method="get">
             {% csrf_token %}
 
             <div class="search-bar">
-                <input type="search" name="search_query" placeholder="Search..." aria-label="Search">
+                <input type="search" name="search_query" placeholder="Search songs..." aria-label="Search">
                 <button type="submit" class="search-button" aria-label="Search">
                     🔍
                 </button>

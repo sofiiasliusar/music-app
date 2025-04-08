@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% load static %}
+{% load custom_filters %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static '/musicapp/сss/New-Release-Songs.css' %}">
+    <link rel="stylesheet" href="{% static '/musicapp/сss/Trending-Songs.css' %}">
+    <link rel="stylesheet" href="{% static '/musicapp/сss/Artists.css' %}">
+    <link rel="stylesheet" href="{% static '/musicapp/сss/Join-Our-Platform.css' %}">
+    <link rel="stylesheet" href="{% static '/musicapp/сss/ArtistsSidebar.css' %}">
+    <link rel="stylesheet" href="{% static '/musicapp/сss/ModalRegister.css' %}">
+{% endblock extra_css%}
+
+{% block content %}
+
+<div class="playlist-container">
+    <h2>Search <span>Results:</span></h2>
+    {% if songs %}
+    <table class="tracklist">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Title</th>
+                <th>Release Date</th>
+                <th>Album</th>
+                <th>Time</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            {% for song in songs %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td class="song-title">
+                    <img src="{{ song.get_image }}" alt="{{ song.name }}">
+                    <div>
+                        <a href="{% url 'song' song.id %}"><strong>{{ song.name }}</strong><br></a>
+                        <small>{{ song.artist.name }}</small>
+                    </div>
+                </td>
+                <td>{{ song.release_date|date:"M d, Y" }}</td>
+                <td>{{ song.album.name|default:"-" }}</td>
+                <td>{{ song.duration|format_duration }} <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong(this, '{{ song.audio_url }}')">▶</span></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p style="margin-top: 100px; margin-bottom: 100px">No songs found.</p>
+    {% endif %}
+<!--    <div class="view-all">+ View All</div>-->
+</div>
+
+
+<div class="popular-artists-container">
+    {% for artist in artists %}
+    <a href="{{ artist.get_absolute_url }}">
+        <div class="artist-block">
+            <img src="{{ artist.get_profile_image }}" alt="{{ artist.name }}">
+        </div>
+    </a>
+    {% empty %}
+        <tr>
+            <td colspan="5" style="margin-top: 100px; margin-bottom: 100px">No artists found.</td>
+        </tr>
+
+    {% endfor %}
+
+</div>
+<div class="new-release-container">
+    {% for album in albums %}
+    <a href="{% url 'album' album.id %}">
+        <div class="song-block">
+            <img src="{{ album.get_image }}" alt="{{ album.name }}">
+            <div class="song-title">{{ album.name }}<br><small>{{ album.owner.name }}</small></div>
+        </div>
+    </a>
+    {% empty %}
+        <tr>
+            <td colspan="5" style="margin-top: 100px; margin-bottom: 100px">No albums found.</td>
+        </tr>
+
+
+    {% endfor %}
+
+</div>
+
+{% endblock content%}

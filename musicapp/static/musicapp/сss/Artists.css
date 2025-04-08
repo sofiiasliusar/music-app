@@ -60,6 +60,27 @@
     box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.7);
 }
 
+
+.popular-artists-container h2 {
+    color: white;
+    font-size: 30px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.popular-artists-container h2 span {
+    color: #f26f90;
+}
+
+h2 {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+h2 span {
+    color: #e600ff;
+}
+
 /* Медіа-запит для екранів до 768px */
 @media (max-width: 768px) {
     .popular-artists-container {
@@ -90,5 +111,14 @@
     .artist-block {
         width: 90px; /* Зменшення ширини блоків для дуже малих екранів */
         height: 90px;
+    }
+}
+
+@media (max-width: 480px) {
+
+
+    .popular-artists-container h2 {
+        font-size: 22px; /* Зменшуємо розмір шрифта для заголовку */
+        text-align: center; /* Центруємо заголовок */
     }
 }
