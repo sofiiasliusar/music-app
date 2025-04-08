@@ -34,11 +34,12 @@ header .nav a {
     font-size: 16px;
     padding: 5px 10px;
     transition: background-color 0.3s;
+    border-radius: 54px;
+
 }
 
 header .nav a:hover {
     background-color: #f26f90;
-    border-radius: 54px;
 }
 
 /* Стилі для Login/Sign Up, вони залишаються в правій частині */
