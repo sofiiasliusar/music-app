@@ -14,6 +14,7 @@
     <h2>Реєстрація</h2>
     <form action="" method="POST">
       {% csrf_token %}
+      <input type="hidden" name="next" value="{{ request.GET.next }}">
       <input type="text" name="username" placeholder="Ваше ім’я" required>
       <input type="email" name="email" placeholder="Email" required>
       <input type="password" name="password1" placeholder="Пароль" required>
