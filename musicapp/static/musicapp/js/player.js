@@ -92,14 +92,14 @@ audioPlayer.addEventListener("ended", () => {
     }
 });
 
-const prevButtons = document.querySelectorAll('.skip-back');
-const nextButtons = document.querySelectorAll('.skip-forward');
+const backButtons = document.querySelectorAll('.skip-back');
+const forwardButtons = document.querySelectorAll('.skip-forward');
 
-prevButtons.forEach(btn => btn.addEventListener("click", () => {
+backButtons.forEach(btn => btn.addEventListener("click", () => {
     audioPlayer.currentTime = Math.max(0, audioPlayer.currentTime - 10); // Go back 10 seconds
 }));
 
-nextButtons.forEach(btn => btn.addEventListener("click", () => {
+forwardButtons.forEach(btn => btn.addEventListener("click", () => {
     audioPlayer.currentTime = Math.min(audioPlayer.duration, audioPlayer.currentTime + 10); // Skip forward 10 seconds
 }));
 
