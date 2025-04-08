@@ -1,8 +1,11 @@
 from django.shortcuts import render
 
 # Create your views here.
-from django.views.generic import TemplateView, DetailView
+from django.views.generic import TemplateView, DetailView, CreateView
 from .models import Song, Artist, ArtistAlbum, PlatformMix
+# from django.urls import reverse_lazy
+# from django.contrib.auth import login
+# from .forms import CustomUserCreationForm
 
 
 class HomeView(TemplateView):
@@ -10,11 +13,22 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        # context["form"] = CustomUserCreationForm()
         context['new_releases'] = Song.objects.order_by('-release_date')[:6]  # Fetch latest 6 songs
-        context['trending_songs'] = Song.objects.order_by('-release_date')[:7]  # Example logic for trending
-        context['popular_artists'] = Artist.objects.all()[:7]  # Fetch first 6 artists
+        context['trending_songs'] = Song.objects.order_by('-release_date')[:10]  # Example logic for trending
+        context['popular_artists'] = Artist.objects.all()[:7]  # Fetch first 7 artists
         return context
 
+
+# class RegisterView(CreateView):
+#     form_class = CustomUserCreationForm
+#     success_url = reverse_lazy("home")  # or any page you want to redirect to
+#     template_name = "Home.html"  # not used since we're embedding form
+#
+#     def form_valid(self, form):
+#         response = super().form_valid(form)
+#         login(self.request, self.object)  # auto-login after signup
+#         return response
 
 class ArtistsView(TemplateView):
     template_name = 'Artists.html'
@@ -77,8 +91,17 @@ class AlbumDetailView(DetailView):
     context_object_name = 'album'
     pk_url_kwarg = 'id'
 
+
 class MixDetailView(DetailView):
     model = PlatformMix
     template_name = "MixDetail.html"
     context_object_name = 'mix'
     pk_url_kwarg = 'id'
+
+
+class SignupView(TemplateView):
+    template_name = 'Signup.html'
+
+
+class LoginView(TemplateView):
+    template_name = 'Login.html'

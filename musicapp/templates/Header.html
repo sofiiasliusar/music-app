@@ -10,8 +10,8 @@
         {% if request.resolver_match.url_name == 'home' %}
         <!-- Elements for Home Page -->
             <input type="text" placeholder="Search..." class="search-input"> <!-- Нове поле вводу -->
-            <a id="login" href="#">Login</a>
-            <a id="sign-up" href="#">Sign Up</a>
+            <a id="login" href="{% url 'login' %}">Login</a>
+            <a id="sign-up" href="{% url 'signup' %}">Sign Up</a>
         {% else %}
         <!-- Elements for Other Pages -->
             <input type="text" placeholder="Search..." class="search-input"> <!-- Нове поле вводу -->

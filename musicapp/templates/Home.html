@@ -98,8 +98,9 @@
         <h1>Sign Up</h1>
         <form>
             <input type="text" placeholder="Enter Your Name" required>
-            <input type="text" placeholder="Enter Your Number" required>
             <input type="email" placeholder="Enter Your E-Mail" required>
+            <input type="password" placeholder="Enter Password" required>
+            <input type="password" placeholder="Repeat Password" required>
             <button type="submit">Sign Up</button>
         </form>
         <button class="social-signup">
@@ -116,36 +117,6 @@
         </button>
     </div>
 </div>
-
-<!--<div id="modal-register" class="modal">-->
-<!--  <div class="modal-content">-->
-<!--    <h2>Реєстрація</h2>-->
-<!--    <form id="register-form">-->
-<!--      <input type="text" placeholder="Ваше ім’я" required>-->
-<!--      <input type="email" placeholder="Email" required>-->
-<!--      <input type="password" placeholder="Пароль" required>-->
-<!--      <button type="submit">Зареєструватися</button>-->
-<!--    </form>-->
-
-<!--    <div class="separator">або</div>-->
-
-<!--    <button class="social-btn">-->
-<!--      <img src="img/Google.png" alt="Google">-->
-<!--      Увійти через Google-->
-<!--    </button>-->
-
-<!--    <button class="social-btn">-->
-<!--      <img src="img/Facebook.png" alt="Facebook">-->
-<!--      Увійти через Facebook-->
-<!--    </button>-->
-
-<!--    <button class="social-btn">-->
-<!--      <img src="img/apple.png" alt="Apple">-->
-<!--      Увійти через Apple-->
-<!--    </button>-->
-<!--  </div>-->
-<!--</div>-->
-
 
 <div id="modal-login" class="modal">
   <div class="modal-content">
@@ -177,32 +148,32 @@
 
 {% endblock content%}
 
-{% block extra_scripts %}
-<script>
-    // Open login modal
-    const loginBtn = document.getElementById('login');
-    const modalLogin = document.getElementById('modal-login');
+<!--{% block extra_scripts %}-->
+<!--<script>-->
+<!--    // Open login modal-->
+<!--    const loginBtn = document.getElementById('login');-->
+<!--    const modalLogin = document.getElementById('modal-login');-->
 
-    loginBtn.addEventListener('click', () => {
-        modalLogin.classList.add("modal_open");
-    })
+<!--    loginBtn.addEventListener('click', () => {-->
+<!--        modalLogin.classList.add("modal_open");-->
+<!--    })-->
 
-    document.getElementById("login-form").addEventListener("submit", function (event) {
-    event.preventDefault(); // Prevent page reload
-    modalLogin.classList.remove("modal_open");
-    // alert("Реєстрація успішна!");
-});
+<!--    document.getElementById("login-form").addEventListener("submit", function (event) {-->
+<!--    event.preventDefault(); // Prevent page reload-->
+<!--    modalLogin.classList.remove("modal_open");-->
+<!--    // alert("Реєстрація успішна!");-->
+<!--});-->
 
-    // Scroll to registration
-    const registerBtn = document.getElementById('sign-up');
+<!--    // Scroll to registration-->
+<!--    const registerBtn = document.getElementById('sign-up');-->
 
-    registerBtn.addEventListener('click', () => {
-        document.getElementById("signup-form").scrollIntoView({behavior: "smooth"});
-    })
+<!--    registerBtn.addEventListener('click', () => {-->
+<!--        document.getElementById("signup-form").scrollIntoView({behavior: "smooth"});-->
+<!--    })-->
 
 
-</script>
-{% endblock extra_scripts%}
+<!--</script>-->
+<!--{% endblock extra_scripts%}-->
 
 
 

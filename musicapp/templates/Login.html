@@ -1,0 +1,41 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <title>Реєстрація</title>
+  <link rel="stylesheet" href="{% static '/musicapp/сss/ModalRegister.css' %}">
+</head>
+<body>
+
+<div class="modal modal_open">
+  <div class="modal-content">
+    <h2>Вхід</h2>
+    <form>
+      <input type="email" placeholder="Email" required>
+      <input type="password" placeholder="Пароль" required>
+      <button type="submit">Увійти</button>
+    </form>
+
+    <div class="separator">або</div>
+
+    <button class="social-btn">
+      <img src="{% static '/musicapp/images/Google.png' %}" alt="Google">
+      Увійти через Google
+    </button>
+
+    <button class="social-btn">
+      <img src="{% static '/musicapp/images/Facebook.png' %}" alt="Facebook">
+      Увійти через Facebook
+    </button>
+
+    <button class="social-btn">
+      <img src="{% static '/musicapp/images/apple.png' %}" alt="Apple">
+      Увійти через Apple
+    </button>
+  </div>
+</div>
+
+</body>
+</html>

@@ -11,8 +11,7 @@ class SongCollectionAdmin(admin.ModelAdmin):
     readonly_fields = ('image_preview_detail',)
 
     def get_total_duration(self, obj):
-        total_seconds = obj.get_total_duration()
-        return str(datetime.timedelta(seconds=int(total_seconds)))  # Formats as HH:MM:SS
+        return obj.get_total_duration()
 
     def get_amount_of_songs(self, obj):
         return obj.get_amount_of_songs()

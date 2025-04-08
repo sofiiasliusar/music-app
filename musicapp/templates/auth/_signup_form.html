@@ -1,0 +1,34 @@
+{% load static %}
+
+<div id="signup-form" class="form-container">
+        <h1>Sign Up</h1>
+
+        {% if form.errors %}
+            <div class="form-errors">
+                {{ form.errors }}
+            </div>
+        {% endif %}
+
+        <form method="post" action="{% url 'register' %}">
+            {% csrf_token %}
+            <input type="text" name="username" placeholder="Enter Your Name" required>
+            <input type="email" name="email" placeholder="Enter Your E-Mail" required>
+            <input type="password" name="password1" placeholder="Enter Password" required>
+            <input type="password" name="password2" placeholder="Repeat Password" required>
+<!--            {{ form.as_p }}-->
+            <button type="submit">Sign Up</button>
+        </form>
+        <button class="social-signup">
+            <img id="google-img" src="{% static '/musicapp/images/Google.png' %}" alt="Google Icon" width="20" height="20">
+            Sign Up With Google
+        </button>
+        <button class="social-signup">
+            <img id="facebook-img" src="{% static '/musicapp/images/Facebook.png' %}" alt="Google Icon" width="20" height="20">
+            Sign Up With Facebook
+        </button>
+        <button class="social-signup">
+            <img id="apple-img" src="{% static '/musicapp/images/apple.png' %}" alt="Google Icon" width="20" height="20">
+            Sign Up With Apple
+        </button>
+    </div>
+</div>
