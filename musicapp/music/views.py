@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 from .forms import SignUpForm
 from django.contrib import messages
 from django.shortcuts import redirect
-from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 class HomeView(TemplateView):
@@ -20,7 +20,7 @@ class HomeView(TemplateView):
         # context["form"] = CustomUserCreationForm()
         context['new_releases'] = Song.objects.order_by('-release_date')[:6]  # Fetch latest 6 songs
         context['trending_songs'] = Song.objects.order_by('-release_date')[:10]  # Example logic for trending
-        context['popular_artists'] = Artist.objects.all()[:7]  # Fetch first 7 artists
+        context['popular_artists'] = Artist.objects.all()[:9]  # Fetch first 7 artists
         return context
 
 
@@ -34,11 +34,14 @@ class HomeView(TemplateView):
 #         login(self.request, self.object)  # auto-login after signup
 #         return response
 
-class ArtistsView(TemplateView):
+
+class ArtistsView(LoginRequiredMixin, TemplateView):
+    login_url = 'login'
     template_name = 'Artists.html'
 
 
-class ArtistDetailView(DetailView):
+class ArtistDetailView(LoginRequiredMixin, DetailView):
+    login_url = 'login'
     model = Artist
     template_name = 'ArtistDetail.html'
     context_object_name = 'artist'
@@ -54,11 +57,13 @@ class ArtistDetailView(DetailView):
         return context
 
 
-class AlbumView(TemplateView):
+class AlbumView(LoginRequiredMixin, TemplateView):
+    login_url = 'login'
     template_name = 'Albums.html'
 
 
-class PlaylistView(TemplateView):
+class PlaylistView(LoginRequiredMixin, TemplateView):
+    login_url = 'login'
     template_name = 'Playlist.html'
 
     def get_context_data(self, **kwargs):
@@ -70,7 +75,8 @@ class PremiumView(TemplateView):
     template_name = 'Premium.html'
 
 
-class SettingsView(TemplateView):
+class SettingsView(LoginRequiredMixin, TemplateView):
+    login_url = 'login'
     template_name = 'Settings.html'
 
 
@@ -82,7 +88,8 @@ class OfficeView(TemplateView):
     template_name = 'Office.html'
 
 
-class SongView(DetailView):
+class SongView(LoginRequiredMixin, DetailView):
+    login_url = 'login'
     model = Song
     template_name = 'Song.html'
     context_object_name = 'song'
@@ -127,13 +134,14 @@ class SignUpView(View):
                 # log the user in
                 user_login = authenticate(request, username=username, password=password)
                 login(request, user_login)
-                return redirect('/')
+                next_url = request.POST.get('next') or '/'
+                return redirect(next_url)
         else:
             messages.info(request, 'Password Not Matching')
             return redirect('signup')
 
 
-class CustomLoginView(View):
+class LoginView(View):
     def get(self, request):
         return render(request, 'login.html')
 
@@ -145,7 +153,8 @@ class CustomLoginView(View):
 
         if user is not None:
             login(request, user)
-            return redirect('/')
+            next_url = request.POST.get('next') or '/'
+            return redirect(next_url)
         else:
             messages.info(request, 'Credentials Invalid')
             return redirect('login')

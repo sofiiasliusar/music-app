@@ -9,7 +9,17 @@
     <div class="login-signup">
         {% if request.resolver_match.url_name == 'home' %}
         <!-- Elements for Home Page -->
-            <input type="text" placeholder="Search..." class="search-input"> <!-- Нове поле вводу -->
+<!--            <input type="text" placeholder="Search..." class="search-input"> &lt;!&ndash; Нове поле вводу &ndash;&gt;-->
+            <form action="search" method="POST">
+            {% csrf_token %}
+
+            <div class="search-bar">
+                <input type="search" name="search_query" placeholder="Search..." aria-label="Search">
+                <button type="submit" class="search-button" aria-label="Search">
+                    🔍
+                </button>
+            </div>
+        </form>
             {% if user.is_authenticated %}
                 <form method="post" action="{% url 'logout' %}" class="logout-form">
                     {% csrf_token %}
@@ -21,8 +31,18 @@
             {% endif %}
         {% else %}
         <!-- Elements for Other Pages -->
-            <input type="text" placeholder="Search..." class="search-input"> <!-- Нове поле вводу -->
-            <!-- Dropdown кнопка -->
+<!--            <input type="text" placeholder="Search..." class="search-input"> &lt;!&ndash; Нове поле вводу &ndash;&gt;-->
+            <form action="search" method="POST">
+            {% csrf_token %}
+
+            <div class="search-bar">
+                <input type="search" name="search_query" placeholder="Search..." aria-label="Search">
+                <button type="submit" class="search-button" aria-label="Search">
+                    🔍
+                </button>
+            </div>
+        </form>
+        <!-- Dropdown кнопка -->
             <div class="dropdown">
                 <button class="dropbtn">
                     <img src="{% static '/musicapp/images/Melonix.png' %}" alt="Dropdown" class="dropdown-img"> <!-- Ваше зображення -->

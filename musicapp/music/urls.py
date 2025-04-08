@@ -16,7 +16,7 @@ urlpatterns = [
     path('album/<int:id>/', views.AlbumDetailView.as_view(), name='album'),
     path('mix/<int:id>/', views.MixDetailView.as_view(), name='mix'),
     path('signup/', views.SignUpView.as_view(), name='signup'),
-    path('login/', views.CustomLoginView.as_view(), name='login'),
+    path('login/', views.LoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(next_page='/'), name='logout'),
 
 ]

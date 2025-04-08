@@ -46,6 +46,7 @@ header .nav a:hover {
 header .login-signup {
     display: flex;
     gap: 20px;
+    align-items: center;
 }
 
 /* Додавання стилів для поля вводу */
@@ -120,12 +121,52 @@ button.link-button {
     font-family: sans-serif;
     padding: 5px 10px;
     border-radius: 54px;
-
-
 }
 button.link-button:hover {
     background-color: #f26f90;
     cursor: pointer;
+}
+
+.search-bar {
+      display: flex;
+      background-color: transparent;
+      border: rgb(242, 111, 144) solid;
+      border-radius: 54px;
+      padding-left: 10px;
+      height: 30px;
+  }
+
+
+.search-bar input[type="search"] {
+    flex-grow: 1;
+    background-color: transparent;
+    border: none;
+    padding-left: 10px;
+    color: #fff;
+    font-size: 15px; /* Increase font size for bigger appearance */
+}
+
+.search-bar button {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 15px;
+    padding: 0 10px;
+    cursor: pointer;
+}
+
+.search-title {
+    color: #fff;
+    font-size: 10px;
+}
+.search-bar input:focus {
+    outline: none; /* Removes the blue outline */
+    border: 1px solid #444; /* Optional: You can add a custom border */
+}
+
+.search-bar input:focus {
+    /*border: 1px solid #f26f90; !* Custom border color on focus *!*/
+    background-color: #222; /* Change background color on focus */
 }
 /* Адаптація для мобільних пристроїв */
 @media (max-width: 768px) {
@@ -152,3 +193,4 @@ button.link-button:hover {
         width: 25px; /* Зменшуємо розмір картинки */
     }
 }
+
