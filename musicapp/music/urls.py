@@ -19,5 +19,5 @@ urlpatterns = [
     path('login/', views.LoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(next_page='/'), name='logout'),
     path('search/', views.SearchView.as_view(), name='search'),
-
+    path('add_to_favorites/<int:song_id>/', views.AddToFavoritesView.as_view(), name='add_to_favorites'),
 ]

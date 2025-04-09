@@ -40,7 +40,18 @@
                 </td>
                 <td>{{ song.release_date|date:"M d, Y" }}</td>
                 <td>{{ song.album.name|default:"-" }}</td>
-                <td>{{ song.duration|format_duration }} <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong(this, '{{ song.audio_url }}')">▶</span></td>
+                <td>{{ song.duration|format_duration }}
+                    <span class="heart-button" data-song-id="{{ song.id }}">
+                        <span class="heart-icon">
+                        {% if song.id in favorite_song_ids %}
+                            ♥︎
+                        {% else %}
+                            ♡︎
+                        {% endif %}
+                        </span> <!-- Default empty heart icon -->
+
+                    </span>
+                    <span class="play-icon" onclick="playSong(this, '{{ song.audio_url }}')">▶</span></td>
             </tr>
             {% endfor %}
         </tbody>
@@ -86,3 +97,47 @@
 </div>
 
 {% endblock content%}
+
+{% block extra_scripts %}
+<td>
+    <!-- Button with a heart icon that changes when clicked -->
+    <button class="heart-button" data-song-id="{{ song.id }}">
+        <span class="heart-icon">❤</span>
+    </button>
+    <span class="duration">{{ song.duration|format_duration }}</span>
+    <span class="play-icon" onclick="playSong(this, '{{ song.audio_url }}')">▶</span>
+</td>
+
+<script>
+    // JavaScript for handling heart icon click
+    document.querySelectorAll('.heart-button').forEach(button => {
+        button.addEventListener('click', function() {
+            const songId = this.getAttribute('data-song-id');
+            const heartIcon = this.querySelector('.heart-icon');
+
+            // Send AJAX request to add song to 'My favorites' playlist
+            fetch(`/add_to_favorites/${songId}/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}',  // Include CSRF token for security
+                },
+                body: JSON.stringify({
+                    song_id: songId,
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'added') {
+                    heartIcon.textContent = data.icon;
+                } else if (data.status === 'already_added') {
+                    heartIcon.textContent = data.icon;
+                }
+            })
+            .catch(error => console.error('Error adding to favorites:', error));
+        });
+    });
+</script>
+
+{% endblock extra_scripts%}
+

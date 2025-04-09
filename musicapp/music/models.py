@@ -3,8 +3,8 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from django.utils.text import slugify
 from datetime import timedelta
-# from django.db.models import Count
-
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 # Create your models here.
 
@@ -131,6 +131,12 @@ class UserPlaylist(SongCollection):
         if first_song:
             return first_song.get_image()  # Use the first song's image, whether it's the song or album image
         return "/static/musicapp/images/playlist-placeholder.jpg"  # Fallback to playlist placeholder
+
+    @receiver(post_save, sender=User)
+    def create_favorites_playlist(sender, instance, created, **kwargs):
+        """Automatically create an empty 'My favorites' playlist for each new user."""
+        if created:
+            UserPlaylist.objects.create(owner=instance, name="My favorites")
 
 
 class UserPlaylistSong(models.Model):

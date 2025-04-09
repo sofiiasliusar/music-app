@@ -16,11 +16,11 @@
   <!-- music-player-container --><!-- music-player-container -->
 <div class="music-player-container">
     <div class="album-cover">
-        <img src="{% static '/musicapp/images/Rectangle 1.png' %}" alt="Song Cover">
+        <img src="{% static '/musicapp/images/Trending songs mix.png' %}" alt="Song Cover">
     </div>
     <div class="music-info">
-        <h3>Song Name</h3>
-        <p>Artist Name</p>
+        <h3>My Favorite Songs ♥</h3>
+        <p>by {{user.username}}</p>
     </div>
     {% include 'PlayerControls.html' %}
 </div>
@@ -53,10 +53,12 @@
                     <!-- Фото для кожного треку -->
                     <img src="{{ song.get_image }}" alt="{{ song.name }}" class="song-cover"> {{ song.name }}
                 </td>
-                <td>{{ song.release_date|date:"M d, Y" }}</td>
+                <td>{{ song.release_date|date:"M d, ︎Y" }}</td>
                 <td>{{ song.album.name|default:"-" }}</td>
                 <td class="song-time">{{ song.duration|format_duration }}</td>
-                <td>{{ song.duration|format_duration }} <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong(this, '{{ song.audio_url }}')">▶</span></td>
+                <td>{{ song.duration|format_duration }}
+                    <span class="play-icon" onclick="playSong(this, '{{ song.audio_url }}')">▶</span>
+                </td>
             </tr>
         {% endfor %}
         </tbody>

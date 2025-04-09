@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 # Create your views here.
 from django.views.generic import TemplateView, DetailView, CreateView, View
-from .models import Song, Artist, ArtistAlbum, PlatformMix
+from .models import Song, Artist, ArtistAlbum, PlatformMix, UserPlaylist
 from django.urls import reverse_lazy
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
@@ -10,7 +10,13 @@ from .forms import SignUpForm
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.contrib.auth.mixins import LoginRequiredMixin
-
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
+import json
+from django.http import JsonResponse
+from django.views import View
+from django.shortcuts import get_object_or_404
+from .models import UserPlaylist, UserPlaylistSong, Song
 
 class HomeView(TemplateView):
     template_name = 'Home.html'
@@ -66,10 +72,24 @@ class PlaylistView(LoginRequiredMixin, TemplateView):
     login_url = 'login'
     template_name = 'Playlist.html'
 
+    # def dispatch(self, request, *args, **kwargs):
+    #     # Check if the user has a 'MyFavorites' playlist, if not, create it
+    #     playlist, created = UserPlaylist.objects.get_or_create(
+    #         owner=self.request.user,
+    #         name="MyFavorites"
+    #     )
+    #     # Proceed with the regular dispatch
+    #     return super().dispatch(request, *args, **kwargs)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['playlist_songs'] = Song.objects.order_by('-release_date')[:5]  # Example logic for playlist
+        # Get the 'MyFavorites' playlist and its songs
+        user = self.request.user
+        favorites_playlist = user.userplaylist_set.filter(name="My favorites").first()
+        playlist = UserPlaylist.objects.get(owner=self.request.user, name="My favorites")
+        context['playlist_songs'] = favorites_playlist.get_songs()  # Get songs in the 'MyFavorites' playlist
         return context
+
 
 class PremiumView(TemplateView):
     template_name = 'Premium.html'
@@ -184,4 +204,40 @@ class SearchView(TemplateView):
         context['songs'] = songs
         context['artists'] = artists
         context['albums'] = albums
+        favorites = UserPlaylist.objects.filter(owner=self.request.user, name="My favorites").first()
+        if favorites:
+            context['favorite_song_ids'] = set(favorites.get_songs().values_list('id', flat=True))
+        else:
+            context['favorite_song_ids'] = set()
         return context
+
+# @method_decorator(csrf_exempt, name='dispatch')  # For simplicity — CSRF token is safer!
+# class AddToFavoritesView(LoginRequiredMixin, View):
+#     def post(self, request, *args, **kwargs):
+#         data = json.loads(request.body)
+#         song_id = data.get('song_id')
+#         try:
+#             song = Song.objects.get(id=song_id)
+#             playlist, _ = UserPlaylist.objects.get_or_create(owner=request.user, name="MyFavorites")
+#             playlist.songs.add(song)
+#             return JsonResponse({'success': True})
+#         except Song.DoesNotExist:
+#             return JsonResponse({'success': False, 'error': 'Song not found'})
+
+class AddToFavoritesView(View):
+    """Class-based view to add a song to the user's 'My favorites' playlist."""
+
+    def post(self, request, song_id):
+        user = request.user
+        song = get_object_or_404(Song, id=song_id)
+
+        # Get or create the "My favorites" playlist for the user
+        favorites_playlist, created = UserPlaylist.objects.get_or_create(owner=user, name="My favorites")
+
+        # Check if the song is already in the playlist
+        if not UserPlaylistSong.objects.filter(playlist=favorites_playlist, song=song).exists():
+            # Add the song to the playlist
+            UserPlaylistSong.objects.create(playlist=favorites_playlist, song=song)
+            return JsonResponse({'status': 'added', 'icon': '♥'})
+        else:
+            return JsonResponse({'status': 'already_added', 'icon': '❤️'})
