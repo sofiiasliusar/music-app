@@ -91,17 +91,16 @@ class ArtistAlbum(SongCollection):
 
 class Song(models.Model):
     name = models.CharField(max_length=100)
-    artist = models.ForeignKey(Artist,  related_name='songs', on_delete=models.CASCADE)
+    artist = models.ForeignKey(Artist,  related_name='songs', on_delete=models.CASCADE)  # todo: add multiple artists
     album = models.ForeignKey(ArtistAlbum, related_name='songs',  on_delete=models.CASCADE, null=True, blank=True)
     duration = models.DurationField()
     release_date = models.DateField()
-    audio_url = models.URLField()
+    audio_url = models.URLField(max_length=500)
     lyrics = models.TextField(blank=True, null=False)
     genres = models.ManyToManyField(Genre, related_name="songs", blank=True)
     image_url = models.URLField(blank=True, null=True)
     popularity = models.PositiveIntegerField(default=0)
     spotify_id = models.CharField(max_length=50, unique=True)
-
 
     def get_image(self):
         """Returns the image URL, or the default placeholder if None."""
