@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.shortcuts import render
 
 # Create your views here.
@@ -86,8 +87,18 @@ class HomeView(TemplateView):
         names = ['MONATIK', 'Скрябін', 'Klavdia Petrivna', 'Okean Elzy', 'Boombox', 'DOROFEEVA', 'Wellboy']
 
         # context["form"] = CustomUserCreationForm()
-        context['new_releases'] = Song.objects.order_by('-release_date')[:6]  # Fetch latest 6 songs
-        context['trending_songs'] = Song.objects.order_by('-release_date')[:10]  # Example logic for trending
+        context['new_releases'] = Song.objects.filter(
+            artist__name__in=names
+        ).exclude(
+            Q(audio_url="https://example.com") | Q(lyrics="")
+        ).order_by('-release_date')[:6]
+        # context['new_releases'] = Song.objects.order_by('-release_date')[:6]  # Fetch latest 6 songs
+        context['trending_songs'] = Song.objects.filter(
+    artist__name__in=names
+        ).exclude(
+            Q(audio_url="https://example.com") | Q(lyrics="")
+        ).order_by('-popularity')[:10]
+        # context['trending_songs'] = Song.objects.order_by('-release_date')[:10]  # Example logic for trending
         context['popular_artists'] = Artist.objects.filter(name__in=names)  # Fetch first 7 artists
         return context
 
@@ -119,166 +130,186 @@ class ArtistDetailView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         """Add the artist's songs to the context."""
         context = super().get_context_data(**kwargs)
-        artist_id = self.object.spotify_id
-        artist_name = self.object.name
-        def get_spotify_api_token():
-            client_id = os.getenv("SPOTIFY_ID")
-            client_secret = os.getenv("SPOTIFY_SECRET")
-            auth_str = f"{client_id}:{client_secret}"
-            b64_auth = base64.b64encode(auth_str.encode()).decode()
-
-            response = requests.post(
-                'https://accounts.spotify.com/api/token',
-                headers={
-                    'Authorization': f'Basic {b64_auth}',
-                    'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                data={'grant_type': 'client_credentials'}
-            )
-
-            return response.json()['access_token']
-
-        def get_top_10_tracks():
-            token = get_spotify_api_token()
-            market = 'UA'
-
-            url = f'https://api.spotify.com/v1/artists/{artist_id}/top-tracks'
-            headers = {
-                'Authorization': f'Bearer {token}',
-            }
-            params = {
-                'market': market
-            }
-
-            response = requests.get(url, headers=headers, params=params)
-            if response.status_code == 200:
-                return response.json()["tracks"]
-
-        def get_lyrics_from_genius(song_title):
-
-            if song_title == "Забий":
-                song_title = "Let It Go"
-            elif song_title == "ДІВ ЧИНА":
-                song_title = "Girl"
-            elif song_title == "Вишнi":
-                song_title = "Cherries"
-            else:
-                lang = detect(song_title)
-                if lang != "en":
-                    translator = Translator()
-                    song_title = translator.translate(song_title, src='uk', dest='en').text
-            search_for = f"{song_title} {artist_name}"
-
-            search_endpoint = "https://api.genius.com/search"
-            headers = {
-                'Authorization': f'Bearer {os.getenv("GENIUS_TOKEN")}',
-            }
-            params = {
-                'q': search_for
-            }
-
-            response = requests.get(search_endpoint, headers=headers, params=params)
-            if response.status_code == 200:
-                if response.json()["response"]["hits"][0]["result"]["lyrics_state"] == "complete"\
-                        and artist_name in response.json()["response"]["hits"][0]["result"]["artist_names"]:
-
-                    base = "https://genius.com"
-                    endpoint = response.json()["response"]["hits"][0]["result"]["path"]
-                    link = base + endpoint
-                    header = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:131.0) Gecko/20100101 Firefox/131.0"}
-                    response = requests.get(url=link, headers=header)
-
-                    contents = response.text
-                    soup = BeautifulSoup(contents, "html.parser")
-                    lyrics_container = soup.find_all(class_="Lyrics__Container-sc-78fb6627-1 hiRbsH")
-
-                    text = "\n".join([block.get_text(separator="\n") for block in lyrics_container]).splitlines()
-                    lyrics = "\n".join(text[2:])
-
-                    return lyrics
-                return ""
-
-
-        def get_song_url_from_soundcloud():
-            scraper_url = "https://spotify-scraper.p.rapidapi.com/v1/track/download/soundcloud"
-
-            querystring = {"track": f"{song_name} {artist_name}", "quality": "sq"}
-
-            headers = {
-                "x-rapidapi-key": os.getenv("RAPID_API_KEY"),
-                "x-rapidapi-host": "spotify-scraper.p.rapidapi.com"
-            }
-
-            scraper_data = requests.get(scraper_url, headers=headers, params=querystring).json()
-
-            return scraper_data["soundcloudTrack"]["audio"][0]["url"]
-
-        # class Song(models.Model):
-        #     name = models.CharField(max_length=100)
-        #     artist = models.ForeignKey(Artist, related_name='songs', on_delete=models.CASCADE)
-        #     album = models.ForeignKey(ArtistAlbum, related_name='songs', on_delete=models.CASCADE, null=True, blank=True)
-        #     duration = models.DurationField()
-        #     release_date = models.DateField()
-        #     audio_url = models.URLField()
-        #     lyrics = models.TextField(blank=True, null=False)
-        #     genres = models.ManyToManyField(Genre, related_name="songs", blank=True)
-        #     image_url = models.URLField(blank=True, null=True)
-        #     popularity = models.PositiveIntegerField(default=0)
-        #     spotify_id = models.CharField(max_length=50, null=True, blank=True)
-
-        # 6l5IEx62Nsc2k1QyfaWvEz -WellBoy
-
-        artist_top_songs = get_top_10_tracks()
-        for song in artist_top_songs:
-            song_name = song["name"]
-            artist = self.object  # todo is it correct?
-            duration = datetime.timedelta(milliseconds=song["duration_ms"])
-            release_date = song["album"]["release_date"]
-            lyrics = get_lyrics_from_genius(song_name)
-            popularity = song["popularity"]
-            audio_url = get_song_url_from_soundcloud()
-            spotify_id = song["id"]
-            album = None
-
-            album_type = song["album"]["album_type"]
-            if album_type == "single":
-                image_url = song["album"]["images"][0]["url"]
-            elif album_type == "album":
-                album_id = song["album"]["id"]
-                album = ArtistAlbum.objects.filter(spotify_id=album_id).first()
-
-                if not album:
-                    print("Album not found. Creating...")
-                    album = ArtistAlbum.objects.create(
-                        name=song["album"]["name"],
-                        owner=self.object,
-                        release_date=song["album"]["release_date"],
-                        image_url=song["album"]["images"][0]["url"],
-                        spotify_id=album_id
-                    )
-            song, created = Song.objects.get_or_create(
-                spotify_id=spotify_id,
-                defaults={
-                    "name": song_name,
-                    "artist": artist,
-                    "album": album,
-                    "duration": duration,
-                    "release_date": release_date,
-                    "audio_url": audio_url,
-                    "lyrics": lyrics,  # You can fill this later
-                    "image_url": image_url if image_url else None,
-                    "popularity": popularity,
-                }
-            )
-
-            if not created and lyrics:
-                # Only update lyrics if the song already exists and lyrics is provided
-                print("Updating lyrics...")
-                song.lyrics = lyrics
-                song.save(update_fields=['lyrics'])
-
-
-
+        # artist_id = self.object.spotify_id
+        # artist_name = self.object.name
+        # def get_spotify_api_token():
+        #     client_id = os.getenv("SPOTIFY_ID")
+        #     client_secret = os.getenv("SPOTIFY_SECRET")
+        #     auth_str = f"{client_id}:{client_secret}"
+        #     b64_auth = base64.b64encode(auth_str.encode()).decode()
+        #
+        #     response = requests.post(
+        #         'https://accounts.spotify.com/api/token',
+        #         headers={
+        #             'Authorization': f'Basic {b64_auth}',
+        #             'Content-Type': 'application/x-www-form-urlencoded'
+        #         },
+        #         data={'grant_type': 'client_credentials'}
+        #     )
+        #
+        #     return response.json()['access_token']
+        #
+        # def get_top_10_tracks():
+        #     token = get_spotify_api_token()
+        #     market = 'UA'
+        #
+        #     url = f'https://api.spotify.com/v1/artists/{artist_id}/top-tracks'
+        #     headers = {
+        #         'Authorization': f'Bearer {token}',
+        #     }
+        #     params = {
+        #         'market': market
+        #     }
+        #
+        #     response = requests.get(url, headers=headers, params=params)
+        #     if response.status_code == 200:
+        #         return response.json()["tracks"]
+        #
+        # def get_lyrics_from_genius(song_title):
+        #
+        #     if song_title == "Забий":
+        #         song_title = "Let It Go"
+        #     elif song_title == "ДІВ ЧИНА":
+        #         song_title = "Girl"
+        #     elif song_title == "Вишнi":
+        #         song_title = "Cherries"
+        #     else:
+        #         lang = detect(song_title)
+        #         if lang != "en":
+        #             translator = Translator()
+        #             song_title = translator.translate(song_title, src='uk', dest='en').text
+        #     search_for = f"{song_title} {artist_name}"
+        #     print(search_for)
+        #
+        #     search_endpoint = "https://api.genius.com/search"
+        #     headers = {
+        #         'Authorization': f'Bearer {os.getenv("GENIUS_TOKEN")}',
+        #     }
+        #     params = {
+        #         'q': search_for
+        #     }
+        #
+        #     response = requests.get(search_endpoint, headers=headers, params=params)
+        #     if response.status_code == 200 and response.json()["response"]["hits"]:
+        #         print(artist_name)
+        #         print(response.json()["response"]["hits"][0]["result"]["artist_names"])
+        #         print(artist_name in response.json()["response"]["hits"][0]["result"]["artist_names"])
+        #         if response.json()["response"]["hits"][0]["result"]["lyrics_state"] == "complete"\
+        #                 and artist_name in response.json()["response"]["hits"][0]["result"]["artist_names"]:
+        #
+        #             base = "https://genius.com"
+        #             endpoint = response.json()["response"]["hits"][0]["result"]["path"]
+        #             link = base + endpoint
+        #             print(link)
+        #             header = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:131.0) Gecko/20100101 Firefox/131.0"}
+        #             response = requests.get(url=link, headers=header)
+        #
+        #             contents = response.text
+        #             soup = BeautifulSoup(contents, "html.parser")
+        #             lyrics_container = soup.find_all(class_="Lyrics__Container-sc-78fb6627-1 hiRbsH")
+        #
+        #             text = "\n".join([block.get_text(separator="\n") for block in lyrics_container]).splitlines()
+        #             lyrics = "\n".join(text[2:])
+        #             print(lyrics)
+        #
+        #             return lyrics
+        #         return ""
+        #
+        #
+        # def get_song_url_from_soundcloud():
+        #     scraper_url = "https://spotify-scraper.p.rapidapi.com/v1/track/download/soundcloud"
+        #
+        #     querystring = {"track": f"{song_name} {artist_name}", "quality": "sq"}
+        #
+        #     headers = {
+        #         "x-rapidapi-key": os.getenv("RAPID_API_KEY"),
+        #         "x-rapidapi-host": "spotify-scraper.p.rapidapi.com"
+        #     }
+        #
+        #     scraper_data = requests.get(scraper_url, headers=headers, params=querystring).json()
+        #     if "soundcloudTrack" in scraper_data:
+        #         return scraper_data["soundcloudTrack"]["audio"][0]["url"]
+        #     else:
+        #         return "https://example.com"
+        #
+        # # class Song(models.Model):
+        # #     name = models.CharField(max_length=100)
+        # #     artist = models.ForeignKey(Artist, related_name='songs', on_delete=models.CASCADE)
+        # #     album = models.ForeignKey(ArtistAlbum, related_name='songs', on_delete=models.CASCADE, null=True, blank=True)
+        # #     duration = models.DurationField()
+        # #     release_date = models.DateField()
+        # #     audio_url = models.URLField()
+        # #     lyrics = models.TextField(blank=True, null=False)
+        # #     genres = models.ManyToManyField(Genre, related_name="songs", blank=True)
+        # #     image_url = models.URLField(blank=True, null=True)
+        # #     popularity = models.PositiveIntegerField(default=0)
+        # #     spotify_id = models.CharField(max_length=50, null=True, blank=True)
+        # #
+        # # 6l5IEx62Nsc2k1QyfaWvEz -WellBoy
+        #
+        # artist_top_songs = get_top_10_tracks()
+        # for song in artist_top_songs:
+        #     song_name = song["name"]
+        #     print(f"Adding song - {song_name}")
+        #     artist = self.object
+        #     duration = datetime.timedelta(milliseconds=song["duration_ms"])
+        #     release_date = song["album"]["release_date"]
+        #     if len(release_date) == 4:
+        #         release_date = datetime.datetime.strptime(release_date + "-01-01", "%Y-%m-%d").date()
+        #
+        #     lyrics = get_lyrics_from_genius(song_name)
+        #     if lyrics:
+        #         lang = detect(lyrics)
+        #         if lang == "ru":
+        #             "song_name is in russian - nonono"
+        #             continue
+        #     popularity = song["popularity"]
+        #     audio_url = get_song_url_from_soundcloud()
+        #     spotify_id = song["id"]
+        #     album = None
+        #     image_url = None
+        #
+        #     album_type = song["album"]["album_type"]
+        #     if album_type == "single":
+        #         image_url = song["album"]["images"][0]["url"]
+        #     elif album_type == "album":
+        #         album_id = song["album"]["id"]
+        #         album = ArtistAlbum.objects.filter(spotify_id=album_id).first()
+        #
+        #         if not album:
+        #             print("Album not found. Creating...")
+        #             release_date = song["album"]["release_date"]
+        #             if len(release_date) == 4:
+        #                 release_date = datetime.datetime.strptime(release_date + "-01-01", "%Y-%m-%d").date()
+        #
+        #             album = ArtistAlbum.objects.create(
+        #                 name=song["album"]["name"],
+        #                 owner=self.object,
+        #                 release_date=release_date,
+        #                 image_url=song["album"]["images"][0]["url"],
+        #                 spotify_id=album_id
+        #             )
+        #     song, created = Song.objects.get_or_create(
+        #         spotify_id=spotify_id,
+        #         defaults={
+        #             "name": song_name,
+        #             "artist": artist,
+        #             "album": album,
+        #             "duration": duration,
+        #             "release_date": release_date,
+        #             "audio_url": audio_url,
+        #             "lyrics": lyrics if lyrics else "",
+        #             "image_url": image_url if image_url else None,
+        #             "popularity": popularity,
+        #         }
+        #     )
+        #
+        #     if not created and lyrics:
+        #         # Only update lyrics if the song already exists and lyrics is provided
+        #         print("Updating lyrics...")
+        #         song.lyrics = lyrics
+        #         song.save(update_fields=['lyrics'])
+        #
 
         context['songs'] = self.object.songs.all()
         context['albums'] = self.object.albums.all()
