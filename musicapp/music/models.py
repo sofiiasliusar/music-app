@@ -83,6 +83,7 @@ class ArtistAlbum(SongCollection):
     owner = models.ForeignKey('Artist', on_delete=models.CASCADE, related_name="albums")
     release_date = models.DateField()
     genres = models.ManyToManyField(Genre, related_name="albums", blank=True)
+    spotify_id = models.CharField(max_length=50, unique=True)
 
     def get_songs(self):
         return self.songs.all()
