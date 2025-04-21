@@ -22,6 +22,7 @@ class Artist(models.Model):
     genres = models.ManyToManyField(Genre, related_name="artists", blank=True)
     profile_image = models.URLField(blank=True, null=True)
     detail_image = models.URLField(blank=True, null=True)
+    spotify_id = models.CharField(max_length=50, unique=True)
 
     def get_absolute_url(self):
         """Returns the URL for the artist's detail page using slug."""
