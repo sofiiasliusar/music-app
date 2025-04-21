@@ -97,6 +97,9 @@ class Song(models.Model):
     lyrics = models.TextField(blank=True, null=False)
     genres = models.ManyToManyField(Genre, related_name="songs", blank=True)
     image_url = models.URLField(blank=True, null=True)
+    popularity = models.PositiveIntegerField(default=0)
+    spotify_id = models.CharField(max_length=50, unique=True)
+
 
     def get_image(self):
         """Returns the image URL, or the default placeholder if None."""
