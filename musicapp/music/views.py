@@ -17,16 +17,69 @@ from django.http import JsonResponse
 from django.views import View
 from django.shortcuts import get_object_or_404
 from .models import UserPlaylist, UserPlaylistSong, Song
+import requests
+
 
 class HomeView(TemplateView):
     template_name = 'Home.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+
+        # official spotify API
+        # top_ukrainian_artists = ["6wbEgVlGqWb4I9tbMluu5Q",  # spotify ids
+        #                          "5RqIkHQnXRZlm1ozfSS1IO",
+        #                          "5BwbVAdT6rFF2vGVE8su2y",
+        #                          "6NTzEgUmN1PIBIYEHhf1kS",
+        #                          "2c3PFZtun8HemDbDfRPV6G",
+        #                          "7wl1m5vgWkCP3cqYVj2noM",
+        #                          "6l5IEx62Nsc2k1QyfaWvEz",
+        #                          ]
+        #
+        # names = []
+        # for artist_id in top_ukrainian_artists:
+        #     url = "https://spotify-scraper3.p.rapidapi.com/api/artists/info"
+        #     params = {"id": artist_id}
+        #     headers = {
+        #         "x-rapidapi-key": "aa08440083msh782bdf9788498e6p1cd73ejsn7a80b9806eeb",
+        #         "x-rapidapi-host": "spotify-scraper3.p.rapidapi.com"
+        #     }
+        #
+        #     response = requests.get(url, headers=headers, params=params)
+        #     if response.status_code == 200:
+        #         data = response.json()["data"]["artist"]
+        #         name = data["name"]
+        #         avatar_img = data["avatar_images"][0]["url"]
+        #         header_img = data["header_images"][0]["url"]
+        #         names.append(name)
+        #         artist, created = Artist.objects.get_or_create(
+        #             name=name,
+        #             defaults={
+        #                 "profile_image": avatar_img,
+        #                 "detail_image": header_img,
+        #             }
+        #         )
+        #
+        #         if created:
+        #             print("Artist was just added to the database!")
+        #         else:
+        #             print("Artist already existed, maybe update info if needed.")
+        #
+        #         print("Info:"
+        #               "\nname- " + name +
+        #               "\navatar_img- " + avatar_img +
+        #               "\nheader_img- " + header_img)
+        #
+        # print(names)
+
+        # For now predefines artists
+        # todo: Later add feature for user upon sign up to search for artists he wants to listen to
+        names = ['MONATIK', 'Скрябін', 'Klavdia Petrivna', 'Okean Elzy', 'Boombox', 'DOROFEEVA', 'Wellboy']
+
         # context["form"] = CustomUserCreationForm()
         context['new_releases'] = Song.objects.order_by('-release_date')[:6]  # Fetch latest 6 songs
         context['trending_songs'] = Song.objects.order_by('-release_date')[:10]  # Example logic for trending
-        context['popular_artists'] = Artist.objects.all()[:9]  # Fetch first 7 artists
+        context['popular_artists'] = Artist.objects.filter(name__in=names)  # Fetch first 7 artists
         return context
 
 
@@ -210,6 +263,7 @@ class SearchView(TemplateView):
         else:
             context['favorite_song_ids'] = set()
         return context
+
 
 # @method_decorator(csrf_exempt, name='dispatch')  # For simplicity — CSRF token is safer!
 # class AddToFavoritesView(LoginRequiredMixin, View):
