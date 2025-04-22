@@ -44,7 +44,7 @@ class Artist(models.Model):
 
     def get_platform_mixes(self):
         """Returns all platform mixes that contain songs by this artist."""
-        return PlatformMix.objects.filter(songs__artist=self).distinct()
+        return PlatformMix.objects.filter(songs__artists=self).distinct()
         # if multiple songs by the same artist exist in the same mix, the mix is only returned once.
 
     # def get_platform_mixes(self):
@@ -91,7 +91,7 @@ class ArtistAlbum(SongCollection):
 
 class Song(models.Model):
     name = models.CharField(max_length=100)
-    artist = models.ForeignKey(Artist,  related_name='songs', on_delete=models.CASCADE)  # todo: add multiple artists
+    artists = models.ManyToManyField(Artist, related_name='songs', blank=True)  # todo: add multiple artists
     album = models.ForeignKey(ArtistAlbum, related_name='songs',  on_delete=models.CASCADE, null=True, blank=True)
     duration = models.DurationField()
     release_date = models.DateField()
@@ -111,7 +111,8 @@ class Song(models.Model):
         return "/static/musicapp/images/song-placeholder.jpg"  # Fallback to placeholder image
 
     def __str__(self):
-        return f"{self.name} by {self.artist.name}"
+        artists_names = ", ".join(artist.name for artist in self.artists.all())
+        return f"{self.name} by {artists_names}"
 
 
 class PlatformMix(SongCollection):
