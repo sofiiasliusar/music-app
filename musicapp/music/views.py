@@ -139,132 +139,132 @@ class ArtistDetailView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         """Add the artist's songs to the context."""
         context = super().get_context_data(**kwargs)
-        # artist_id = self.object.spotify_id
-        # print(artist_id)
-        # artist_name = self.object.name
-        #
-        # def get_spotify_api_token():
-        #     client_id = os.getenv("SPOTIFY_ID")
-        #     client_secret = os.getenv("SPOTIFY_SECRET")
-        #     auth_str = f"{client_id}:{client_secret}"
-        #     b64_auth = base64.b64encode(auth_str.encode()).decode()
-        #
-        #     response = requests.post(
-        #         'https://accounts.spotify.com/api/token',
-        #         headers={
-        #             'Authorization': f'Basic {b64_auth}',
-        #             'Content-Type': 'application/x-www-form-urlencoded'
-        #         },
-        #         data={'grant_type': 'client_credentials'}
-        #     )
-        #
-        #     return response.json()['access_token']
-        #
-        # def get_top_10_tracks():
-        #     token = get_spotify_api_token()
-        #     market = 'UA'
-        #
-        #     url = f'https://api.spotify.com/v1/artists/{artist_id}/top-tracks'
-        #     headers = {
-        #         'Authorization': f'Bearer {token}',
-        #     }
-        #     params = {
-        #         'market': market
-        #     }
-        #
-        #     response = requests.get(url, headers=headers, params=params)
-        #     print(response)
-        #     if response.status_code == 200:
-        #         return response.json()["tracks"]
-        #
-        # def get_lyrics_from_genius(song_title):
-        #
-        #     if song_title == "Забий":
-        #         song_title = "Let It Go"
-        #     elif song_title == "ДІВ ЧИНА":
-        #         song_title = "Girl"
-        #     elif song_title == "Вишнi":
-        #         song_title = "Cherries"
-        #     else:
-        #         lang = detect(song_title)
-        #         if lang != "en":
-        #             translator = Translator()
-        #             song_title = translator.translate(song_title, src='uk', dest='en').text
-        #     search_for = f"{song_title} {artist_name}"
-        #     print(search_for)
-        #
-        #     search_endpoint = "https://api.genius.com/search"
-        #     headers = {
-        #         'Authorization': f'Bearer {os.getenv("GENIUS_TOKEN")}',
-        #     }
-        #     params = {
-        #         'q': search_for
-        #     }
-        #
-        #     response = requests.get(search_endpoint, headers=headers, params=params)
-        #     if response.status_code == 200 and response.json()["response"]["hits"]:
-        #         print(artist_name)
-        #         print(response.json()["response"]["hits"][0]["result"]["artist_names"])
-        #         print(artist_name in response.json()["response"]["hits"][0]["result"]["artist_names"])
-        #         if response.json()["response"]["hits"][0]["result"]["lyrics_state"] == "complete"\
-        #                 and artist_name in response.json()["response"]["hits"][0]["result"]["artist_names"]:
-        #
-        #             base = "https://genius.com"
-        #             endpoint = response.json()["response"]["hits"][0]["result"]["path"]
-        #             link = base + endpoint
-        #             print(link)
-        #             header = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:131.0) Gecko/20100101 Firefox/131.0"}
-        #             response = requests.get(url=link, headers=header)
-        #
-        #             contents = response.text
-        #             soup = BeautifulSoup(contents, "html.parser")
-        #             lyrics_container = soup.find_all(class_="Lyrics__Container-sc-78fb6627-1 hiRbsH")
-        #
-        #             text = "\n".join([block.get_text(separator="\n") for block in lyrics_container]).splitlines()
-        #             lyrics = "\n".join(text[2:])
-        #             print(lyrics)
-        #
-        #             return lyrics
-        #         return ""
-        #
-        #
-        # def get_song_url_from_soundcloud(name):
-        #     scraper_url = "https://spotify-scraper.p.rapidapi.com/v1/track/download/soundcloud"
-        #
-        #     querystring = {"track": f"{name} {artist_name}", "quality": "sq"}
-        #
-        #     headers = {
-        #         "x-rapidapi-key": os.getenv("RAPID_API_KEY"),
-        #         "x-rapidapi-host": "spotify-scraper.p.rapidapi.com"
-        #     }
-        #
-        #     scraper_data = requests.get(scraper_url, headers=headers, params=querystring).json()
-        #     if "soundcloudTrack" in scraper_data:
-        #         return scraper_data["soundcloudTrack"]["audio"][0]["url"]
-        #     else:
-        #         return "https://example.com"
-        #
-        # def get_track_preview_from_spotify(song_id):
-        #     track_url = f"https://open.spotify.com/track/{song_id}"
-        #
-        #     response = requests.get(track_url)
-        #
-        #     if response.status_code == 200:
-        #         soup = BeautifulSoup(response.content, 'html.parser')
-        #
-        #         og_audio_tag = soup.find('meta', property='og:audio')
-        #
-        #         if og_audio_tag:
-        #             url = og_audio_tag.get('content')
-        #             print(url)
-        #             return url
-        #         else:
-        #             print("Audio URL not found in the meta tags.")
-        #             return "https://fakeurl.com"
-        #     else:
-        #         print(f"Error: Unable to fetch the page. Status code: {response.status_code}")
-        #         return "https://fakeurl.com"
-        #
+        artist_id = self.object.spotify_id
+        print(artist_id)
+        artist_name = self.object.name
+
+        def get_spotify_api_token():
+            client_id = os.getenv("SPOTIFY_ID")
+            client_secret = os.getenv("SPOTIFY_SECRET")
+            auth_str = f"{client_id}:{client_secret}"
+            b64_auth = base64.b64encode(auth_str.encode()).decode()
+
+            response = requests.post(
+                'https://accounts.spotify.com/api/token',
+                headers={
+                    'Authorization': f'Basic {b64_auth}',
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                data={'grant_type': 'client_credentials'}
+            )
+
+            return response.json()['access_token']
+
+        def get_top_10_tracks():
+            token = get_spotify_api_token()
+            market = 'UA'
+
+            url = f'https://api.spotify.com/v1/artists/{artist_id}/top-tracks'
+            headers = {
+                'Authorization': f'Bearer {token}',
+            }
+            params = {
+                'market': market
+            }
+
+            response = requests.get(url, headers=headers, params=params)
+            print(response)
+            if response.status_code == 200:
+                return response.json()["tracks"]
+
+        def get_lyrics_from_genius(song_title):
+
+            if song_title == "Забий":
+                song_title = "Let It Go"
+            elif song_title == "ДІВ ЧИНА":
+                song_title = "Girl"
+            elif song_title == "Вишнi":
+                song_title = "Cherries"
+            else:
+                lang = detect(song_title)
+                if lang != "en":
+                    translator = Translator()
+                    song_title = translator.translate(song_title, src='uk', dest='en').text
+            search_for = f"{song_title} {artist_name}"
+            print(search_for)
+
+            search_endpoint = "https://api.genius.com/search"
+            headers = {
+                'Authorization': f'Bearer {os.getenv("GENIUS_TOKEN")}',
+            }
+            params = {
+                'q': search_for
+            }
+
+            response = requests.get(search_endpoint, headers=headers, params=params)
+            if response.status_code == 200 and response.json()["response"]["hits"]:
+                print(artist_name)
+                print(response.json()["response"]["hits"][0]["result"]["artist_names"])
+                print(artist_name in response.json()["response"]["hits"][0]["result"]["artist_names"])
+                if response.json()["response"]["hits"][0]["result"]["lyrics_state"] == "complete"\
+                        and artist_name in response.json()["response"]["hits"][0]["result"]["artist_names"]:
+
+                    base = "https://genius.com"
+                    endpoint = response.json()["response"]["hits"][0]["result"]["path"]
+                    link = base + endpoint
+                    print(link)
+                    header = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:131.0) Gecko/20100101 Firefox/131.0"}
+                    response = requests.get(url=link, headers=header)
+
+                    contents = response.text
+                    soup = BeautifulSoup(contents, "html.parser")
+                    lyrics_container = soup.find_all(class_="Lyrics__Container-sc-78fb6627-1 hiRbsH")
+
+                    text = "\n".join([block.get_text(separator="\n") for block in lyrics_container]).splitlines()
+                    lyrics = "\n".join(text[2:])
+                    print(lyrics)
+
+                    return lyrics
+                return ""
+
+
+        def get_song_url_from_soundcloud(name):
+            scraper_url = "https://spotify-scraper.p.rapidapi.com/v1/track/download/soundcloud"
+
+            querystring = {"track": f"{name} {artist_name}", "quality": "sq"}
+
+            headers = {
+                "x-rapidapi-key": os.getenv("RAPID_API_KEY"),
+                "x-rapidapi-host": "spotify-scraper.p.rapidapi.com"
+            }
+
+            scraper_data = requests.get(scraper_url, headers=headers, params=querystring).json()
+            if "soundcloudTrack" in scraper_data:
+                return scraper_data["soundcloudTrack"]["audio"][0]["url"]
+            else:
+                return "https://example.com"
+
+        def get_track_preview_from_spotify(song_id):
+            track_url = f"https://open.spotify.com/track/{song_id}"
+
+            response = requests.get(track_url)
+
+            if response.status_code == 200:
+                soup = BeautifulSoup(response.content, 'html.parser')
+
+                og_audio_tag = soup.find('meta', property='og:audio')
+
+                if og_audio_tag:
+                    url = og_audio_tag.get('content')
+                    print(url)
+                    return url
+                else:
+                    print("Audio URL not found in the meta tags.")
+                    return "https://fakeurl.com"
+            else:
+                print(f"Error: Unable to fetch the page. Status code: {response.status_code}")
+                return "https://fakeurl.com"
+
         # artist_top_songs = get_top_10_tracks()
         # print(artist_top_songs)
         # for song in artist_top_songs:
@@ -352,7 +352,7 @@ class ArtistDetailView(LoginRequiredMixin, DetailView):
         #         song.save(update_fields=['audio_url'])
         #     time.sleep(random.uniform(1, 3))
 
-        context['songs'] = Song.objects.filter(artists=self.object)
+        context['songs'] = Song.objects.filter(artists=self.object)[:10]
         context['albums'] = self.object.albums.all()
         context['platform_mixes'] = self.object.get_platform_mixes()  # artist playlists
         return context
