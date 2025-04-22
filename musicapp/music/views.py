@@ -48,8 +48,13 @@ class HomeView(TemplateView):
         #                          "6l5IEx62Nsc2k1QyfaWvEz",
         #                          ]
         #
+        # top_ukrainian_artists = ["11sIz9STeD6yVSuBaD8nMW"]
+        #
         # names = []
+        #
+        # # SCRAPER FOR IMAGES (INCLUDING HEADER IMAGE)
         # for artist_id in top_ukrainian_artists:
+        #     print("HELLOOO")
         #     url = "https://spotify-scraper3.p.rapidapi.com/api/artists/info"
         #     params = {"id": artist_id}
         #     headers = {
@@ -58,6 +63,7 @@ class HomeView(TemplateView):
         #     }
         #
         #     response = requests.get(url, headers=headers, params=params)
+        #     print(response)
         #     if response.status_code == 200:
         #         data = response.json()["data"]["artist"]
         #         name = data["name"]
@@ -69,6 +75,7 @@ class HomeView(TemplateView):
         #             defaults={
         #                 "profile_image": avatar_img,
         #                 "detail_image": header_img,
+        #                 "spotify_id": artist_id,
         #             }
         #         )
         #
@@ -90,13 +97,13 @@ class HomeView(TemplateView):
 
         # context["form"] = CustomUserCreationForm()
         context['new_releases'] = Song.objects.filter(
-            artist__name__in=names
+            artists__name__in=names
         ).exclude(
             Q(audio_url="https://example.com") | Q(lyrics="")
         ).order_by('-release_date')[:6]
         # context['new_releases'] = Song.objects.order_by('-release_date')[:6]  # Fetch latest 6 songs
         context['trending_songs'] = Song.objects.filter(
-    artist__name__in=names
+        artists__name__in=names
         ).exclude(
             Q(audio_url="https://example.com") | Q(lyrics="")
         ).order_by('-popularity')[:10]
@@ -133,7 +140,9 @@ class ArtistDetailView(LoginRequiredMixin, DetailView):
         """Add the artist's songs to the context."""
         context = super().get_context_data(**kwargs)
         # artist_id = self.object.spotify_id
+        # print(artist_id)
         # artist_name = self.object.name
+        #
         # def get_spotify_api_token():
         #     client_id = os.getenv("SPOTIFY_ID")
         #     client_secret = os.getenv("SPOTIFY_SECRET")
@@ -164,6 +173,7 @@ class ArtistDetailView(LoginRequiredMixin, DetailView):
         #     }
         #
         #     response = requests.get(url, headers=headers, params=params)
+        #     print(response)
         #     if response.status_code == 200:
         #         return response.json()["tracks"]
         #
@@ -218,10 +228,10 @@ class ArtistDetailView(LoginRequiredMixin, DetailView):
         #         return ""
         #
         #
-        # def get_song_url_from_soundcloud():
+        # def get_song_url_from_soundcloud(name):
         #     scraper_url = "https://spotify-scraper.p.rapidapi.com/v1/track/download/soundcloud"
         #
-        #     querystring = {"track": f"{song_name} {artist_name}", "quality": "sq"}
+        #     querystring = {"track": f"{name} {artist_name}", "quality": "sq"}
         #
         #     headers = {
         #         "x-rapidapi-key": os.getenv("RAPID_API_KEY"),
@@ -233,52 +243,48 @@ class ArtistDetailView(LoginRequiredMixin, DetailView):
         #         return scraper_data["soundcloudTrack"]["audio"][0]["url"]
         #     else:
         #         return "https://example.com"
-
-        def get_track_preview_from_spotify(song_id):
-            track_url = f"https://open.spotify.com/track/{song_id}"
-
-            response = requests.get(track_url)
-
-            if response.status_code == 200:
-                soup = BeautifulSoup(response.content, 'html.parser')
-
-                og_audio_tag = soup.find('meta', property='og:audio')
-
-                if og_audio_tag:
-                    url = og_audio_tag.get('content')
-                    print(url)
-                    return url
-                else:
-                    print("Audio URL not found in the meta tags.")
-                    return "https://fakeurl.com"
-            else:
-                print(f"Error: Unable to fetch the page. Status code: {response.status_code}")
-                return "https://fakeurl.com"
-
-        # # class Song(models.Model):
-        # #     name = models.CharField(max_length=100)
-        # #     artist = models.ForeignKey(Artist, related_name='songs', on_delete=models.CASCADE)
-        # #     album = models.ForeignKey(ArtistAlbum, related_name='songs', on_delete=models.CASCADE, null=True, blank=True)
-        # #     duration = models.DurationField()
-        # #     release_date = models.DateField()
-        # #     audio_url = models.URLField()
-        # #     lyrics = models.TextField(blank=True, null=False)
-        # #     genres = models.ManyToManyField(Genre, related_name="songs", blank=True)
-        # #     image_url = models.URLField(blank=True, null=True)
-        # #     popularity = models.PositiveIntegerField(default=0)
-        # #     spotify_id = models.CharField(max_length=50, null=True, blank=True)
-        # #
-        # # 6l5IEx62Nsc2k1QyfaWvEz -WellBoy
+        #
+        # def get_track_preview_from_spotify(song_id):
+        #     track_url = f"https://open.spotify.com/track/{song_id}"
+        #
+        #     response = requests.get(track_url)
+        #
+        #     if response.status_code == 200:
+        #         soup = BeautifulSoup(response.content, 'html.parser')
+        #
+        #         og_audio_tag = soup.find('meta', property='og:audio')
+        #
+        #         if og_audio_tag:
+        #             url = og_audio_tag.get('content')
+        #             print(url)
+        #             return url
+        #         else:
+        #             print("Audio URL not found in the meta tags.")
+        #             return "https://fakeurl.com"
+        #     else:
+        #         print(f"Error: Unable to fetch the page. Status code: {response.status_code}")
+        #         return "https://fakeurl.com"
         #
         # artist_top_songs = get_top_10_tracks()
+        # print(artist_top_songs)
         # for song in artist_top_songs:
         #     song_name = song["name"]
+        #     spotify_id = song["id"]
         #     print(f"Adding song - {song_name}")
-        #     artist = self.object
         #     duration = datetime.timedelta(milliseconds=song["duration_ms"])
         #     release_date = song["album"]["release_date"]
         #     if len(release_date) == 4:
         #         release_date = datetime.datetime.strptime(release_date + "-01-01", "%Y-%m-%d").date()
+        #
+        #     artist_objs = []
+        #
+        #     for artist in song["artists"]:
+        #         print(artist["name"])
+        #         artist_obj, _ = Artist.objects.get_or_create(
+        #             spotify_id=artist["id"],
+        #             defaults={"name": artist["name"]}
+        #         )
+        #         artist_objs.append(artist_obj)
         #
         #     lyrics = get_lyrics_from_genius(song_name)
         #     if lyrics:
@@ -287,8 +293,7 @@ class ArtistDetailView(LoginRequiredMixin, DetailView):
         #             "song_name is in russian - nonono"
         #             continue
         #     popularity = song["popularity"]
-        #     audio_url = get_song_url_from_soundcloud()
-        #     spotify_id = song["id"]
+        #     audio_url = get_track_preview_from_spotify(spotify_id)
         #     album = None
         #     image_url = None
         #
@@ -316,7 +321,6 @@ class ArtistDetailView(LoginRequiredMixin, DetailView):
         #         spotify_id=spotify_id,
         #         defaults={
         #             "name": song_name,
-        #             "artist": artist,
         #             "album": album,
         #             "duration": duration,
         #             "release_date": release_date,
@@ -327,20 +331,28 @@ class ArtistDetailView(LoginRequiredMixin, DetailView):
         #         }
         #     )
         #
+        #     if created:
+        #         song.artists.set(artist_objs)  # use .set() to assign all at once
+        #     else:
+        #         song.artists.add(*artist_objs)
+
+        # UPDATE LYRICS
         #     if not created and lyrics:
         #         # Only update lyrics if the song already exists and lyrics is provided
         #         print("Updating lyrics...")
         #         song.lyrics = lyrics
         #         song.save(update_fields=['lyrics'])
-        #
-        for song in self.object.songs.all():
-            audio_url = get_track_preview_from_spotify(song.spotify_id)
 
-            if audio_url:
-                song.audio_url = audio_url
-                song.save(update_fields=['audio_url'])
-            time.sleep(random.uniform(1, 3))
-        context['songs'] = self.object.songs.all()
+        # UPDATE AUDIO WITH PREVIEW
+        # for song in self.object.songs.all():
+        #     audio_url = get_track_preview_from_spotify(song.spotify_id)
+        #
+        #     if audio_url:
+        #         song.audio_url = audio_url
+        #         song.save(update_fields=['audio_url'])
+        #     time.sleep(random.uniform(1, 3))
+
+        context['songs'] = Song.objects.filter(artists=self.object)
         context['albums'] = self.object.albums.all()
         context['platform_mixes'] = self.object.get_platform_mixes()  # artist playlists
         return context
