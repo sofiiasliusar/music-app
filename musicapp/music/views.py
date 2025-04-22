@@ -26,6 +26,8 @@ import os
 import datetime
 from langdetect import detect
 from bs4 import BeautifulSoup
+import time
+import random
 
 load_dotenv()
 
@@ -231,7 +233,28 @@ class ArtistDetailView(LoginRequiredMixin, DetailView):
         #         return scraper_data["soundcloudTrack"]["audio"][0]["url"]
         #     else:
         #         return "https://example.com"
-        #
+
+        def get_track_preview_from_spotify(song_id):
+            track_url = f"https://open.spotify.com/track/{song_id}"
+
+            response = requests.get(track_url)
+
+            if response.status_code == 200:
+                soup = BeautifulSoup(response.content, 'html.parser')
+
+                og_audio_tag = soup.find('meta', property='og:audio')
+
+                if og_audio_tag:
+                    url = og_audio_tag.get('content')
+                    print(url)
+                    return url
+                else:
+                    print("Audio URL not found in the meta tags.")
+                    return "https://fakeurl.com"
+            else:
+                print(f"Error: Unable to fetch the page. Status code: {response.status_code}")
+                return "https://fakeurl.com"
+
         # # class Song(models.Model):
         # #     name = models.CharField(max_length=100)
         # #     artist = models.ForeignKey(Artist, related_name='songs', on_delete=models.CASCADE)
@@ -310,7 +333,13 @@ class ArtistDetailView(LoginRequiredMixin, DetailView):
         #         song.lyrics = lyrics
         #         song.save(update_fields=['lyrics'])
         #
+        for song in self.object.songs.all():
+            audio_url = get_track_preview_from_spotify(song.spotify_id)
 
+            if audio_url:
+                song.audio_url = audio_url
+                song.save(update_fields=['audio_url'])
+            time.sleep(random.uniform(1, 3))
         context['songs'] = self.object.songs.all()
         context['albums'] = self.object.albums.all()
         context['platform_mixes'] = self.object.get_platform_mixes()  # artist playlists
