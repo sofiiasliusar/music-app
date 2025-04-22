@@ -23,29 +23,45 @@ class SongCollectionAdmin(admin.ModelAdmin):
 
 
 class SongAdmin(admin.ModelAdmin):
-    list_display = ['name', 'image_preview_list', 'artist', 'release_date', 'album', 'duration']
+    list_display = ['name', 'image_preview_list', 'release_date', 'album', 'duration']
     readonly_fields = ('image_preview_detail',)
     image_preview_detail = staticmethod(image_preview_detail)
     image_preview_list = staticmethod(image_preview_list)
+
 
 class ArtistAlbumInline(admin.TabularInline):
     model = ArtistAlbum
     extra = 0
 
 
-class SongInline(admin.TabularInline):
-    model = Song
-    extra = 0
+# class SongInline(admin.TabularInline):
+#     model = Song
+#     extra = 0
 
 
 class ArtistAdmin(admin.ModelAdmin):
-    inlines = [ArtistAlbumInline, SongInline]
+    inlines = [ArtistAlbumInline]
+
+    def change_view(self, request, object_id, form_url='', extra_context=None):
+        artist = self.get_object(request, object_id)
+        # Fetch related songs using the ManyToMany relationship
+        songs = Song.objects.filter(artists=artist)
+
+        # Add the songs to the context
+        if extra_context is None:
+            extra_context = {}
+        extra_context['songs'] = songs
+
+        return super().change_view(request, object_id, form_url, extra_context=extra_context)
 
 
 class ArtistAlbumAdmin(SongCollectionAdmin):
-    inlines = [SongInline]
-    list_display = SongCollectionAdmin.list_display + ['owner', 'release_date']  # Add extra fields
+    list_display = SongCollectionAdmin.list_display + ['owner', 'release_date', "get_songs"]  # Add extra fields
 
+    def get_songs(self, obj):
+        return ", ".join(song.name for song in obj.songs.all())
+
+    get_songs.short_description = 'Songs'
 
 class UserPlaylistSongInline(admin.TabularInline):
     model = UserPlaylistSong
