@@ -1,0 +1,16 @@
+{% extends "admin/change_form.html" %}
+{% block content %}
+  {{ block.super }}
+  <h2>Artist Songs</h2>
+  <ul>
+    {% for song in songs %}
+      <li>
+          <a href="{% url 'admin:music_song_change' song.id %}">
+          {{ song.name }}
+          </a>
+      </li>
+    {% empty %}
+      <li>No songs found for this artist.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}
