@@ -91,7 +91,7 @@ class ArtistAlbum(SongCollection):
 
 class Song(models.Model):
     name = models.CharField(max_length=100)
-    artists = models.ManyToManyField(Artist, related_name='songs', blank=True)  # todo: add multiple artists
+    artists = models.ManyToManyField(Artist, related_name='songs', blank=True)  # todo: handle deletion of all artists for song
     album = models.ForeignKey(ArtistAlbum, related_name='songs',  on_delete=models.CASCADE, null=True, blank=True)
     duration = models.DurationField()
     release_date = models.DateField()
