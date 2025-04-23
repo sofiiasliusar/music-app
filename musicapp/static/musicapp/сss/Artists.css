@@ -3,7 +3,8 @@
 /* Контейнер для популярних артистів */
 .popular-artists-container {
     display: flex;
-    flex-direction: center; /* Встановлюємо вертикальне розташування елементів */
+    flex-wrap: wrap;
+    justify-content: start; /* Встановлюємо вертикальне розташування елементів */
     align-items: center; /* Центруємо елементи */
     margin-left: 300px; /* Відступ для бокового меню */
     margin-top: 20px;
@@ -11,6 +12,7 @@
     padding: 20px;
     border-radius: 10px;
     max-width: 74%;
+    gap: 30px;
 }
 .popular-artists-container h2 {
             font-size: 24px;

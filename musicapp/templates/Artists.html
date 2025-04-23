@@ -1,158 +1,25 @@
 {% extends "base.html" %}
 {% load static %}
 
-
 {% block extra_css %}
-    <link rel="stylesheet" href="{% static '/musicapp/сss/Albums.css' %}">
+    <link rel="stylesheet" href="{% static '/musicapp/сss/Artists.css' %}">
     <link rel="stylesheet" href="{% static '/musicapp/сss/ArtistsSidebar.css' %}">
-    <link rel="stylesheet" href="{% static '/musicapp/сss/New-Release-Songs.css' %}">
-
 {% endblock extra_css%}
-
 
 {% block content %}
 
+<!-- Popular Artists -->
+<div class="popular-artists-container">
 
+    {% for artist in popular_artists %}
+    <a href="{{ artist.get_absolute_url }}">
+        <div class="artist-block">
+            <img src="{{ artist.get_profile_image }}" alt="{{ artist.name }}">
+        </div>
+    </a>
+    {% endfor %}
 
-<!-- Контейнер для картинки з текстом -->
-<div class="image-container">
-    <img src="{% static '/musicapp/images/Eminem.png' %}" alt="Eminem" class="image">
-    <div class="text-overlay">Eminem</div>
 </div>
-
-
-
-
-<!-- Table for Trending Songs -->
-<div class="song-table-container">
-    <table class="song-table">
-        <thead>
-            <tr>
-                <th>Title</th>
-                <th>Release Date</th>
-                <th>Singer</th>
-                <th>Time</th>
-                <th>Play</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>
-                    <!-- Фото для кожного треку -->
-                    <img src="{% static '/musicapp/images/The_Neighbourhood_-_The_Neighbourhood9.png' %}" alt="Forcecore" class="song-cover"> Without Me
-                </td>
-                <td>Nov 3, 2023</td>
-                <td>Eminem</td>
-                <td class="song-time">3:26</td>
-                <td>3:26 <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong()">▶</span></td>
-            </tr>
-            <tr>
-                <td>
-                    <!-- Фото для кожного треку -->
-                    <img src="{% static '/musicapp/images/The_Neighbourhood_-_The_Neighbourhood10.png' %}" alt="Skyfall Beats" class="song-cover"> mockingbird
-                </td>
-                <td>Oct 26, 2023</td>
-                <td>Eminem</td>
-                <td class="song-time">3:20</td>
-                <td>3:26 <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong()">▶</span></td>
-            </tr>
-            <tr>
-                <td>
-                    <!-- Фото для кожного треку -->
-                    <img src="{% static '/musicapp/images/The_Neighbourhood_-_The_Neighbourhood11.png' %}" alt="Greedy" class="song-cover"> The Real Slim Sha..
-                </td>
-                <td>Nov 30, 2023</td>
-                <td>Eminem</td>
-                <td class="song-time">3:10</td>
-                <td>3:26 <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong()">▶</span></td>
-            </tr>
-            <tr>
-                <td>
-                    <!-- Фото для кожного треку -->
-                    <img src="{% static '/musicapp/images/The_Neighbourhood_-_The_Neighbourhood12.png' %}" alt="Lovin On Me" class="song-cover"> Lose Yourself
-                </td>
-                <td>Dec 15, 2023</td>
-                <td>Eminem</td>
-                <td class="song-time">2:48</td>
-                <td>3:26 <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong()">▶</span></td>
-            </tr>
-            <tr>
-                <td>
-                    <!-- Фото для кожного треку -->
-                    <img src="{% static '/musicapp/images/The_Neighbourhood_-_The_Neighbourhood13.png' %}" alt="Pain the Town Red" class="song-cover"> Godzila
-                </td>
-                <td>Dec 29, 2023</td>
-                <td>Eminem</td>
-                <td class="song-time">3:02</td>
-                <td>3:26 <span class="heart-icon">❤</span> <span class="play-icon" onclick="playSong()">▶</span></td>
-            </tr>
-          
-           
-            
-           
-        </tbody>
-    </table>
-</div>
-
-
-<!-- Нові релізи пісень --> 
-<div class="new-release-container">
-    <h2>Artist’s  <span>Playlist</span></h2>
-    <div class="song-block">
-        <img src="{% static '/musicapp/images/Rectangle_17__1_-removebg-preview.png' %}" alt="Time">
-        <div class="song-title">Time<br><small>Luciano</small></div>
-    </div>
-    <div class="song-block">
-        <img src="{% static '/musicapp/images/Rectangle_17__2_-removebg-preview.png' %}" alt="112">
-        <div class="song-title">112<br><small>jazzek</small></div>
-    </div>
-    <div class="song-block">
-        <img src="{% static '/musicapp/images/Rectangle_17__3_-removebg-preview.png' %}" alt="We Don't Care">
-        <div class="song-title">We Don't Care<br><small>Kyanu & DJ Gullum</small></div>
-    </div>
-    <div class="song-block">
-        <img src="{% static '/musicapp/images/Rectangle_17__4_-removebg-preview.png' %}" alt="Who I Am">
-        <div class="song-title">Who I Am<br><small>Alan Walker & Elias</small></div>
-    </div>
-    <div class="song-block">
-        <img src="{% static '/musicapp/images/Rectangle 1.png' %}" alt="Baixo">
-        <div class="song-title">Baixo<br><small>XXAnteria</small></div>
-    </div>
-    <div class="song-block">
-        <img src="{% static '/musicapp/images/Rectangle 2.png' %}" alt="Baixo">
-        <div class="song-title">Baixo<br><small>XXAnteria</small></div>
-    </div>
-</div>
-
-<!-- Нові релізи пісень --> 
-<div class="new-release-container">
-    <h2>Artist’s  <span>Albums</span></h2>
-    <div class="song-block">
-        <img src="{% static '/musicapp/images/Rectangle 1.png' %}" alt="Time">
-        <div class="song-title">Time<br><small>Luciano</small></div>
-    </div>
-    <div class="song-block">
-        <img src="{% static '/musicapp/images/Rectangle 2.png' %}" alt="112">
-        <div class="song-title">112<br><small>jazzek</small></div>
-    </div>
-    <div class="song-block">
-        <img src="{% static '/musicapp/images/Rectangle 3.png' %}" alt="We Don't Care">
-        <div class="song-title">We Don't Care<br><small>Kyanu & DJ Gullum</small></div>
-    </div>
-    <div class="song-block">
-        <img src="{% static '/musicapp/images/Rectangle 4.png' %}" alt="Who I Am">
-        <div class="song-title">Who I Am<br><small>Alan Walker & Elias</small></div>
-    </div>
-    <div class="song-block">
-        <img src="{% static '/musicapp/images/Rectangle 5.png' %}" alt="Baixo">
-        <div class="song-title">Baixo<br><small>XXAnteria</small></div>
-    </div>
-    <div class="song-block">
-        <img src="{% static '/musicapp/images/Rectangle 2.png' %}" alt="Baixo">
-        <div class="song-title">Baixo<br><small>XXAnteria</small></div>
-    </div>
-</div>
-
 
 
 {% endblock content%}
