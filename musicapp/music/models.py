@@ -119,6 +119,8 @@ class PlatformMix(SongCollection):
     owner = models.CharField(max_length=255, default="Melonix")
     songs = models.ManyToManyField(Song, related_name='mixes')
     genres = models.ManyToManyField(Genre, related_name="mixes", blank=True)
+    spotify_id = models.CharField(max_length=50, unique=True, null=True)
+
 
     def get_songs(self):
         return self.songs.all()
