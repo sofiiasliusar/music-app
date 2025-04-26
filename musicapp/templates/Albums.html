@@ -45,22 +45,22 @@
 </div>
 
 
-<!-- Нові релізи пісень -->
-<div class="new-release-container">
-    <h2>Top  <span>Albums</span></h2>
-    {% for album in albums %}
-    <a href="{% url 'mix' album.id %}">
-        <div class="song-block">
-            <img src="{{ album.get_image }}" alt="{{ album.name }}">
-            <div class="song-title">{{ album.name }}<br></div>
-        </div>
-    </a>
-    {% empty %}
-        <tr>
-            <td colspan="5">No albums available.</td>
-        </tr>
-    {% endfor %}
-</div>
+<!--&lt;!&ndash; Нові релізи пісень &ndash;&gt;-->
+<!--<div class="new-release-container">-->
+<!--    <h2>Top  <span>Albums</span></h2>-->
+<!--    {% for album in albums %}-->
+<!--    <a href="{% url 'mix' album.id %}">-->
+<!--        <div class="song-block">-->
+<!--            <img src="{{ album.get_image }}" alt="{{ album.name }}">-->
+<!--            <div class="song-title">{{ album.name }}<br></div>-->
+<!--        </div>-->
+<!--    </a>-->
+<!--    {% empty %}-->
+<!--        <tr>-->
+<!--            <td colspan="5">No albums available.</td>-->
+<!--        </tr>-->
+<!--    {% endfor %}-->
+<!--</div>-->
 
 
 {% endblock content%}

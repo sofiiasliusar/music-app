@@ -99,14 +99,6 @@
 {% endblock content%}
 
 {% block extra_scripts %}
-<td>
-    <!-- Button with a heart icon that changes when clicked -->
-    <button class="heart-button" data-song-id="{{ song.id }}">
-        <span class="heart-icon">❤</span>
-    </button>
-    <span class="duration">{{ song.duration|format_duration }}</span>
-    <span class="play-icon" onclick="playSong(this, '{{ song.audio_url }}')">▶</span>
-</td>
 
 <script>
     // JavaScript for handling heart icon click
