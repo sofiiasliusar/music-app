@@ -13,7 +13,7 @@
 <!-- Trending Songs Section -->
 <div class="trending-songs-container">
     <!-- Фото мікса -->
-    <img src="{% static '/musicapp/images/Trending songs mix.png' %}" alt="Album Cover" class="album-cover">
+    <img src="{{ mix.get_image}}" alt="Album Cover" class="album-cover">
 
     <div class="content">
         <h1>{{ mix.name }}</h1>

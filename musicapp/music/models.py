@@ -121,6 +121,9 @@ class PlatformMix(SongCollection):
     genres = models.ManyToManyField(Genre, related_name="mixes", blank=True)
     spotify_id = models.CharField(max_length=50, unique=True, null=True)
 
+    def get_image(self):
+        """Returns the image URL, or the default placeholder if None."""
+        return self.image_url or "/musicapp/images/Trending songs mix.png"
 
     def get_songs(self):
         return self.songs.all()
