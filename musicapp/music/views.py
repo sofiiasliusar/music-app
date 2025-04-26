@@ -27,7 +27,6 @@ import datetime
 from langdetect import detect
 from bs4 import BeautifulSoup
 import time
-import random
 
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -385,6 +384,8 @@ class ArtistDetailView(LoginRequiredMixin, DetailView):
                 song_title = "Girl"
             elif song_title == "Вишнi":
                 song_title = "Cherries"
+            elif song_title == "27":
+                song_title = "27"
             else:
                 lang = detect(song_title)
                 if lang != "en":
@@ -595,134 +596,130 @@ class AlbumView(LoginRequiredMixin, TemplateView):
                 track_name = track_link.get_text(strip=True)
                 track_href = track_link['href']
                 track_id = track_href.split('/')[-1]
+                song = Song.objects.filter(spotify_id=track_id).first()
+                if not song:
+                    # Navigate up DOM to find related artist and album links
+                    track_container = track_link.find_parent('div')
+                    artist_link = track_container.find_next('a', href=lambda x: x and '/artist/' in x)
+                    album_link = track_container.find_next('a', href=lambda x: x and '/album/' in x)
 
-                # Navigate up DOM to find related artist and album links
-                track_container = track_link.find_parent('div')
-                artist_link = track_container.find_next('a', href=lambda x: x and '/artist/' in x)
-                album_link = track_container.find_next('a', href=lambda x: x and '/album/' in x)
+                    artist_name = artist_link.get_text(strip=True) if artist_link else "Unknown Artist"
+                    artist_id = artist_link['href'].split('/')[-1] if artist_link else "No ID"
 
-                artist_name = artist_link.get_text(strip=True) if artist_link else "Unknown Artist"
-                artist_id = artist_link['href'].split('/')[-1] if artist_link else "No ID"
+                    album_id = album_link['href'].split('/')[-1] if album_link else "No Album"
 
-                album_id = album_link['href'].split('/')[-1] if album_link else "No Album"
+                    print(f"Track: {track_name} | Track ID: {track_id}")
+                    print(f"Artist: {artist_name} | Artist ID: {artist_id}")
+                    print(f"Album ID: {album_id}")
+                    print("-" * 40)
 
-                print(f"Track: {track_name} | Track ID: {track_id}")
-                print(f"Artist: {artist_name} | Artist ID: {artist_id}")
-                print(f"Album ID: {album_id}")
-                print("-" * 40)
+                    # SCRAPE ADDITIONAL SONG DETAILS FROM SPOTIFY + GENIUS
+                    token = get_spotify_api_token()
+                    market = 'UA'
 
-                # SCRAPE ADDITIONAL SONG DETAILS FROM SPOTIFY + GENIUS
-                token = get_spotify_api_token()
-                market = 'UA'
-
-                track_url = f'https://api.spotify.com/v1/tracks/{track_id}'
-                headers = {
-                    'Authorization': f'Bearer {token}',
-                }
-                params = {
-                    'market': market
-                }
-
-                response = requests.get(track_url, headers=headers, params=params)
-                if response.status_code == 200:
-                    song = response.json()
-                    print(f"Adding song - {track_name}")
-                    duration = datetime.timedelta(milliseconds=song["duration_ms"])
-                    release_date = song["album"]["release_date"]
-                    if len(release_date) == 4:
-                        release_date = datetime.datetime.strptime(release_date + "-01-01", "%Y-%m-%d").date()
-
-                    artist_objs = []
-                    artist_url = "https://spotify-scraper3.p.rapidapi.com/api/artists/info"
-                    params = {"id": artist_id}
+                    track_url = f'https://api.spotify.com/v1/tracks/{track_id}'
                     headers = {
-                        "x-rapidapi-key": "aa08440083msh782bdf9788498e6p1cd73ejsn7a80b9806eeb",
-                        "x-rapidapi-host": "spotify-scraper3.p.rapidapi.com"
+                        'Authorization': f'Bearer {token}',
+                    }
+                    params = {
+                        'market': market
                     }
 
-                    response = requests.get(artist_url, headers=headers, params=params)
-                    ("HERE I AM!!!!")
-                    print(response.json())
+                    response = requests.get(track_url, headers=headers, params=params)
                     if response.status_code == 200:
-                        data = response.json()["data"]["artist"]
-                        if data:
-                            avatar_img = data["avatar_images"][0]["url"]
-                            header_img = None
-                            if data["header_images"]:
-                                header_img = data["header_images"][0]["url"]
-                            else:
-                                print("No header image")
-                            artist, created = Artist.objects.get_or_create(
-                                spotify_id=artist_id,
-                                defaults={
-                                    "profile_image": avatar_img,
-                                    "detail_image": header_img,
-                                    "name": artist_name,
-                                }
-                            )
-                            artist_objs.append(artist)
+                        song = response.json()
+                        print(f"Adding song - {track_name}")
+                        duration = datetime.timedelta(milliseconds=song["duration_ms"])
+                        release_date = song["album"]["release_date"]
+                        if len(release_date) == 4:
+                            release_date = datetime.datetime.strptime(release_date + "-01-01", "%Y-%m-%d").date()
 
-                            if created:
-                                print("Artist was just added to the database!")
-                            else:
-                                print("Artist already existed.")
+                        artist_objs = []
+                        artist = Artist.objects.filter(spotify_id=artist_id).first()
+                        if artist:
+                            print(f"Artist {artist_name} already exists in the database.")
                         else:
-                            print("No artist")
+                            artist_url = "https://spotify-scraper3.p.rapidapi.com/api/artists/info"
+                            params = {"id": artist_id}
+                            headers = {
+                                "x-rapidapi-key": "57937a8210msh64b62a57f1f923ep109691jsn88ed90dfb4f0",
+                                "x-rapidapi-host": "spotify-scraper3.p.rapidapi.com"
+                            }
 
-                    lyrics = get_lyrics_from_genius(track_name, artist_name)
-                    if lyrics:
-                        lang = detect(lyrics)
-                        if lang == "ru":
-                            "song_name is in russian - nonono"
-                            continue
-                    popularity = song["popularity"]
-                    audio_url = get_track_preview_from_spotify(track_id)
-                    album = None
-                    image_url = None
+                            response = requests.get(artist_url, headers=headers, params=params)
+                            print("HERE I AM!!!!")
+                            print(response.json())
+                            if response.status_code == 200:
+                                data = response.json()["data"]["artist"]
+                                if data:
+                                    avatar_img = data["avatar_images"][0]["url"]
+                                    header_img = None
+                                    if data["header_images"]:
+                                        header_img = data["header_images"][0]["url"]
+                                    else:
+                                        print("No header image")
+                                    artist = Artist.objects.create(
+                                        spotify_id=artist_id,
+                                        profile_image=avatar_img,
+                                        detail_image=header_img,
+                                        name=artist_name,
+                                    )
+                                    print(f"Created artist {artist_name}.")
+                                else:
+                                    print("No artist data found.")
+                            else:
+                                print(f"Failed to fetch artist info for {artist_name}.")
 
-                    album_type = song["album"]["album_type"]
-                    if album_type == "single":
-                        image_url = song["album"]["images"][0]["url"]
-                    elif album_type == "album":
-                        album = ArtistAlbum.objects.filter(spotify_id=album_id).first()
+                        artist_objs.append(artist)
 
-                        if not album:
-                            print("Album not found. Creating...")
-                            release_date = song["album"]["release_date"]
-                            if len(release_date) == 4:
-                                release_date = datetime.datetime.strptime(release_date + "-01-01", "%Y-%m-%d").date()
+                        lyrics = get_lyrics_from_genius(track_name, artist_name)
+                        if lyrics:
+                            lang = detect(lyrics)
+                            if lang == "ru":
+                                "song_name is in russian - nonono"
+                                continue
+                        popularity = song["popularity"]
+                        audio_url = get_track_preview_from_spotify(track_id)
+                        album = None
+                        image_url = None
 
-                            album = ArtistAlbum.objects.create(
-                                name=song["album"]["name"],
-                                owner=ArtistAlbum.objects.filter(spotify_id=artist_id).first(),
-                                release_date=release_date,
-                                image_url=song["album"]["images"][0]["url"],
-                                spotify_id=album_id
-                            )
+                        album_type = song["album"]["album_type"]
+                        if album_type == "single":
+                            image_url = song["album"]["images"][0]["url"]
+                        elif album_type == "album":
+                            album = ArtistAlbum.objects.filter(spotify_id=album_id).first()
 
-                    song, created = Song.objects.get_or_create(
-                        spotify_id=track_id,
-                        defaults={
-                            "name": track_name,
-                            "album": album,
-                            "duration": duration,
-                            "release_date": release_date,
-                            "audio_url": audio_url,
-                            "lyrics": lyrics if lyrics else "",
-                            "image_url": image_url if image_url else None,
-                            "popularity": popularity,
-                        }
-                    )
-                    songs.append(song)
+                            if not album:
+                                print("Album not found. Creating...")
+                                release_date = song["album"]["release_date"]
+                                if len(release_date) == 4:
+                                    release_date = datetime.datetime.strptime(release_date + "-01-01", "%Y-%m-%d").date()
 
-                    if created:
-                        song.artists.set(artist_objs)  # use .set() to assign all at once
-                    else:
-                        song.artists.add(*artist_objs)  #### STOPPED HERE _ NEXT CREATE SONG FROM ALL INFO, THEN CREATE PLAYLIST - SHOW,
-                        # then do the same for albums and radios - can do manually :P
+                                album = ArtistAlbum.objects.create(
+                                    name=song["album"]["name"],
+                                    owner=Artist.objects.filter(spotify_id=artist_id).first(),
+                                    release_date=release_date,
+                                    image_url=song["album"]["images"][0]["url"],
+                                    spotify_id=album_id
+                                )
 
+                        song = Song.objects.create(
+                            spotify_id=track_id,
+                            name=track_name,
+                            album=album,
+                            duration=duration,
+                            release_date=release_date,
+                            audio_url=audio_url,
+                            lyrics=lyrics if lyrics else "",
+                            image_url=image_url if image_url else None,
+                            popularity=popularity
+                        )
+                        print(f"Created song {track_name}.")
 
-                break
+                else:
+                    print("Song exists")
+                songs.append(song)
+                print("Song added to mix")
             return songs
 
         def get_spotify_api_token():
@@ -829,15 +826,18 @@ class AlbumView(LoginRequiredMixin, TemplateView):
             # Parse page source with BeautifulSoup
             soup1 = BeautifulSoup(driver.page_source, "html.parser")
             # Get all card containers
-            cards = soup1.find_all("div", {"data-encore-id": "card"})
-
+            cards = soup1.find_all("div", {"data-encore-id": "card"})[19:]
+            print(len(cards))
             print("🎵 Extracted Playlist Cards:\n")
             playlist_ids = []
             for card in cards:
                 # Extract title
                 title_tag = card.find("p", {"data-encore-id": "cardTitle"})
                 playlist_title = title_tag.get_text(strip=True) if title_tag else "No Title"
-
+                to_skip = ["Max Korzh Radio", "KRBK Radio"]
+                if playlist_title in to_skip:
+                    print("skipping "+playlist_title)
+                    continue
                 # Extract image
                 img_tag = card.find("img", {"data-testid": "card-image"})
                 img_url = img_tag["src"] if img_tag else None
@@ -850,49 +850,34 @@ class AlbumView(LoginRequiredMixin, TemplateView):
                 print(f"Image URL: {img_url}")
                 print(f"Playlist ID: {playlist_id}")
                 print("-" * 50)
-
                 # SCRAPE SONGS FROM PLAYLIST PAGE
+                mix_songs = scrape_playlist_tracks(playlist_id)
+                mix, created = PlatformMix.objects.get_or_create(
+                    spotify_id=playlist_id,
+                    defaults={
+                        "name": playlist_title,
+                        "image_url": img_url
+                    }
+                )
 
-                for playlist_id in playlist_ids:
-                    mix_songs = scrape_playlist_tracks(playlist_id)
-                    mix, created = PlatformMix.objects.get_or_create(
-                        spotify_id=playlist_id,
-                        defaults={
-                            "name": playlist_title,
-                            "image_url": img_url
-                        }
-                    )
-
-                    if created:
-                        mix.songs.set(mix_songs)  # use .set() to assign all at once
-                    else:
-                        mix.songs.add(*mix_songs)
-
-                    break
-                break
-
-
-
-            # class SongCollection(models.Model):
-            #     name = models.CharField(max_length=100)
-            #     image_url = models.URLField(blank=True, null=True)
-            # class PlatformMix(SongCollection):
-            #     owner = models.CharField(max_length=255, default="Melonix")
-            #     songs = models.ManyToManyField(Song, related_name='mixes')
-            #     genres = models.ManyToManyField(Genre, related_name="mixes", blank=True)
-            #     spotify_id = models.CharField(max_length=50, unique=True, null=True)
+                if created:
+                    mix.songs.set(mix_songs)  # use .set() to assign all at once
+                else:
+                    mix.songs.add(*mix_songs)
 
             print(playlist_ids)
             print(f"Total mixes loaded {len(playlist_ids)}")
-
-
-
-
-
+        #
         finally:
             driver.quit()
 
-        context['mixes'] = PlatformMix.objects.filter(spotify_id__in=playlist_ids)
+        mixes_ids = ['37i9dQZF1E4l2ioIaCjhu0', '37i9dQZF1E4l6urr0WyrHk', '37i9dQZF1E4wuO62icjSo9', '37i9dQZF1E4tLXl1ytNjGw',
+         '37i9dQZF1E4A8y674xzcYv', '37i9dQZF1E4vm60o07iwlG', '37i9dQZF1E4noT0MbKz5Ed', '37i9dQZF1E4DTZUur7HqeC',
+         '37i9dQZF1E4xO7AcESjSyV', '37i9dQZF1E4Bz1Tyga0dyF', '37i9dQZF1E4xxHdVdUnARi', '37i9dQZF1E4AfgteCrizQG',
+         '37i9dQZF1E4vkBCi0dJzdI', '37i9dQZF1E4xQ4S5eUfiuo', '37i9dQZF1E4FCYxweFnGWe', '37i9dQZF1E4sPFmlETtBHH',
+         '37i9dQZF1E4yl1BBzACV3o', '37i9dQZF1E4wXrG4w9c53u', '37i9dQZF1E4yQINTazcB01', '37i9dQZF1E4ptINQIygp3c']
+
+        context['mixes'] = PlatformMix.objects.filter(spotify_id__in=mixes_ids)
         # context['radio_mixes'] = 0
         # context['albums'] = 0
 
