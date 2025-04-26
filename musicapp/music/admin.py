@@ -1,6 +1,7 @@
 import datetime
 from django.contrib import admin
 from .utils import image_preview_detail, image_preview_list
+from .templatetags.custom_filters import format_duration
 
 # Register your models here.
 from .models import Artist, ArtistAlbum, Song, PlatformMix, UserPlaylist, UserPlaylistSong, Genre
@@ -11,7 +12,7 @@ class SongCollectionAdmin(admin.ModelAdmin):
     readonly_fields = ('image_preview_detail',)
 
     def get_total_duration(self, obj):
-        return obj.get_total_duration()
+        return format_duration(obj.get_total_duration())
 
     def get_amount_of_songs(self, obj):
         return obj.get_amount_of_songs()
