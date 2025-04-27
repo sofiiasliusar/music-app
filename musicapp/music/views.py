@@ -63,7 +63,7 @@ class HomeView(TemplateView):
         #     url = "https://spotify-scraper3.p.rapidapi.com/api/artists/info"
         #     params = {"id": artist_id}
         #     headers = {
-        #         "x-rapidapi-key": "aa08440083msh782bdf9788498e6p1cd73ejsn7a80b9806eeb",
+        #         "x-rapidapi-key": os.getenv("RAPID_API_KEY"),
         #         "x-rapidapi-host": "spotify-scraper3.p.rapidapi.com"
         #     }
         #
@@ -291,7 +291,7 @@ class ArtistsView(LoginRequiredMixin, TemplateView):
         #     url = "https://spotify-scraper3.p.rapidapi.com/api/artists/info"
         #     params = {"id": artist_id}
         #     headers = {
-        #         "x-rapidapi-key": "aa08440083msh782bdf9788498e6p1cd73ejsn7a80b9806eeb",
+        #         "x-rapidapi-key": os.getenv("RAPID_API_KEY"),
         #         "x-rapidapi-host": "spotify-scraper3.p.rapidapi.com"
         #     }
         #
@@ -643,7 +643,7 @@ class AlbumView(LoginRequiredMixin, TemplateView):
         #                     artist_url = "https://spotify-scraper3.p.rapidapi.com/api/artists/info"
         #                     params = {"id": artist_id}
         #                     headers = {
-        #                         "x-rapidapi-key": "deef5fa739msh14ac8082938fac8p13233fjsn27c9f442f8f4",
+        #                         "x-rapidapi-key": os.getenv("RAPID_API_KEY"),
         #                         "x-rapidapi-host": "spotify-scraper3.p.rapidapi.com"
         #                     }
         #
